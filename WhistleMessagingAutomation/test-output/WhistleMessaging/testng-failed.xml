@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [WhistleMessaging]">
+  <test name="Regression suite 1(failed)">
+    <classes>
+      <class name="testscripts.LoginPage">
+        <methods>
+          <include name="checkLogin"/>
+          <include name="loginAfterClass"/>
+          <include name="loginBeforeClass"/>
+        </methods>
+      </class> <!-- testscripts.LoginPage -->
+      <class name="framework.MainMethod">
+        <methods>
+          <include name="driverEnd"/>
+          <include name="driverStart"/>
+        </methods>
+      </class> <!-- framework.MainMethod -->
+    </classes>
+  </test> <!-- Regression suite 1(failed) -->
+</suite> <!-- Failed suite [WhistleMessaging] -->

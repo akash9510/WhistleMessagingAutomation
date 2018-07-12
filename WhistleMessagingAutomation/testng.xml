@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="WhistleMessaging" verbose="1" >
+  <test name="Regression suite 1" >
+    <classes>
+  	  <class name ="framework.MainMethod"></class>	  
+      <class name="testscripts.LoginPage"/>
+    </classes>
+ </test>
+</suite>
