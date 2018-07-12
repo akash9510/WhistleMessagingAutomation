@@ -4,6 +4,10 @@
     <classes>
   	  <class name ="framework.MainMethod"></class>	  
       <class name="testscripts.LoginPage"/>
+      <methods>
+       <include name="checkLogin" />
+        <include name="checkForgetPassword" />
+      </methods>
     </classes>
  </test>
 </suite>

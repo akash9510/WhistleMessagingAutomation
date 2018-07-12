@@ -29,7 +29,7 @@ public class ExecutionSetUp {
 				
 				driver = new ChromeDriver();
 				
-				driver.manage().window().fullscreen();
+				//driver.manage().window().fullscreen();
 				//maximizeBrowser();
 				
 				//driver.manage().window().maximize();

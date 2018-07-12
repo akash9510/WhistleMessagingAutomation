@@ -23,6 +23,18 @@ public class loginWebE {
 	@FindBy(css = ".user-name-dropdown")
 	public WebElement lbl_UserName;
 	
+	/** to click on Logout link option */
+	@FindBy(xpath = "//a[text()='Logout']")
+	public WebElement lnk_Logout;
+	
+	/** to click on Forget Password button */
+	@FindBy(xpath = "//button[contains(text(),'Forgot Password')]")
+	public WebElement btn_Forget_Password;
+	
+	/** to get the Forget Password message */
+	@FindBy(css = ".animated.slideInRight.center-align")
+	public WebElement lbl_SuccessMessage;
+	
 	static loginWebE Instance = null;
 	
 	public static loginWebE getInstance(WebDriver driver)

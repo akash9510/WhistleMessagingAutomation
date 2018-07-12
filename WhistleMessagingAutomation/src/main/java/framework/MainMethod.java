@@ -26,7 +26,7 @@ public class MainMethod {
 	static String strBrowserName = null;
 	static WebDriver driver = null;
 	static loginWebE LoginWebE = null;
-	//public static ExtentReports extent;
+	public static ExtentReports extent;
 	
 	@BeforeSuite
 	public static void 	driverStart()
@@ -36,8 +36,8 @@ public class MainMethod {
 		{
 			Log4J.logp.info("Execution Started");
 			
-			//extent = new ExtentReports("src/main/resources/AdvanceExtentReport/ExtentReportMaven.html", true);
-			//extent.loadConfig(new File("src/main/resources/AdvanceExtentReport/extent-config.xml"));
+			extent = new ExtentReports("src/main/resources/AdvanceExtentReport/ExtentReportMaven.html", true);
+			extent.loadConfig(new File("src/main/resources/AdvanceExtentReport/extent-config.xml"));
 			
 			Log4J.loadLogger();
 			
@@ -70,6 +70,8 @@ public class MainMethod {
 	{
 		try
 		{
+			extent.flush();
+			extent.close();
 			driver.close();
 		}
 		catch(Exception e)
