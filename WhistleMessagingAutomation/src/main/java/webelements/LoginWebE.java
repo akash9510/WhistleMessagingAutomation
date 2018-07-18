@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class loginWebE {
+public class LoginWebE {
 	
 	/** to enter value in Email address*/
 	@FindBy(id = "login-email-form_input")
@@ -35,13 +35,13 @@ public class loginWebE {
 	@FindBy(css = ".animated.slideInRight.center-align")
 	public WebElement lbl_SuccessMessage;
 	
-	static loginWebE Instance = null;
+	static LoginWebE Instance = null;
 	
-	public static loginWebE getInstance(WebDriver driver)
+	public static LoginWebE getInstance(WebDriver driver)
 	{
 		if(Instance == null)
 		{
-			Instance = PageFactory.initElements(driver, loginWebE.class);
+			Instance = PageFactory.initElements(driver, LoginWebE.class);
 		}
 		return Instance;
 	}

@@ -1,14 +1,17 @@
 package library;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+
 import org.openqa.selenium.WebDriver;
 
 import framework.ExecutionSetUp;
-import webelements.loginWebE;
+import webelements.LoginWebE;
 
 public class LoginLib {
 	
 	static WebDriver driver = null;
-	public static loginWebE LoginWebE = null;
+	public static LoginWebE loginWebE = null;
 	
 	/**
 	 * 
@@ -16,31 +19,37 @@ public class LoginLib {
 	 * @since 07-07-2018
 	 * 
 	 * */
-	public static boolean login(String strUsername, String strPassword)
+	public static boolean login()
 	{
 		boolean bstatus = false;
+		String strUserName, strPassword;
 		try
 		{
 			Log4J.logp.info("Started :::: Login");
 			
+			Properties logProperties = new Properties();
+			logProperties.load(new FileInputStream("src/main/resources/Properties/data.properties"));
+			strUserName = logProperties.getProperty("username");
+			strPassword = logProperties.getProperty("password");
+			
 			driver = ExecutionSetUp.getDriver();
-			LoginWebE = loginWebE.getInstance(driver);
+			loginWebE = LoginWebE.getInstance(driver);
 			
-			LoginWebE.txt_EmailAdd.clear();
-			LoginWebE.txt_EmailAdd.sendKeys(strUsername);
+			loginWebE.txt_EmailAdd.clear();
+			loginWebE.txt_EmailAdd.sendKeys(strUserName);
 			Thread.sleep(2000);
 			
-			LoginWebE.btn_Next.click();
-			CommonLib.waitForObject(LoginWebE.txt_Password, "visibility", 10);
+			loginWebE.btn_Next.click();
+			CommonLib.waitForObject(loginWebE.txt_Password, "visibility", 10);
 			
-			LoginWebE.txt_Password.clear();
-			LoginWebE.txt_Password.sendKeys(strPassword);
+			loginWebE.txt_Password.clear();
+			loginWebE.txt_Password.sendKeys(strPassword);
 			Thread.sleep(2000);
 			
-			LoginWebE.btn_Next.click();
-			CommonLib.waitForObject(LoginWebE.lbl_UserName, "visibility", 20);
+			loginWebE.btn_Next.click();
+			CommonLib.waitForObject(loginWebE.lbl_UserName, "visibility", 20);
 			
-			bstatus = CommonLib.checkElementPresent(LoginWebE.lbl_UserName);
+			bstatus = CommonLib.checkElementPresent(loginWebE.lbl_UserName);
 			
 			if(bstatus == true)
 			{
@@ -73,15 +82,15 @@ public class LoginLib {
 		try
 		{
 			driver = ExecutionSetUp.getDriver();
-			LoginWebE = loginWebE.getInstance(driver);
+			loginWebE = loginWebE.getInstance(driver);
 			
-			LoginWebE.lbl_UserName.click();
-			CommonLib.waitForObject(LoginWebE.lnk_Logout, "clickable", 10);
+			loginWebE.lbl_UserName.click();
+			CommonLib.waitForObject(loginWebE.lnk_Logout, "clickable", 10);
 			
-			LoginWebE.lnk_Logout.click();
-			CommonLib.waitForObject(LoginWebE.txt_EmailAdd, "visibility", 20);
+			loginWebE.lnk_Logout.click();
+			CommonLib.waitForObject(loginWebE.txt_EmailAdd, "visibility", 20);
 			
-			if(CommonLib.checkElementPresent(LoginWebE.txt_EmailAdd) == true)
+			if(CommonLib.checkElementPresent(loginWebE.txt_EmailAdd) == true)
 			{
 				bstatus = true;
 				Log4J.logp.info("Logout successfully");

@@ -1,18 +1,25 @@
 package library;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import framework.ExecutionSetUp;
+import webelements.HomePageWebE;
 
 public class CommonLib {
 	
 	static WebDriver driver = null;
 	static WebDriverWait wait;
+	static HomePageWebE homePageWebE = null;
 	
 	public static boolean waitForObject(WebElement webe, String strProperty, long d)
 	{
@@ -78,6 +85,130 @@ public class CommonLib {
 		{
 			Log4J.logp.info("---------------- Ending - checkElementPresent False ----------------");
 			return false;
+		}
+	}
+	
+	/** 
+	 * 
+	 * This method is use for Select Date from Calendar
+	 * 
+	 * */
+	public static boolean selectDate(String strSampleDate,String strValue)
+	{
+		int intMonth;
+		String strDate, strYear, strMonth;
+		try
+		{
+			driver = ExecutionSetUp.getDriver();
+			homePageWebE = HomePageWebE.getInstance(driver);
+			
+			homePageWebE.lnk_Year.click();
+			Thread.sleep(2000);
+			
+			intMonth = Integer.parseInt(strSampleDate.split("\\/")[0]);
+			strDate = strSampleDate.split("\\/")[1];
+			strYear = strSampleDate.split("\\/")[2];
+			
+			WebElement webYear = driver.findElement(By.xpath("//span[text()='" + strYear + "']"));
+			webYear.click();
+			
+			strMonth = Month.of(intMonth).name();
+			strMonth = strMonth.substring(0,1).toUpperCase() + strMonth.substring(1).toLowerCase();
+			
+			for(int i = 1; i<=12;i++)
+			{
+				System.out.println(homePageWebE.lbl_Month.getText());
+				if(homePageWebE.lbl_Month.getText().contains(strMonth))
+				{
+					driver.findElement(By.xpath("//span[text()='" + strDate + "']")).click();
+					break;
+				}
+				else
+				{
+					Date date = new Date();
+					LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+					int month = localDate.getMonthValue();
+					if(month < intMonth)
+					{
+						if(strValue.equals("Depart"))
+						{
+							homePageWebE.lnk_Right_Pointer_Depart.click();
+						}
+						else
+						{
+							homePageWebE.lnk_Right_Pointer.click();
+						}
+						Thread.sleep(2000);
+						System.out.println(homePageWebE.lbl_Month.getText());
+						if(homePageWebE.lbl_Month.getText().contains(strMonth))
+						{
+							driver.findElement(By.xpath("//span[text()='" + strDate + "']")).click();
+							break;
+						}
+					}
+					else
+					{
+						if(strValue.equals("Depart"))
+						{
+							homePageWebE.lnk_Left_Pointer_Depart.click();
+						}
+						else
+						{
+							homePageWebE.lnk_Left_Pointer.click();
+						}
+						Thread.sleep(2000);
+						System.out.println(homePageWebE.lbl_Month.getText());
+						if(homePageWebE.lbl_Month.getText().contains(strMonth))
+						{
+							driver.findElement(By.xpath("//span[text()='" + strDate + "']")).click();
+							break;
+						}
+					}
+				}
+			}
+			
+			Thread.sleep(4000);
+			return true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * This method is use for get background Color of Element
+	 * 
+	 * */
+	
+	public static String getBackgroundColor(WebElement webe) throws InterruptedException
+	{
+		String[] arrstrColournum = null;
+		String strColour = null;
+
+		try
+		{
+			driver = ExecutionSetUp.getDriver();
+
+			arrstrColournum = webe.getCssValue("background-color").toString().replace("rgba(", "").replace(")", "").split(",");
+
+			System.out.println(Integer.parseInt(arrstrColournum[0].trim()));
+			System.out.println(Integer.parseInt(arrstrColournum[1].trim()));
+			System.out.println(Integer.parseInt(arrstrColournum[2].trim().split(" ")[0]));
+
+			strColour = String.format("#%02x%02x%02x", Integer.parseInt(arrstrColournum[0].trim()), Integer.parseInt(arrstrColournum[1].trim()), Integer.parseInt(arrstrColournum[2].trim().split(" ")[0]));
+
+			/*numbers = webe.getCssValue("background-color").toString().replace("rgb(", "").replace(")", "").split(",");
+			strhex = String.format("#%02x%02x%02x", Integer.parseInt(numbers[0].trim()), Integer.parseInt(numbers[1].trim()), Integer.parseInt(numbers[2].trim().split(" ")[0]));*/
+			return strColour;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
 		}
 	}
 

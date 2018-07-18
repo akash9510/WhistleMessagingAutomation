@@ -19,11 +19,11 @@ import framework.MainMethod;
 import library.CommonLib;
 import library.Log4J;
 import library.LoginLib;
-import webelements.loginWebE;
+import webelements.LoginWebE;
 public class LoginPage {
 	
 	static WebDriver driver = null;
-	static loginWebE LoginWebE = null;
+	static LoginWebE loginWebE = null;
 	static SoftAssert				softAssertion;
 	static String strUserName, strPassword;
 	
@@ -32,7 +32,7 @@ public class LoginPage {
 	public static void loginBeforeClass() throws FileNotFoundException, IOException
 	{
 		driver = ExecutionSetUp.getDriver();
-		LoginWebE = loginWebE.getInstance(driver);
+		loginWebE = LoginWebE.getInstance(driver);
 		
 		Properties logProperties = new Properties();
 		logProperties.load(new FileInputStream("src/main/resources/Properties/data.properties"));
@@ -61,10 +61,10 @@ public class LoginPage {
 			
 			softAssertion = new SoftAssert();
 			
-			bstatus = LoginLib.login(strUserName, strPassword);
+			bstatus = LoginLib.login();
 			if(bstatus == true)
 			{
-				strActualUserName = LoginWebE.lbl_UserName.getText().trim();
+				strActualUserName = loginWebE.lbl_UserName.getText().trim();
 				if(strActualUserName.equals(strUserName))
 				{
 					Log4J.logp.info("User will be successfully login in site");
@@ -130,16 +130,16 @@ public class LoginPage {
 			
 			strExpectedMessage = "We've sent you an email with a link to reset your password.";
 			
-			LoginWebE.btn_Forget_Password.click();
-			CommonLib.waitForObject(LoginWebE.txt_EmailAdd, "visibility", 10);
+			loginWebE.btn_Forget_Password.click();
+			CommonLib.waitForObject(loginWebE.txt_EmailAdd, "visibility", 10);
 			
-			LoginWebE.txt_EmailAdd.clear();
-			LoginWebE.txt_EmailAdd.sendKeys(strUserName);
+			loginWebE.txt_EmailAdd.clear();
+			loginWebE.txt_EmailAdd.sendKeys(strUserName);
 			
-			LoginWebE.btn_Next.click();
-			CommonLib.waitForObject(LoginWebE.lbl_SuccessMessage, "visibility", 10);
+			loginWebE.btn_Next.click();
+			CommonLib.waitForObject(loginWebE.lbl_SuccessMessage, "visibility", 10);
 			
-			strActualMessage = LoginWebE.lbl_SuccessMessage.getText().trim();
+			strActualMessage = loginWebE.lbl_SuccessMessage.getText().trim();
 			
 			if(strExpectedMessage.equals(strActualMessage))
 			{

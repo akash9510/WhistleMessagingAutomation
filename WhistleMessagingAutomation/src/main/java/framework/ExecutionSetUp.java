@@ -6,6 +6,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import library.Log4J;
@@ -24,6 +25,10 @@ public class ExecutionSetUp {
 			if(strBrowserName.equalsIgnoreCase("Chrome"))
 			{
 				Log4J.logp.info("This is Chrome Browser..");
+				
+				//ChromeOptions options = new ChromeOptions();
+				
+				//options.addArguments("--enable-notifications");
 				
 				System.setProperty("webdriver.chrome.driver","src/main/resources/Drivers/chromedriver");
 				

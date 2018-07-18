@@ -19,13 +19,13 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import library.CommonLib;
 import library.Log4J;
-import webelements.loginWebE;
+import webelements.LoginWebE;
 
 public class MainMethod {
 	
 	static String strBrowserName = null;
 	static WebDriver driver = null;
-	static loginWebE LoginWebE = null;
+	static LoginWebE LoginWebE = null;
 	public static ExtentReports extent;
 	
 	@BeforeSuite
@@ -54,7 +54,7 @@ public class MainMethod {
 			ExecutionSetUp.launchBrowser(strBrowserName);
 			
 			driver = ExecutionSetUp.getDriver();
-			LoginWebE  = loginWebE.getInstance(driver);
+			LoginWebE  = LoginWebE.getInstance(driver);
 			
 			driver.get(strURl);
 			CommonLib.waitForObject(LoginWebE.txt_EmailAdd, "visibility", 20);
