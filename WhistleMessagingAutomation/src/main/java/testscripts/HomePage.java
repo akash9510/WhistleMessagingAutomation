@@ -1,6 +1,7 @@
 package testscripts;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
@@ -14,8 +15,10 @@ import com.relevantcodes.extentreports.LogStatus;
 import framework.ExecutionSetUp;
 import framework.MainMethod;
 import library.CommonLib;
+import library.HomePageLib;
 import library.Log4J;
 import library.LoginLib;
+import net.sourceforge.htmlunit.corejs.javascript.tools.debugger.Main;
 import webelements.HomePageWebE;
 import webelements.LoginWebE;
 
@@ -225,14 +228,17 @@ public class HomePage {
 			
 			// Test ID 7
 			
+			homePageWebE.ico_NotificationToggel.click();
+			Thread.sleep(2000);
+			
 			strBackground = homePageWebE.lbl_NotificationBackground.getCssValue("background-color");
 			Log4J.logp.info(strBackground);
 			
 			if(strBackground.trim().equalsIgnoreCase("rgba(189, 189, 189, 1)"))
 			{
-				Log4J.logp.info("By default Sound toggle is off");
+				Log4J.logp.info("By default Notification toggle is off");
 				softAssertion.assertTrue(true);
-				Child3.log(LogStatus.PASS, "By default sound toggle is off");
+				Child3.log(LogStatus.PASS, "By default Notification toggle is off");
 				
 				homePageWebE.ico_NotificationToggel.click();
 				Thread.sleep(2000);
@@ -357,11 +363,866 @@ public class HomePage {
 			Thread.sleep(2000);
 			
 			CommonLib.uploadFile();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_AddGuest.click();
+			Thread.sleep(2000);
+			
+			HomePageLib.addGuestDetails();
+			Thread.sleep(2000);
+			
+			homePageWebE.txt_CompaignMessage.sendKeys("Test Message");
+			Thread.sleep(2000);
+
+			homePageWebE.btn_Send.click();
+			Thread.sleep(15000);
+			
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 
+	 * This method is use for Sent Survey using Survey Template
+	 * 
+	 */
+	@Test(description = "Start Survey using Survey Template",priority = 3)
+	public static void startSurveyUsingSurveyTemplate()
+	{
+		ExtentTest startSurveyUsingSurveyTemplate = MainMethod.extent.startTest("Test ID 10 : Start Survey using Survey Template").assignCategory("Regression");
+		try
+		{
+			softAssertion = new SoftAssert();
+			LoginLib.login();
+			homePageWebE.ico_GuestChat.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_StartConversation.click();
+			CommonLib.waitForObject(homePageWebE.btn_StartSurvey, "visibility", 10);
+			
+			homePageWebE.btn_StartSurvey.click();
+			CommonLib.waitForObject(homePageWebE.btn_UseSurveyTemplate, "clickable", 10);
+			
+			homePageWebE.btn_UseSurveyTemplate.click();
+			CommonLib.waitForObject(homePageWebE.lnk_FIrstTemplate, "clickable", 10);
+			
+			homePageWebE.lnk_FIrstTemplate.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_NextSurvey.click();
+			Thread.sleep(2000);
+			
+			HomePageLib.addGuestDetails();
+			
+			homePageWebE.btn_NextSurvey.click();
+			CommonLib.waitForObject(homePageWebE.btn_SendSurvey, "clickable", 10);
+			
+			homePageWebE.btn_SendSurvey.click();
+			CommonLib.waitForObject(homePageWebE.lbl_SurveySent, "visibility", 20);
+			
+			System.out.println(homePageWebE.lbl_SurveySent.getText().trim());
+			
+			if(homePageWebE.lbl_SurveySent.getText().trim().contains("Survey Sent!"))
+			{
+				Log4J.logp.info("Survey Sent Successfully");
+				softAssertion.assertTrue(true);
+				startSurveyUsingSurveyTemplate.log(LogStatus.PASS, "Survey Sent Successfully");
+			}
+			else
+			{
+				Log4J.logp.error("Survey not sent");
+				softAssertion.assertTrue(false);
+				startSurveyUsingSurveyTemplate.log(LogStatus.FAIL, "Survey not Sent");
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "Test ID 10 : Start Survey using Survey Template Failed");
+		}
+		finally {
 
+			if (startSurveyUsingSurveyTemplate.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				startSurveyUsingSurveyTemplate.log(LogStatus.FAIL, "Test ID 10 : Failed for Unknown status.");
+			MainMethod.extent.endTest(startSurveyUsingSurveyTemplate);
+
+			if (startSurveyUsingSurveyTemplate.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				startSurveyUsingSurveyTemplate.log(LogStatus.FAIL, "Test ID 10 : Start Survey using Survey Template is failed.");
+			}
+			else
+			{
+				startSurveyUsingSurveyTemplate.log(LogStatus.PASS, "Test ID 10 : Start Survey using Survey Template is passed.");
+			}
+			
+			softAssertion.assertAll();
+			LoginLib.logout();
+		}
+	}
+	
+	/**
+	 * 
+	 * This method is use for Start Survey Without Template
+	 * 
+	 * */
+	@Test(description = "Start Survey Without Template",priority = 4)
+	public static void startSurveyWithoutTemplate()
+	{
+		ExtentTest startSurveyWithoutTemplate = MainMethod.extent.startTest("Test ID 12 :Start Survey Without Template").assignCategory("Regression");
+		try
+		{
+			softAssertion = new SoftAssert();
+			LoginLib.login();
+			
+			homePageWebE.ico_GuestChat.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_StartConversation.click();
+			CommonLib.waitForObject(homePageWebE.btn_StartSurvey, "visibility", 10);
+			
+			homePageWebE.btn_StartSurvey.click();
+			CommonLib.waitForObject(homePageWebE.btn_UseSurveyTemplate, "clickable", 10);
+			
+			homePageWebE.txt_Survey_Question.sendKeys("Test Survey Questions ?");
+			Thread.sleep(2000);
+			
+			/*homePageWebE.lst_AnswerType.click();
+			CommonLib.waitForObject(homePageWebE.lst_Range, "visibility", 10);
+			
+			homePageWebE.lst_Range.click();
+			CommonLib.waitForObject(homePageWebE.txt_StartRange, "visibility", 10);
+			
+			homePageWebE.txt_StartRange.clear();
+			homePageWebE.txt_StartRange.sendKeys("5");
+			Thread.sleep(2000);
+			
+			homePageWebE.txt_EndRange.clear();
+			homePageWebE.txt_EndRange.sendKeys("10");
+			Thread.sleep(2000);*/
+			
+			homePageWebE.btn_AddAnswerQuestion.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.txt_Choice.sendKeys("None");
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_NextSurvey.click();
+			Thread.sleep(2000);
+			
+			HomePageLib.addGuestDetails();
+			
+			homePageWebE.btn_NextSurvey.click();
+			CommonLib.waitForObject(homePageWebE.btn_SendSurvey, "clickable", 10);
+			
+			homePageWebE.btn_SendSurvey.click();
+			CommonLib.waitForObject(homePageWebE.lbl_SurveySent, "visibility", 20);
+			
+			System.out.println(homePageWebE.lbl_SurveySent.getText().trim());
+			
+			if(homePageWebE.lbl_SurveySent.getText().trim().contains("Survey Sent!"))
+			{
+				Log4J.logp.info("Survey Sent Successfully without template");
+				softAssertion.assertTrue(true);
+				startSurveyWithoutTemplate.log(LogStatus.PASS, "Survey Sent Successfully without template");
+			}
+			else
+			{
+				Log4J.logp.error("Survey not sent");
+				softAssertion.assertTrue(false);
+				startSurveyWithoutTemplate.log(LogStatus.FAIL, "Survey not Sent");
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "Test ID 10 : Start Survey without Template Failed");
+		}
+		finally {
+
+			if (startSurveyWithoutTemplate.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				startSurveyWithoutTemplate.log(LogStatus.FAIL, "Test ID 10 : Failed for Unknown status.");
+			MainMethod.extent.endTest(startSurveyWithoutTemplate);
+
+			if (startSurveyWithoutTemplate.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				startSurveyWithoutTemplate.log(LogStatus.FAIL, "Test ID 10 : Start Survey without Template is failed.");
+			}
+			else
+			{
+				startSurveyWithoutTemplate.log(LogStatus.PASS, "Test ID 10 : Start Survey without Template is passed.");
+			}
+			
+			softAssertion.assertAll();
+			LoginLib.logout();
+		}
+	}
+	
+	/**
+	 * 
+	 * This method is use for open and delete conversation
+	 * 
+	 * */
+	@Test(description = "Open and delete conversation",priority = 5)
+	public static void openDeleteConversation()
+	{
+		boolean bstatus = false;
+		String strValue;
+		ExtentTest openDeleteConversation = MainMethod.extent.startTest("Open and delete Conversation").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		ExtentTest child3 = null;
+		try
+		{
+			child1 = MainMethod.extent.startTest("Test ID 12 : View Open Conversation");
+			child2 = MainMethod.extent.startTest("Test ID 13 : Delete Open Conversation");
+			child3 = MainMethod.extent.startTest("Test ID 14 : Archive Conversation");
+			
+			softAssertion = new SoftAssert();
+			LoginLib.login();
+			
+			homePageWebE.ico_GuestChat.click();
+			Thread.sleep(2000);
+			
+			// Scroll Down
+			bstatus = CommonLib.scroll_Page(homePageWebE.scrollbar_Conversation,10);
+			
+			if(bstatus == true)
+			{
+				Log4J.logp.info("Conversation Scroll down successfully");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Conversation Scroll down successfully");
+			}
+			else
+			{
+				Log4J.logp.info("Conversation Scroll down un successfully");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Conversation Scroll down un successful");
+			}
+			
+			// Scroll up
+			bstatus = CommonLib.scroll_Page_Up(homePageWebE.scrollbar_Conversation,10);
+			
+			if(bstatus == true)
+			{
+				Log4J.logp.info("Conversation Scroll up successfully");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Conversation Scroll up successfully");
+			}
+			else
+			{
+				Log4J.logp.info("Conversation Scroll up un successfully");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Conversation Scroll up un successful");
+			}
+			
+			// Close the chat
+			
+			strValue = homePageWebE.lbl_Names.get(0).getText().trim();
+			
+			homePageWebE.conversation_list.get(0).click();
+			CommonLib.waitForObject(homePageWebE.ico_CloseChat, "visibility", 10);
+			
+			Thread.sleep(2000);
+			homePageWebE.ico_CloseChat.click();
+			Thread.sleep(2000);
+			
+			if(homePageWebE.lbl_Names.get(0).getText().trim().equals(strValue))
+			{
+				Log4J.logp.info("Chat not deleted");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "Chat not deleted");
+			}
+			else
+			{
+				Log4J.logp.info("Chat deleted successfully");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "Chat deleted successfully.");
+			}
+			
+			// Archived Tab
+			
+			homePageWebE.tab_Archived.click();
+			Thread.sleep(2000);
+			
+			// Scroll Down
+			bstatus = CommonLib.scroll_Page(homePageWebE.scrollBar_Archive,1);
+			
+			if(bstatus == true)
+			{
+				Log4J.logp.info("Archive Conversation Scroll down successfully");
+				softAssertion.assertTrue(true);
+				child3.log(LogStatus.PASS, "Archive Conversation Scroll down successfully");
+			}
+			else
+			{
+				Log4J.logp.info("Conversation Scroll down un successfully");
+				softAssertion.assertTrue(false);
+				child3.log(LogStatus.FAIL, "Archive Conversation Scroll down un successful");
+			}
+			
+			// Scroll up
+			homePageWebE.tab_Archived.click();
+			Thread.sleep(2000);
+			
+			bstatus = CommonLib.scroll_Page_Up(homePageWebE.scrollBar_Archive,1);
+			
+			if(bstatus == true)
+			{
+				Log4J.logp.info("Archive Conversation Scroll up successfully");
+				softAssertion.assertTrue(true);
+				child3.log(LogStatus.PASS, "Archive Conversation Scroll up successfully");
+			}
+			else
+			{
+				Log4J.logp.info("Conversation Scroll up un successfully");
+				softAssertion.assertTrue(false);
+				child3.log(LogStatus.FAIL, "Archive Conversation Scroll up un successful");
+			}			
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "checkDropdownToggleBehavior Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child3.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child3.log(LogStatus.FAIL, "Failed for Unknown status.");
+			
+
+			openDeleteConversation.appendChild(child1);
+			openDeleteConversation.appendChild(child2);
+			openDeleteConversation.appendChild(child3);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+			MainMethod.extent.endTest(child3);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL") || child3.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				openDeleteConversation.log(LogStatus.FAIL, "openDeleteConversation is failed.");
+			}
+			else
+			{
+				openDeleteConversation.log(LogStatus.PASS, "openDeleteConversation is passed.");
+			}
+			//NewLandingPage.appendChild(actionOption);
+			MainMethod.extent.endTest(openDeleteConversation);
+
+			softAssertion.assertAll();
+			
+			LoginLib.logout();
+		}
+	}
+	
+	/**
+	 * 
+	 * This method is use for Block and Unblocked Conversation
+	 * 
+	 * */
+	@Test(description = "Block and Unblock Conversation",priority = 6)
+	public static void blockUnblockConversation()
+	{
+		String strExpectedValue, strActualValue;
+		ExtentTest blockUnblockConversation = MainMethod.extent.startTest("Block and Unblock Conversation").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		try
+		{
+			child1 = MainMethod.extent.startTest("Test ID 15: Block Conversation");
+			child2 = MainMethod.extent.startTest("Test ID 16 : Unblock User");
+			
+			softAssertion = new SoftAssert();
+			LoginLib.login();
+			
+			homePageWebE.ico_GuestChat.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.conversation_list.get(0).click();
+			CommonLib.waitForObject(homePageWebE.ico_CloseChat, "clickable", 10);
+			
+			strExpectedValue = homePageWebE.lbl_Names.get(0).getText().trim();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_BlockUnblock.click();
+			CommonLib.waitForObject(homePageWebE.btn_Confirm, "clickable", 10);
+			
+			homePageWebE.btn_Confirm.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.tab_Blocked.click();
+			CommonLib.waitForObject(homePageWebE.first_Blocked, "visibility", 10);
+			
+			strActualValue = homePageWebE.first_Blocked.getText().trim();
+			
+			//System.out.println(strActualValue);
+			//System.out.println(strExpectedValue);
+			
+			if(strActualValue.equals(strExpectedValue))
+			{
+				Log4J.logp.info("Conversation has been displayed in Blocked tab after block it");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Conversation has been displayed in Blocked tag after blcok it");
+			}
+			else
+			{
+				Log4J.logp.info("Conversation not blocked");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Conversation not blocked");
+			}
+			
+			homePageWebE.first_Blocked.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_BlockUnblock.click();
+			CommonLib.waitForObject(homePageWebE.btn_Confirm, "clickable", 10);
+			
+			homePageWebE.btn_Confirm.click();
+			Thread.sleep(4000);
+			//System.out.println(homePageWebE.btn_BlockUnblock.getText().trim());
+			
+			if(homePageWebE.btn_BlockUnblock.getText().trim().contains("block")) 
+			{
+				Log4J.logp.info("User has been Unblocked successfully");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "User has been unblocked successfully");
+			}
+			else
+			{
+				Log4J.logp.info("User not un-blocked");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "User not un-blocked");
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "blockUnblockConversation Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			blockUnblockConversation.appendChild(child1);
+			blockUnblockConversation.appendChild(child2);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				blockUnblockConversation.log(LogStatus.FAIL, "blockUnblockConversation is failed.");
+			}
+			else
+			{
+				blockUnblockConversation.log(LogStatus.PASS, "blockUnblockConversation is passed.");
+			}
+			//NewLandingPage.appendChild(actionOption);
+			MainMethod.extent.endTest(blockUnblockConversation);
+
+			softAssertion.assertAll();
+			
+			LoginLib.logout();
+		}
+	}
+	
+	/**
+	 * 
+	 * This method is use for Live Chats
+	 * 
+	 * */
+	@Test(description = "Open Live chats",priority = 7)
+	public static void openLiveChat()
+	{
+		boolean bstatus = false;
+		//String strValue;
+		ExtentTest openLiveChat = MainMethod.extent.startTest("Open Live Chats").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		try
+		{
+			child1 = MainMethod.extent.startTest("Test ID 17 : Live Open Conversation");
+			child2 = MainMethod.extent.startTest("Test ID 13 : Live Archive Conversation");
+			
+			softAssertion = new SoftAssert();
+			LoginLib.login();
+			
+			homePageWebE.ico_Live_Chat.click();
+			Thread.sleep(4000);
+			
+			// Scroll Down
+			bstatus = CommonLib.scroll_Page(homePageWebE.scrollbar_LiveChat,10);
+			
+			if(bstatus == true)
+			{
+				Log4J.logp.info("Live Conversation Scroll down successfully");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Live Conversation Scroll down successfully");
+			}
+			else
+			{
+				Log4J.logp.info("Live Conversation Scroll down un successfully");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Live Conversation Scroll down un successful");
+			}
+			
+			// Scroll up
+			bstatus = CommonLib.scroll_Page_Up(homePageWebE.scrollbar_LiveChat,10);
+			
+			if(bstatus == true)
+			{
+				Log4J.logp.info("Live Conversation Scroll up successfully");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Live Conversation Scroll up successfully");
+			}
+			else
+			{
+				Log4J.logp.info("Live Conversation Scroll up un successfully");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Live Conversation Scroll up un successful");
+			}
+			
+			
+			// Archived Tab
+			homePageWebE.tab_Archived.click();
+			Thread.sleep(2000);
+			
+			// Scroll Down
+			bstatus = CommonLib.scroll_Page(homePageWebE.scrollBar_Archive,1);
+			
+			if(bstatus == true)
+			{
+				Log4J.logp.info("Archive Conversation Scroll down successfully");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "Archive Conversation Scroll down successfully");
+			}
+			else
+			{
+				Log4J.logp.info("Conversation Scroll down un successfully");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "Archive Conversation Scroll down un successful");
+			}
+			
+			// Scroll up
+			homePageWebE.tab_Archived.click();
+			Thread.sleep(2000);
+			
+			bstatus = CommonLib.scroll_Page_Up(homePageWebE.scrollBar_Archive,1);
+			
+			if(bstatus == true)
+			{
+				Log4J.logp.info("Archive Conversation Scroll up successfully");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "Archive Conversation Scroll up successfully");
+			}
+			else
+			{
+				Log4J.logp.info("Conversation Scroll up un successfully");
+				softAssertion.assertTrue(false);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "openLiveChat Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			openLiveChat.appendChild(child1);
+			openLiveChat.appendChild(child2);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				openLiveChat.log(LogStatus.FAIL, "openLiveChat is failed.");
+			}
+			else
+			{
+				openLiveChat.log(LogStatus.PASS, "openLiveChat is passed.");
+			}
+			//NewLandingPage.appendChild(actionOption);
+			MainMethod.extent.endTest(openLiveChat);
+
+			softAssertion.assertAll();
+			
+			LoginLib.logout();
+		}
+	}
+	
+
+	/**
+	 * 
+	 * This method is use for Block and Unblocked Live Conversation
+	 * 
+	 * */
+	@Test(description = "Block Live Conversation",priority = 8)
+	public static void blockLiveConversation()
+	{
+		String strExpectedValue, strActualValue;
+		ExtentTest blockLiveConversation = MainMethod.extent.startTest("Test ID 19 : Live Block Conversation").assignCategory("Regression");
+		
+		try
+		{
+			softAssertion = new SoftAssert();
+			LoginLib.login();
+			
+			homePageWebE.ico_Live_Chat.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.conversation_list.get(0).click();
+			CommonLib.waitForObject(homePageWebE.ico_CloseChat, "clickable", 10);
+			
+			strExpectedValue = homePageWebE.lbl_LiveChatNames.get(0).getText().trim();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_BlockUnblock.click();
+			CommonLib.waitForObject(homePageWebE.btn_Confirm, "clickable", 10);
+			
+			homePageWebE.btn_Confirm.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.tab_Blocked.click();
+			CommonLib.waitForObject(homePageWebE.first_Blocked, "visibility", 10);
+			
+			strActualValue = homePageWebE.first_Blocked.getText().trim();
+			
+			//System.out.println(strActualValue);
+			//System.out.println(strExpectedValue);
+			
+			if(strActualValue.equals(strExpectedValue))
+			{
+				Log4J.logp.info("Live Conversation has been displayed in Blocked tab after block it");
+				softAssertion.assertTrue(true);
+				blockLiveConversation.log(LogStatus.PASS, " Live Conversation has been displayed in Blocked tag after blcok it");
+			}
+			else
+			{
+				Log4J.logp.info("Live Conversation not blocked");
+				softAssertion.assertTrue(false);
+				blockLiveConversation.log(LogStatus.FAIL, "Live Conversation not blocked");
+			}
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "blockLiveConversation Failed");
+		}
+		finally
+		{
+			if (blockLiveConversation.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				blockLiveConversation.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			if (blockLiveConversation.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				blockLiveConversation.log(LogStatus.FAIL, "blockLiveConversation is failed.");
+			}
+			else
+			{
+				blockLiveConversation.log(LogStatus.PASS, "blockUnblockConversation is passed.");
+			}
+			//NewLandingPage.appendChild(actionOption);
+			MainMethod.extent.endTest(blockLiveConversation);
+			softAssertion.assertAll();
+			LoginLib.logout();
+		}
+	}
+	
+	/**
+	 * 
+	 * This method is use for Create Channel, Add Members and Delete members with team members
+	 * 
+	 * */
+	@Test(description = "Create Channel with team members", priority = 9)
+	public static void createDeleteChannel()
+	{
+		ArrayList<String> arrExpectedTeam = new ArrayList<String>();
+		int  intCount, intAfterCount;
+		ExtentTest createDeleteChannel = MainMethod.extent.startTest("Create Channel, Add members and Delete Channel").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		ExtentTest child3 = null;
+		ExtentTest child4 = null;
+		try
+		{
+			
+			child1 = MainMethod.extent.startTest("Test ID 20 :  Crate Team Chat");
+			child2 = MainMethod.extent.startTest("Test ID 21 :  Add Members to Team Chat");
+			child3 = MainMethod.extent.startTest("Test ID 22 :  Delete Team Chat");
+			child4 = MainMethod.extent.startTest("Test ID 23 :  Delete Members to Team Chat");
+			
+			softAssertion = new SoftAssert();
+			LoginLib.login();
+			
+			homePageWebE.ico_TeamChat.click();
+			CommonLib.waitForObject(homePageWebE.btn_CreateChannel, "clickable", 10);
+			
+			homePageWebE.btn_CreateChannel.click();
+			CommonLib.waitForObject(homePageWebE.txt_ChannelName, "visibility", 10);
+			
+			homePageWebE.txt_ChannelName.sendKeys("Test Channel");
+			Thread.sleep(2000);
+			
+			for(int i = 0;i<3;i++)
+			{
+				arrExpectedTeam.add(homePageWebE.lbl_TeamMembers.get(i).getText());
+				homePageWebE.lbl_TeamMembers.get(i).click();
+			}
+			
+			homePageWebE.btn_ConfirmChannel.click();
+			CommonLib.waitForObject(homePageWebE.lbl_ConfirmMembers.get(0), "visibility", 10);
+			
+			for(int i = 0;i< homePageWebE.lbl_ConfirmMembers.size(); i++)
+			{
+				if(arrExpectedTeam.contains(homePageWebE.lbl_ConfirmMembers.get(i).getText()))
+				{
+					Log4J.logp.info(homePageWebE.lbl_ConfirmMembers.get(i).getText() + " team memeber has been added in Channel");
+					softAssertion.assertTrue(true);
+					child1.log(LogStatus.PASS, homePageWebE.lbl_ConfirmMembers.get(i).getText() + " team memeber has been added in Channel");
+				}
+				else
+				{
+					Log4J.logp.info(homePageWebE.lbl_ConfirmMembers.get(i).getText() + " team memeber not added in Channel");
+					softAssertion.assertTrue(false);
+					child1.log(LogStatus.FAIL, homePageWebE.lbl_ConfirmMembers.get(i).getText() + " team memeber not added in Channel");
+				}
+			}
+			
+			// Add Member to Chat
+			homePageWebE.ico_AddMembers.click();
+			CommonLib.waitForObject(homePageWebE.lbl_NewMembers.get(0), "visibility", 10);
+			
+			arrExpectedTeam.add(homePageWebE.lbl_NewMembers.get(0).getText().trim());
+			
+			homePageWebE.lbl_NewMembers.get(0).click();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_NewConfirm.click();
+			CommonLib.waitForObject(homePageWebE.lbl_ConfirmMembers.get(0), "visibility", 10);
+			Thread.sleep(2000);
+			
+			for(int i = 0;i< homePageWebE.lbl_ConfirmMembers.size(); i++)
+			{
+				if(arrExpectedTeam.contains(homePageWebE.lbl_ConfirmMembers.get(i).getText()))
+				{
+					Log4J.logp.info(homePageWebE.lbl_ConfirmMembers.get(i).getText() + " team memeber has been added in Channel");
+					softAssertion.assertTrue(true);
+					child2.log(LogStatus.PASS, homePageWebE.lbl_ConfirmMembers.get(i).getText() + " team memeber has been added in Channel");
+				}
+				else
+				{
+					Log4J.logp.info(homePageWebE.lbl_ConfirmMembers.get(i).getText() + " team memeber not added in Channel");
+					softAssertion.assertTrue(false);
+					child2.log(LogStatus.FAIL, homePageWebE.lbl_ConfirmMembers.get(i).getText() + " team memeber not added in Channel");
+				}
+			}
+			
+			// Delete Members
+			
+			intCount = homePageWebE.lbl_ConfirmMembers.size();
+			
+			homePageWebE.ico_Delete.get(0).click();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_ConfirmRemove.click();
+			Thread.sleep(2000);
+			
+			intAfterCount = homePageWebE.lbl_ConfirmMembers.size();
+			
+			if(intAfterCount == intCount-1)
+			{
+				Log4J.logp.info("Team member removed from channel");
+				softAssertion.assertTrue(true);
+				child4.log(LogStatus.PASS, "Team members has been removed from channel");
+			}
+			else
+			{
+				Log4J.logp.info("Team member not removed from Channel");
+				softAssertion.assertTrue(false);
+				child4.log(LogStatus.FAIL, "Team member not removed frm channel");
+			}
+			
+			// Delete Channel
+			
+			homePageWebE.ico_RemoveChannel.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_ConfirmChannelRemove.click();
+			Thread.sleep(2000);
+			
+			if(homePageWebE.lbl_ChannelName.get(0).getText().contains("Test Channel"))
+			{
+				Log4J.logp.info("Channel Not removed");
+				softAssertion.assertTrue(false);
+				child3.log(LogStatus.FAIL, "Channel not removed");
+			}
+			else
+			{
+				Log4J.logp.info("Channel Removed");
+				softAssertion.assertTrue(true);
+				child3.log(LogStatus.PASS, "Channel Removed");
+			}
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "createDeleteChannel Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child3.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child3.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child4.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child4.log(LogStatus.FAIL, "Failed for Unknown status.");
+			
+
+			createDeleteChannel.appendChild(child1);
+			createDeleteChannel.appendChild(child2);
+			createDeleteChannel.appendChild(child3);
+			createDeleteChannel.appendChild(child4);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+			MainMethod.extent.endTest(child3);
+			MainMethod.extent.endTest(child4);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL") || child3.getRunStatus().toString().equalsIgnoreCase("FAIL") || child4.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				createDeleteChannel.log(LogStatus.FAIL, "createDeleteChannel is failed.");
+			}
+			else
+			{
+				createDeleteChannel.log(LogStatus.PASS, "createDeleteChannel is passed.");
+			}
+			//NewLandingPage.appendChild(actionOption);
+			MainMethod.extent.endTest(createDeleteChannel);
+
+			softAssertion.assertAll();
+			
+			LoginLib.logout();
+		}
+	}
 }

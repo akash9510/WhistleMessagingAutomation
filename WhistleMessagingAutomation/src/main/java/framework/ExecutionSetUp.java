@@ -1,6 +1,8 @@
 package framework;
 
 import java.awt.Toolkit;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -32,7 +34,14 @@ public class ExecutionSetUp {
 				
 				System.setProperty("webdriver.chrome.driver","src/main/resources/Drivers/chromedriver");
 				
-				driver = new ChromeDriver();
+				//driver = new ChromeDriver();
+				
+				ChromeOptions options=new ChromeOptions();
+				Map<String, Object> prefs=new HashMap<String,Object>();
+				prefs.put("profile.default_content_setting_values.notifications", 1);
+				//1-Allow, 2-Block, 0-default
+				options.setExperimentalOption("prefs",prefs);
+				driver=new ChromeDriver(options);
 				
 				//driver.manage().window().fullscreen();
 				//maximizeBrowser();

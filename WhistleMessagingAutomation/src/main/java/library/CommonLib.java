@@ -1,6 +1,7 @@
 package library;
 
 import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -11,8 +12,11 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -223,11 +227,23 @@ public class CommonLib {
 	 * */
 	public static boolean uploadFile()
 	{
+		String strFileName;
 		try
 		{
-					File file = new File("/Users/admin/Desktop/Campaigns-Sample-XLSX (1).xlsx");
+					//F//ile file = new File("src/main/resources/Files/Campaigns-Sample.xlsx");
 					 
-					StringSelection stringSelection= new StringSelection(file.getAbsolutePath());
+					//StringSelection stringSelection= new StringSelection(file.getAbsolutePath());
+					
+					strFileName = "Campaigns-Sample.xlsx";
+					
+					String uploadFilePath = "/src/main/resources/Files/";
+					String projectDir = System.getProperty("user.dir");
+					String directory = projectDir + uploadFilePath + strFileName;
+					
+					System.out.println(directory);
+
+					StringSelection media = new StringSelection(directory);
+					Toolkit.getDefaultToolkit().getSystemClipboard().setContents(media, null);
 					 
 					//Copy to clipboard Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
 					 
@@ -288,6 +304,91 @@ public class CommonLib {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public static boolean scroll_Page_Up(WebElement webeScrollArea, int iLoopCount)
+	{
+
+		try
+		{
+			driver = ExecutionSetUp.getDriver();
+			Actions dragger = new Actions(driver);
+
+			for (int i = 0; i <= iLoopCount; i++)
+			{
+				dragger.moveToElement(webeScrollArea).click().sendKeys(Keys.UP).build().perform();
+			}
+
+			return true;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
+	public static boolean scroll_Page(WebElement webeScrollArea, int iLoopCount)
+	{
+		try
+		{
+
+			driver = ExecutionSetUp.getDriver();
+			Actions dragger = new Actions(driver);
+
+			for (int i = 0; i <= iLoopCount; i++)
+			{
+				dragger.moveToElement(webeScrollArea).click().sendKeys(Keys.PAGE_DOWN).build().perform();
+			}
+			return true;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
+	public static boolean scroll_without_element()
+	{
+		JavascriptExecutor jse;
+		try
+		{
+			driver = ExecutionSetUp.getDriver();
+			jse = (JavascriptExecutor) driver;
+			jse.executeScript("window.scrollBy(0,400)", "");
+
+			return true;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
+	
+	public static boolean scrollUp_without_element()
+	{
+		JavascriptExecutor jse;
+		try
+		{
+
+			driver = ExecutionSetUp.getDriver();
+			jse = (JavascriptExecutor) driver;
+			jse.executeScript("window.scrollBy(0,-400)", "");
+
+			return true;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 
 }

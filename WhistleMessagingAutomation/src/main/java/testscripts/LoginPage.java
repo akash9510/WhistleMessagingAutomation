@@ -181,6 +181,64 @@ public class LoginPage {
 		}
 	}
 	
+	/**
+	 * 
+	 * This method is check User can able to Logout from the system
+	 * 
+	 * */
+	@Test(description = "Logout from the application",priority = 2)
+	public static void checkLogout()
+	{
+		boolean bstatus = false;
+		ExtentTest checkLogout = MainMethod.extent.startTest("Test ID 94 : Logout").assignCategory("Regression");
+		try
+		{
+			softAssertion = new SoftAssert();
+			LoginLib.login();
+			Thread.sleep(2000);
+			
+			bstatus = LoginLib.logout();
+			
+			if(bstatus == true)
+			{
+				Log4J.logp.info("Logout Succesfully from the application");
+				softAssertion.assertTrue(true);
+				checkLogout.log(LogStatus.PASS, "Logout Successfully from the application");
+			}
+			else
+			{
+				Log4J.logp.info("Logout un-successfully");
+				softAssertion.assertTrue(false);
+				checkLogout.log(LogStatus.FAIL, "Logout un - successfully");
+			}
+			
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			softAssertion.assertTrue(false,"checkLogout");
+		}
+		finally {
+
+			if (checkLogout.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				checkLogout.log(LogStatus.FAIL, "Test ID 94 : Failed for Unknown status.");
+			MainMethod.extent.endTest(checkLogout);
+
+			if (checkLogout.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkLogout.log(LogStatus.FAIL, "Test ID 94 : Logout :: Failed");
+			}
+			else
+			{
+				checkLogout.log(LogStatus.PASS, "Test ID 94 : Logout :: Passed");
+			}
+			
+			softAssertion.assertAll();
+			driver.get("https://staging.v2whistle.com");
+		}
+	}
+	
 	@AfterClass
 	public static void loginAfterClass()
 	{
