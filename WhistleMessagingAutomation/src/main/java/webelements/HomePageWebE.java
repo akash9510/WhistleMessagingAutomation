@@ -43,7 +43,7 @@ public class HomePageWebE {
 	public WebElement txt_Message;
 	
 	/** to click on Send button */
-	@FindBy(xpath = "(//div[@class='SendMessageButton'])[1]")
+	@FindBy(xpath = "(//div[@class='SendMessageButton'])[2]")
 	public WebElement btn_Send;
 	
 	/** to get the value of Month */
@@ -117,6 +117,14 @@ public class HomePageWebE {
 	/** to click on Add Guest button */
 	@FindBy(xpath= "(//span[contains(text(),'Add Guest')])[2]")
 	public WebElement btn_AddGuest;
+	
+	/** to click on Add Guest button of Campaign */
+	@FindBy(xpath = "//span[contains(text(),'Add Guest')]")
+	public WebElement btn_AddGuestCompaign;
+	
+	/** to check Compaign message sent or not */
+	@FindBy(xpath = "//div[@mode='determinate']")
+	public WebElement compaign_Message;
 	
 	/** to enter the values in tables */
 	@FindBy(xpath = "//table//div[@class='col input-field s12']//input")

@@ -341,6 +341,8 @@ public class HomePage {
 	@Test(description = "Start Compaign",priority = 2)
 	public static void startCompaign()
 	{
+		String strGuestName, strPhoneNo, strEmail;
+		ExtentTest startCompaign = MainMethod.extent.startTest("Test ID 9 : Start Compaign").assignCategory("Regression");
 		try
 		{
 			softAssertion = new SoftAssert();
@@ -365,22 +367,61 @@ public class HomePage {
 			CommonLib.uploadFile();
 			Thread.sleep(2000);
 			
-			homePageWebE.btn_AddGuest.click();
+			homePageWebE.btn_AddGuestCompaign.click();
 			Thread.sleep(2000);
 			
-			HomePageLib.addGuestDetails();
-			Thread.sleep(2000);
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("src/main/resources/Properties/data.properties"));
+			strGuestName = properties.getProperty("guestname");
+			strPhoneNo = properties.getProperty("phoneno");
+			strEmail = properties.getProperty("username");
+			
+			homePageWebE.txt_GuestValues.get(0).sendKeys(strGuestName);
+			homePageWebE.txt_GuestValues.get(1).sendKeys(strPhoneNo);
+			homePageWebE.txt_GuestValues.get(2).sendKeys("Test Notes");
+			homePageWebE.txt_GuestValues.get(3).sendKeys(strEmail);
 			
 			homePageWebE.txt_CompaignMessage.sendKeys("Test Message");
 			Thread.sleep(2000);
 
 			homePageWebE.btn_Send.click();
-			Thread.sleep(15000);
+			CommonLib.waitForObject(homePageWebE.compaign_Message, "visibility", 20);
 			
+			if(CommonLib.checkElementPresent(homePageWebE.compaign_Message))
+			{
+				Log4J.logp.info("Compaign message sent successfully");
+				softAssertion.assertTrue(true);
+				startCompaign.log(LogStatus.PASS, "Compaign message sent successfully");
+			}
+			else
+			{
+				Log4J.logp.info("Compaign message not sent");
+				softAssertion.assertTrue(false);
+				startCompaign.log(LogStatus.FAIL, "Compaign message not sent");
+			}
 		}
-		catch(Exception e)
-		{
+		catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
+			softAssertion.assertTrue(false, "Test ID 9 : Start Compaign Failed");
+		}
+		finally {
+
+			if (startCompaign.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				startCompaign.log(LogStatus.FAIL, "Test ID 9 : Failed for Unknown status.");
+			MainMethod.extent.endTest(startCompaign);
+
+			if (startCompaign.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				startCompaign.log(LogStatus.FAIL, "Test ID 9 : Start Compaign Failed");
+			}
+			else
+			{
+				startCompaign.log(LogStatus.PASS, "Test ID 9 : Start Compaign Passed");
+			}
+			
+			softAssertion.assertAll();
+			LoginLib.logout();
 		}
 	}
 	
