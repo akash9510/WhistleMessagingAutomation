@@ -1,9 +1,15 @@
 package testscripts;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -721,7 +727,7 @@ public class HomePage {
 				Log4J.logp.info("Conversation Scroll up un successfully");
 				softAssertion.assertTrue(false);
 				child3.log(LogStatus.FAIL, "Archive Conversation Scroll up un successful");
-			}			
+			}		
 			
 		}
 		catch(Exception e)
@@ -975,6 +981,8 @@ public class HomePage {
 		}
 		catch(Exception e)
 		{
+			Log4J.logp.error("Problem found in :: checkLandingPage");
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "openLiveChat Failed");
 		}
@@ -1038,7 +1046,7 @@ public class HomePage {
 			CommonLib.waitForObject(homePageWebE.btn_Confirm, "clickable", 10);
 			
 			homePageWebE.btn_Confirm.click();
-			Thread.sleep(2000);
+			Thread.sleep(4000);
 			
 			homePageWebE.tab_Blocked.click();
 			CommonLib.waitForObject(homePageWebE.first_Blocked, "visibility", 10);

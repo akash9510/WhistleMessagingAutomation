@@ -5,15 +5,21 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -323,6 +329,7 @@ public class CommonLib {
 		}
 		catch (Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			return false;
 		}
@@ -345,6 +352,7 @@ public class CommonLib {
 		}
 		catch (Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			return false;
 		}
@@ -389,6 +397,49 @@ public class CommonLib {
 			return false;
 		}
 
+	}
+	
+	/**
+	 * 
+	  This method is use for take screenshots
+	  
+	 * */
+	
+	public static boolean takeScreenshots()
+	{
+		String strCurrentDate;
+		try
+		{
+			
+			/*StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			String strErrorStack = null;
+			
+			e.printStackTrace(pw);
+			strErrorStack = sw.toString();
+			Log4J.logp.error(strErrorStack);*/
+			
+			SimpleDateFormat format = new SimpleDateFormat("ddMMyyyyHHmmss");
+			Date date = new Date();
+			
+			strCurrentDate = format.format(date);
+			
+			Log4J.logp.info(strCurrentDate);
+			
+			TakesScreenshot scrShot = (TakesScreenshot) driver;
+			File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
+			
+			File DestFile = new File("/Users/admin/Downloads/Screenshots/" + strCurrentDate + ".png");
+			
+			FileUtils.copyFile(SrcFile, DestFile);
+			
+			return true;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return false;
+		}
 	}
 
 }
