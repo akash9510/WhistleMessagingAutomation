@@ -8,11 +8,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.gargoylesoftware.htmlunit.javascript.host.canvas.WebGLRenderbuffer;
+
 public class HomePageWebE {
 	
 	/** Enter value in Gust Name textbox */
 	@FindBy(id = "new-convo-guest-name")
 	public WebElement txt_GuestName;
+	
+	/** to click on Search result */
+	@FindBy(xpath = "//div[@class='SearchResultsContainer SearchResultsContainer--open']//div")
+	public List<WebElement> lst_SearchResults;
 	
 	/** to enter value in  Phone number */
 	@FindBy(id = "phone_1")
@@ -45,6 +51,10 @@ public class HomePageWebE {
 	/** to click on Send button */
 	@FindBy(xpath = "(//div[@class='SendMessageButton'])[2]")
 	public WebElement btn_Send;
+	
+	/** to click on Send button */
+	@FindBy(xpath = "(//div[@class='SendMessageButton'])[1]")
+	public WebElement btn_SendConversation;
 	
 	/** to get the value of Month */
 	@FindBy(xpath = "//div[@style='height: inherit; padding-top: 12px;']")
@@ -293,6 +303,50 @@ public class HomePageWebE {
 	/** to click on Confirm button of Channel */
 	@FindBy(css ="#deleteChannel .confirm.delete")
 	public WebElement btn_ConfirmChannelRemove;
+	
+	/** to click on Add Template button */
+	@FindBy(css = ".InsertButton")
+	public WebElement ico_InsertTemplate;
+	
+	/** to click on Insert Template button */
+	@FindBy(xpath = "//div[contains(text(),'Insert Template')]")
+	public WebElement btn_InsertTemlpate;
+	
+	/** to click on Template from Pop-up */
+	@FindBy(css = ".TemplateModal__template-text")
+	public List<WebElement> list_Templates;
+	
+	/** to check template added or not */
+	@FindBy(css = ".ChatMessage__message--bubble.currentUser > span")
+	public List<WebElement> lbl_Templates;
+	
+	/** to click on Direct Chat icon from Left Panel */
+	@FindBy(id = "direct-chat-tab")
+	public WebElement ico_DirectChat;
+	
+	/** to click on Team members from Direct Chat */
+	@FindBy(css = ".DirectChatSidebar__list__item")
+	public List<WebElement> lnk_TeamMember;
+	
+	/** to enter message in Direct message */
+	@FindBy(css = ".ChatMessageBox__input")
+	public WebElement txt_DirectMessage;
+	
+	/** to get the message which sent to direcrt chat */
+	@FindBy(css = ".ChatMessage__message--bubble.currentUser > span")
+	public List<WebElement> lbl_DirectMessage;
+	
+	/** to click on search icon */
+	@FindBy(css = ".SearchBox")
+	public WebElement ico_Search;
+	
+	/** to enter value in Search box */
+	@FindBy(css = ".SearchBox  input")
+	public WebElement txt_SearchBox;
+	
+	/** to click on Clear icon in Search box */
+	@FindBy(css = ".closeIcon")
+	public WebElement ico_Clear;
 	
 	static HomePageWebE Instance = null;
 	

@@ -8,9 +8,12 @@ import java.util.Date;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -69,11 +72,14 @@ public class HomePage {
 			
 			//homePageWebE.txt_GuestName.clear();
 			homePageWebE.txt_GuestName.sendKeys(strGuestName);
-			Thread.sleep(5000);
+			Thread.sleep(8000);
 			
-			//homePageWebE.txt_PhoneNo.clear();
+			homePageWebE.lst_SearchResults.get(0).click();
+			Thread.sleep(4000);
+			
+			homePageWebE.txt_PhoneNo.clear();
 			homePageWebE.txt_PhoneNo.sendKeys(strPhoneNo);
-			Thread.sleep(2000);
+			Thread.sleep(4000);
 			
 			homePageWebE.txt_ArrivalDate.click();
 			Thread.sleep(3000);
@@ -81,7 +87,7 @@ public class HomePage {
 			bstatus = CommonLib.selectDate(strArrivalDate,"Arrival");
 			
 			homePageWebE.txt_DepartureDate.click();
-			Thread.sleep(3000);
+			Thread.sleep(4000);
 			
 			bstatus = CommonLib.selectDate(strDepartDate,"Depart");
 			
@@ -95,9 +101,9 @@ public class HomePage {
 			
 			//shomePageWebE.txt_Message.clear();
 			homePageWebE.txt_Message.sendKeys("Hello");
-			Thread.sleep(2000);
+			Thread.sleep(4000);
 			
-			homePageWebE.btn_Send.click();
+			homePageWebE.btn_SendConversation.click();
 			CommonLib.waitForObject(homePageWebE.lbl_Messages.get(0), "visibility", 20);
 			
 			int intMessageSize = homePageWebE.lbl_Messages.size();
@@ -945,6 +951,10 @@ public class HomePage {
 			homePageWebE.tab_Archived.click();
 			Thread.sleep(2000);
 			
+			//WebElement element = driver.findElement(By.id("my-id"));
+			JavascriptExecutor je = ((JavascriptExecutor) driver);
+			je.executeScript("$('.ArchiveContainer').scroll(0,400)");
+			
 			// Scroll Down
 			bstatus = CommonLib.scroll_Page(homePageWebE.scrollBar_Archive,1);
 			
@@ -1274,4 +1284,213 @@ public class HomePage {
 			LoginLib.logout();
 		}
 	}
+	
+	/**
+	 * 
+	 * This method is use for Insert Template on channel
+	 * 
+	 * */
+	@Test(description = "Insert Template in Team Chat message ", priority = 10)
+	public static void insertTemplate()
+	{
+		String strExpectedTemplateValue, strAcualTemplateValue;
+		ExtentTest insertTemplate = MainMethod.extent.startTest("Test ID 26 : Insert Template in Team Chat Message").assignCategory("Regeression");
+		try
+		{
+			softAssertion = new SoftAssert();
+			LoginLib.login();
+			
+			homePageWebE.ico_TeamChat.click();
+			CommonLib.waitForObject(homePageWebE.btn_CreateChannel, "clickable", 10);
+			
+			homePageWebE.btn_CreateChannel.click();
+			CommonLib.waitForObject(homePageWebE.txt_ChannelName, "visibility", 10);
+			
+			homePageWebE.txt_ChannelName.sendKeys("Template Insert Channel");
+			Thread.sleep(2000);
+			
+			for(int i = 0;i<3;i++)
+			{
+				homePageWebE.lbl_TeamMembers.get(i).click();
+			}
+			
+			homePageWebE.btn_ConfirmChannel.click();
+			CommonLib.waitForObject(homePageWebE.lbl_ConfirmMembers.get(0), "visibility", 10);
+			Thread.sleep(2000);
+			
+			homePageWebE.ico_InsertTemplate.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_InsertTemlpate.click();
+			Thread.sleep(2000);
+			
+			strExpectedTemplateValue = homePageWebE.list_Templates.get(2).getText().trim();
+			
+			homePageWebE.list_Templates.get(2).click();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_SendConversation.click();
+			Thread.sleep(2000);
+			
+			strAcualTemplateValue = homePageWebE.lbl_Templates.get(0).getText().trim();
+			
+			if(strAcualTemplateValue.equals(strExpectedTemplateValue))
+			{
+				Log4J.logp.info("Template has been addedd successfully");
+				softAssertion.assertTrue(true);
+				insertTemplate.log(LogStatus.PASS, "Template has been added successfully");
+			}
+			else
+			{
+				Log4J.logp.info("Template not added");
+				softAssertion.assertTrue(false);
+				insertTemplate.log(LogStatus.FAIL, "Template not added");
+			}
+			
+			homePageWebE.ico_RemoveChannel.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_ConfirmChannelRemove.click();
+			Thread.sleep(2000);
+			
+		}
+	
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "insertTemplate Failed");
+		}
+		finally
+		{
+			if (insertTemplate.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				insertTemplate.log(LogStatus.FAIL, "Failed for Unknown status.");
+			
+			if (insertTemplate.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				insertTemplate.log(LogStatus.FAIL, "insertTemplate is failed.");
+			}
+			else
+			{
+				insertTemplate.log(LogStatus.PASS, "insertTemplate is passed.");
+			}
+			//NewLandingPage.appendChild(actionOption);
+			MainMethod.extent.endTest(insertTemplate);
+			softAssertion.assertAll();
+			LoginLib.logout();
+		}
+	}
+	
+	/**
+	 * 
+	 * This method is use for check Direct Chat message
+	 * 
+	 * */
+	@Test(description = "Check Direct chat and clear search box", priority = 11)
+	public static void checkDirectChat()
+	{
+		String strExpectedValue,strAttribute;
+		int intSize;
+		ExtentTest checkDirectChat = MainMethod.extent.startTest("Check Direct chat and clear search box").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		try
+		{
+			 child1 = MainMethod.extent.startTest("Test ID 27 : Sending a Direct Chat");
+			 child2  = MainMethod.extent.startTest("Test ID  28 : Clear Direct Chat Search box");
+			
+			softAssertion = new SoftAssert();
+			LoginLib.login();
+			
+			homePageWebE.ico_DirectChat.click();
+			CommonLib.waitForObject(homePageWebE.lnk_TeamMember.get(0), "visibility", 10);
+			
+			homePageWebE.lnk_TeamMember.get(0).click();
+			Thread.sleep(2000);
+			
+			homePageWebE.txt_DirectMessage.sendKeys("Test Direct Message");
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_SendConversation.click();
+			Thread.sleep(2000);
+			
+			intSize = homePageWebE.lbl_DirectMessage.size();
+			
+			strExpectedValue = homePageWebE.lbl_DirectMessage.get(intSize-1).getText().trim();
+			
+			if(strExpectedValue.equals("Test Direct Message"))
+			{
+				Log4J.logp.info("Message has been sent successfuly");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Message has been sent successfully");
+			}
+			else
+			{
+				Log4J.logp.info("Message not sent");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Message not sent");
+			}
+			
+			// check Search box
+			
+			homePageWebE.ico_Search.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.txt_SearchBox.sendKeys("Test");
+			Thread.sleep(2000);
+			
+			homePageWebE.ico_Clear.click();
+			Thread.sleep(2000);
+			
+			strAttribute = homePageWebE.txt_SearchBox.getAttribute("class");
+			
+			if(strAttribute.isEmpty())
+			{
+				Log4J.logp.info("Search bar disappears after click on clear icon");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "Search bar disappears after click on clear icon");
+			}
+			else
+			{
+				Log4J.logp.info("Clear functionality not working ");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "Clear functionality not working");
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "checkDirectChat Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+			
+			
+
+			checkDirectChat.appendChild(child1);
+			checkDirectChat.appendChild(child2);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkDirectChat.log(LogStatus.FAIL, "checkDirectChat is failed.");
+			}
+			else
+			{
+				checkDirectChat.log(LogStatus.PASS, "checkDirectChat is passed.");
+			}
+			//NewLandingPage.appendChild(actionOption);
+			MainMethod.extent.endTest(checkDirectChat);
+
+			softAssertion.assertAll();
+			
+			LoginLib.logout();
+		}
+	}
+	
 }
