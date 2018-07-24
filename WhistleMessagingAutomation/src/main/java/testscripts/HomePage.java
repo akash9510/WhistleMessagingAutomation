@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -1287,10 +1288,210 @@ public class HomePage {
 	
 	/**
 	 * 
+	 * This method is use for Translate Team chat message
+	 * 
+	 * */
+	@Test(description = "Translate team message",priority = 10)
+	public static void translateTeamMessage()
+	{
+		ArrayList<String> arrExpectedTeam = new ArrayList<String>();
+		int intSize;
+		String strExpectedTranslate,strActualTranslate;
+		ExtentTest translateTeamMessage = MainMethod.extent.startTest("Translate Team chat message").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		try
+		{
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("src/main/resources/Properties/Translate.properties"));
+			
+			child1 = MainMethod.extent.startTest("Test ID 24 :  Translate Team chat message after has been sent");
+			child2 = MainMethod.extent.startTest("Test ID 25 : Translate Team chat message before message has been sent");
+			
+			String strValue = properties.getProperty("Translate.Amharic");
+			
+			softAssertion = new SoftAssert();
+			LoginLib.login();
+			
+			homePageWebE.ico_TeamChat.click();
+			CommonLib.waitForObject(homePageWebE.btn_CreateChannel, "clickable", 10);
+			
+			homePageWebE.btn_CreateChannel.click();
+			CommonLib.waitForObject(homePageWebE.txt_ChannelName, "visibility", 10);
+			
+			homePageWebE.txt_ChannelName.sendKeys("Translate Channel");
+			Thread.sleep(2000);
+			
+			for(int i = 0;i<3;i++)
+			{
+				arrExpectedTeam.add(homePageWebE.lbl_TeamMembers.get(i).getText());
+				homePageWebE.lbl_TeamMembers.get(i).click();
+			}
+			
+			homePageWebE.btn_ConfirmChannel.click();
+			CommonLib.waitForObject(homePageWebE.lbl_ConfirmMembers.get(0), "visibility", 10);
+			
+			homePageWebE.txt_DirectMessage.sendKeys("This is test message");
+			Thread.sleep(2000);
+			
+			homePageWebE.ico_Translate.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.lst_Translte.click();
+			Thread.sleep(2000);
+			
+			//intSize = homePageWebE.lbl_Languages.size();
+			
+			for(int i = 0;i<5;i++)
+			{
+				strValue = homePageWebE.lbl_Languages.get(i).getText().trim();
+				
+				homePageWebE.lbl_Languages.get(i).click();
+				Thread.sleep(2000);
+				
+				homePageWebE.btn_TranslateTo.click();
+				Thread.sleep(4000);
+				
+				 strExpectedTranslate = properties.getProperty("Translate." + strValue);
+				
+				 strActualTranslate = homePageWebE.txt_DirectMessage.getText().trim();
+				
+				//System.out.println(strExpectedTranslate);
+				//System.out.println(strActualTranslate);
+				
+				if(strActualTranslate.equals(strExpectedTranslate))
+				{
+					Log4J.logp.info("Message Translate");
+					softAssertion.assertTrue(true);
+					child2.log(LogStatus.PASS, "Message translate in " + strValue + " language before message has been sent");
+				}
+				else
+				{
+					Log4J.logp.info("Message not translate");
+					softAssertion.assertTrue(false);
+					child2.log(LogStatus.FAIL, "Message not translate in " + strValue + " language before message has been sent");
+				}
+				
+				homePageWebE.txt_DirectMessage.clear();
+				homePageWebE.txt_DirectMessage.sendKeys("This is test message");
+				Thread.sleep(2000);
+				
+				homePageWebE.lst_Translte.click();
+				Thread.sleep(2000);
+			}
+			
+			// Check After Send message
+			
+			driver.navigate().refresh();
+			CommonLib.waitForObject(homePageWebE.btn_SendConversation, "clickable", 20);
+			
+			homePageWebE.lbl_ChannelName.get(0).click();
+			Thread.sleep(2000);
+			
+			homePageWebE.txt_DirectMessage.sendKeys("This is test message");
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_SendConversation.click();
+			Thread.sleep(2000);
+			
+			Actions builder = new Actions(driver);
+			builder.moveToElement(homePageWebE.lbl_Templates.get(0)).build().perform();
+			
+			homePageWebE.ico_Setting.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.lst_Translte.click();
+			Thread.sleep(2000);
+			
+			//intSize = homePageWebE.lbl_Languages.size();
+			
+			for(int i = 0;i<5;i++)
+			{
+				strValue = homePageWebE.lbl_Languages.get(i).getText().trim();
+				
+				homePageWebE.lbl_Languages.get(i).click();
+				Thread.sleep(2000);
+				
+				homePageWebE.btn_TranslateTo.click();
+				Thread.sleep(4000);
+				
+				strExpectedTranslate = properties.getProperty("Translate." + strValue);
+				
+				strActualTranslate = homePageWebE.lbl_Templates.get(0).getText().trim();
+				
+				//System.out.println(strExpectedTranslate);
+				//System.out.println(strActualTranslate);
+				
+				if(strActualTranslate.equals(strExpectedTranslate))
+				{
+					Log4J.logp.info("Message Translate");
+					softAssertion.assertTrue(true);
+					child1.log(LogStatus.PASS, "Message translate in " + strValue + " language After message has been sent");
+				}
+				else
+				{
+					Log4J.logp.info("Message not translate");
+					softAssertion.assertTrue(false);
+					child2.log(LogStatus.FAIL, "Message not translate in " + strValue + " language After message has been sent");
+				}
+				
+				homePageWebE.lst_Translte.click();
+				Thread.sleep(2000);
+			}
+			
+			driver.navigate().refresh();
+			CommonLib.waitForObject(homePageWebE.btn_SendConversation, "clickable", 20);
+			
+			homePageWebE.lbl_ChannelName.get(0).click();
+			Thread.sleep(2000);
+			
+			homePageWebE.ico_RemoveChannel.click();
+			Thread.sleep(2000);
+			
+			homePageWebE.btn_ConfirmChannelRemove.click();
+			Thread.sleep(2000);
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "createDeleteChannel Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+			
+			translateTeamMessage.appendChild(child1);
+			translateTeamMessage.appendChild(child2);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				translateTeamMessage.log(LogStatus.FAIL, "translateTeamMessage is failed.");
+			}
+			else
+			{
+				translateTeamMessage.log(LogStatus.PASS, "translateTeamMessage is passed.");
+			}
+			//NewLandingPage.appendChild(actionOption);
+			MainMethod.extent.endTest(translateTeamMessage);
+
+			softAssertion.assertAll();
+			
+			LoginLib.logout();
+		}
+	}
+	
+	/**
+	 * 
 	 * This method is use for Insert Template on channel
 	 * 
 	 * */
-	@Test(description = "Insert Template in Team Chat message ", priority = 10)
+	@Test(description = "Insert Template in Team Chat message ", priority = 11)
 	public static void insertTemplate()
 	{
 		String strExpectedTemplateValue, strAcualTemplateValue;
@@ -1380,12 +1581,13 @@ public class HomePage {
 		}
 	}
 	
+	
 	/**
 	 * 
 	 * This method is use for check Direct Chat message
 	 * 
 	 * */
-	@Test(description = "Check Direct chat and clear search box", priority = 11)
+	@Test(description = "Check Direct chat and clear search box", priority = 12)
 	public static void checkDirectChat()
 	{
 		String strExpectedValue,strAttribute;
@@ -1492,5 +1694,279 @@ public class HomePage {
 			LoginLib.logout();
 		}
 	}
-	
+		
+		/**
+		 * 
+		 * This method is use for check Log sheet
+		 * 
+		 * */
+		@Test(description = "Check Log sheet",priority = 13)
+		public static void checkLogSheet()
+		{
+			String strName;
+			ExtentTest checkLogSheet = MainMethod.extent.startTest("Check Log Sheet").assignCategory("Regression");
+			ExtentTest child1 = null;
+			ExtentTest child2 = null;
+			try
+			{
+				child1 = MainMethod.extent.startTest("Test ID 30 :  Add Participants to Log Sheet");
+				child2 = MainMethod.extent.startTest("Test ID 31 : Add Filter Log Sheet");
+				softAssertion = new SoftAssert();
+				LoginLib.login();
+				Properties properties = new Properties();
+				properties.load(new FileInputStream("src/main/resources/Properties/data.properties"));
+				strName = properties.getProperty("username");
+				
+				homePageWebE.ico_LogSheet.click();
+				CommonLib.waitForObject(homePageWebE.btn_AddLogSheet, "clickable", 10);
+				
+				homePageWebE.btn_AddLogSheet.click();
+				CommonLib.waitForObject(homePageWebE.log_Sheet, "visibility", 10);
+				
+				if(CommonLib.checkElementPresent(homePageWebE.ico_LogSheet))
+				{
+					Log4J.logp.info("Logsheet has been added successfully");
+					softAssertion.assertTrue(true);
+					child1.log(LogStatus.PASS, "Participants has been added in Log Sheet");
+				}
+				else
+				{
+					Log4J.logp.info("Logsheet not added");
+					softAssertion.assertTrue(false);
+					child1.log(LogStatus.FAIL, "Participants not added");
+				}
+				
+				// Filter
+				
+				homePageWebE.btn_Filter.click();
+				CommonLib.waitForObject(homePageWebE.txt_FilterSearch, "visibility", 10);
+				
+				homePageWebE.txt_FilterSearch.sendKeys(strName);
+				Thread.sleep(2000);
+				if(homePageWebE.log_Sheet.getText().trim().equals(strName))
+				{
+					Log4J.logp.info("Search functionality working proper");
+					softAssertion.assertTrue(true);
+					child2.log(LogStatus.PASS, "Search functionality working proper");
+				}
+				else
+				{
+					Log4J.logp.info("Search functionality not working");
+					softAssertion.assertTrue(false);
+					child2.log(LogStatus.FAIL, "Search Functionality not working");
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				softAssertion.assertTrue(false, "checkLogSheet Failed");
+			}
+			finally
+			{
+				if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+					child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+				if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+					child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+				
+				
+
+				checkLogSheet.appendChild(child1);
+				checkLogSheet.appendChild(child2);
+
+				MainMethod.extent.endTest(child1);
+				MainMethod.extent.endTest(child2);
+
+				if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+				{
+					checkLogSheet.log(LogStatus.FAIL, "checkLogSheet is failed.");
+				}
+				else
+				{
+					checkLogSheet.log(LogStatus.PASS, "checkLogSheet is passed.");
+				}
+				//NewLandingPage.appendChild(actionOption);
+				MainMethod.extent.endTest(checkLogSheet);
+
+				softAssertion.assertAll();
+				
+				LoginLib.logout();
+			}
+		}
+		
+		/**
+		 * 
+		 * This method is use for add/delete/replace Columns in Log Sheet
+		 * 
+		 * */
+		@Test(description = "Add/delete/change/replace Columns in Log Sheet", priority = 14)
+		public static void checkColumnsLogSheet()
+		{
+			int intBeforeColumns, intAfterColumns;
+			String strValue;
+			int intRemoveSize,intDelete;
+			try
+			{
+				softAssertion = new SoftAssert();
+				LoginLib.login();
+				
+				homePageWebE.ico_LogSheet.click();
+				CommonLib.waitForObject(homePageWebE.btn_AddLogSheet, "visibility", 10);
+				
+				homePageWebE.btn_EditColumns.click();
+				CommonLib.waitForObject(homePageWebE.btn_SaveColumnn, "clickable", 10);
+				
+				intBeforeColumns = homePageWebE.columns_Size.size();
+				
+				homePageWebE.btn_AddColumns.click();
+				Thread.sleep(2000);
+				
+				intAfterColumns = homePageWebE.columns_Size.size();
+				
+				if(intAfterColumns == intBeforeColumns + 1)
+				{
+					Log4J.logp.info("New Column has been added");
+					softAssertion.assertTrue(true);
+					
+					CommonLib.scroll_PageHorizontally(homePageWebE.scroll_Horizontal, 7);
+					
+					//homePageWebE.txt_Columns.get(intAfterColumns -1).click();
+					//Thread.sleep(2000);
+					homePageWebE.txt_Columns.get(intAfterColumns -1).clear();
+					homePageWebE.txt_Columns.get(intAfterColumns -1).sendKeys("Test Column");
+					Thread.sleep(2000);
+					
+					homePageWebE.btn_SaveColumnn.click();
+					CommonLib.waitForObject(homePageWebE.btn_EditColumns, "visibility", 10);
+					
+					strValue = homePageWebE.lbl_Columns.get(intAfterColumns - 1).getText().trim();
+					
+					System.out.println(strValue);
+					
+					if(strValue.contains("Test Column"))
+					{
+						Log4J.logp.info("New Column has been added with new name");
+						softAssertion.assertTrue(true);
+					}
+					else
+					{
+						Log4J.logp.info("New Column not added with new name");
+						softAssertion.assertTrue(false);
+					}
+				}
+				else
+				{
+					Log4J.logp.info("New Column not added");
+					softAssertion.assertTrue(false);
+				}
+				
+				// Edit Log Sheet Columns
+				homePageWebE.btn_EditColumns.click();
+				CommonLib.waitForObject(homePageWebE.btn_SaveColumnn, "clickable", 10);
+				
+				CommonLib.scroll_PageHorizontally(homePageWebE.scroll_Horizontal, 7);
+				Thread.sleep(2000);
+				
+				homePageWebE.txt_Columns.get(intAfterColumns -1).clear();
+				homePageWebE.txt_Columns.get(intAfterColumns -1).sendKeys("New Test Column");
+				Thread.sleep(2000);
+				
+				homePageWebE.btn_SaveColumnn.click();
+				CommonLib.waitForObject(homePageWebE.btn_EditColumns, "visibility", 10);
+				
+				strValue = homePageWebE.lbl_Columns.get(intAfterColumns - 1).getText().trim();
+				
+				System.out.println(strValue);
+				
+				if(strValue.contains("New Test Column"))
+				{
+					Log4J.logp.info("After Change Columns name New Column has been added with new name");
+					softAssertion.assertTrue(true);
+				}
+				else
+				{
+					Log4J.logp.info("Column name not changed");
+					softAssertion.assertTrue(false);
+				}
+				
+				// Replace Log Sheet Columns
+				homePageWebE.btn_EditColumns.click();
+				CommonLib.waitForObject(homePageWebE.btn_SaveColumnn, "clickable", 10);
+				
+				CommonLib.scroll_PageHorizontally(homePageWebE.scroll_Horizontal, 7);
+				Thread.sleep(2000);
+				
+				intRemoveSize = homePageWebE.ico_Remove.size();
+				
+				homePageWebE.ico_Remove.get(intRemoveSize-1).click();
+				Thread.sleep(2000);
+				
+				homePageWebE.txt_Columns.get(intAfterColumns -1).clear();
+				homePageWebE.txt_Columns.get(intAfterColumns -1).sendKeys("Replace Test Column");
+				Thread.sleep(2000);
+				
+				homePageWebE.btn_Replace.click();
+				Thread.sleep(2000);
+				
+				homePageWebE.btn_SaveColumnn.click();
+				CommonLib.waitForObject(homePageWebE.btn_EditColumns, "visibility", 10);
+				
+				strValue = homePageWebE.lbl_Columns.get(intAfterColumns - 1).getText().trim();
+				
+				System.out.println(strValue);
+				
+				if(strValue.contains("Replace Test Column"))
+				{
+					Log4J.logp.info("After Replace Columns name New Column has been added with new name");
+					softAssertion.assertTrue(true);
+				}
+				else
+				{
+					Log4J.logp.info("Column name not Replaceed");
+					softAssertion.assertTrue(false);
+				}
+				
+				// Delete Column
+				
+				intAfterColumns = homePageWebE.lbl_Columns.size();
+				
+				homePageWebE.btn_EditColumns.click();
+				CommonLib.waitForObject(homePageWebE.btn_SaveColumnn, "clickable", 10);
+				
+				CommonLib.scroll_PageHorizontally(homePageWebE.scroll_Horizontal, 7);
+				Thread.sleep(2000);
+				
+				intRemoveSize = homePageWebE.ico_Remove.size();
+				
+				homePageWebE.ico_Remove.get(intRemoveSize-1).click();
+				Thread.sleep(2000);
+				
+				homePageWebE.btn_SaveColumnn.click();
+				CommonLib.waitForObject(homePageWebE.btn_EditColumns, "visibility", 10);
+				
+				intDelete = homePageWebE.lbl_Columns.size();
+				
+				System.out.println(intAfterColumns + " Ands " + intDelete);
+				
+				//strValue = homePageWebE.lbl_Columns.get(intAfterColumns - 1).getText().trim();
+				
+				//System.out.println(strValue);
+				
+				if(intDelete == intAfterColumns - 1)
+				{
+					Log4J.logp.info("Column has been deleted");
+					softAssertion.assertTrue(true);
+				}
+				else
+				{
+					Log4J.logp.info("Column not deleted");
+					softAssertion.assertTrue(false);
+				}
+				
+				
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 }

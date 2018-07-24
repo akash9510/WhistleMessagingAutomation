@@ -399,6 +399,40 @@ public class CommonLib {
 
 	}
 	
+	
+	/**
+	 * 
+	 * This method is use for Scroll horizonal
+	 * 
+	 * */
+	public static boolean scroll_PageHorizontally(WebElement webeScrollArea, int iLoopCount)
+	{
+		try
+		{
+
+			driver = ExecutionSetUp.getDriver();
+			Actions dragger = new Actions(driver);
+			
+			JavascriptExecutor js = (JavascriptExecutor)driver; 
+			
+			js.executeScript("$('.react-grid-Canvas').scrollLeft(1000)");
+
+			/*for (int i = 0; i <= iLoopCount; i++)
+			{
+				dragger.moveToElement(webeScrollArea).click().sendKeys(Keys.ARROW_RIGHT).build().perform();
+				Thread.sleep(2000);
+			}*/
+			return true;
+		}
+		catch (Exception e)
+		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
 	/**
 	 * 
 	  This method is use for take screenshots

@@ -320,6 +320,10 @@ public class HomePageWebE {
 	@FindBy(css = ".ChatMessage__message--bubble.currentUser > span")
 	public List<WebElement> lbl_Templates;
 	
+	/** to click on Setting icon */
+	@FindBy(css = ".ChatMessage__settings")
+	public WebElement ico_Setting;
+	
 	/** to click on Direct Chat icon from Left Panel */
 	@FindBy(id = "direct-chat-tab")
 	public WebElement ico_DirectChat;
@@ -347,6 +351,78 @@ public class HomePageWebE {
 	/** to click on Clear icon in Search box */
 	@FindBy(css = ".closeIcon")
 	public WebElement ico_Clear;
+	
+	/** to click on Log Sheet icon */
+	@FindBy(id = "logsheets-tab")
+	public WebElement ico_LogSheet;
+	
+	/** to click on Add Button */
+	@FindBy(xpath = "//button[text()='Add']")
+	public WebElement btn_AddLogSheet;
+	
+	/** to click on Filter button */
+	@FindBy(xpath = "//button[text()='Filter']")
+	public WebElement btn_Filter;
+	
+	/** to click on Edit Columns button */
+	@FindBy(xpath ="//button[text()='Edit Columns']")
+	public WebElement btn_EditColumns;
+	
+	/** to check Log sheet has been added or not */
+	@FindBy(xpath = "(//div[@class='react-grid-Cell__value'])[1]")
+	public WebElement log_Sheet;
+	
+	/** to enter value in Search */
+	@FindBy(xpath = "(//input[@placeholder='Search'])[1]")
+	public WebElement txt_FilterSearch;
+	
+	/** to click on Add Column button */
+	@FindBy(xpath = "//button[text()='Add Column']")
+	public WebElement btn_AddColumns;
+	
+	/** to get the columns size in Log Sheet */
+	@FindBy(css = ".widget-HeaderCell__value")
+	public List<WebElement> columns_Size;
+	
+	/** to scroll the page Horizontally */
+	@FindBy(css = ".react-grid-Canvas")
+	public WebElement scroll_Horizontal;
+	
+	/** to input the values in New Columns */
+	@FindBy(css = ".widget-HeaderCell__value > div > input")
+	public List<WebElement> txt_Columns;
+	
+	/** to click on Save button */
+	@FindBy(xpath = "//button[text()='Save']")
+	public WebElement btn_SaveColumnn;
+	
+	/** to check Column added or not */
+	@FindBy(css = ".react-grid-HeaderCell-sortable")
+	public List<WebElement> lbl_Columns;
+	
+	/** to click on translate icon */
+	@FindBy(css = ".gtranslate-logo")
+	public WebElement ico_Translate;
+	
+	/** to click on Translate TO button */
+	@FindBy(xpath = "//button[text()='Translate to']")
+	public WebElement btn_TranslateTo;
+	
+	/** to click on Translte dropdown */
+	@FindBy(xpath = "//div[contains(@id,'undefined--undefined')]")
+	public WebElement lst_Translte;
+	
+	/** to get the list of Translate languages */
+	@FindBy(xpath = "//span[@role='menuitem']//div[@style]//div")
+	public List<WebElement> lbl_Languages;
+	
+	/** to click on Remove button */
+	@FindBy(css = ".full-width.btn-red.btn-dark.centered-element")
+	public List<WebElement> ico_Remove;
+	
+	/** to click on Relace button */
+	@FindBy(css = ".full-width.btn-green.btn-dark.centered-element")
+	public WebElement btn_Replace;
 	
 	static HomePageWebE Instance = null;
 	
