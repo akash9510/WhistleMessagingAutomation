@@ -64,6 +64,7 @@ public class LoginLib {
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			return false;
 		}

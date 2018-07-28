@@ -14,6 +14,8 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import javax.xml.xpath.XPath;
+
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -69,6 +71,7 @@ public class CommonLib {
 		}
 		catch (Exception e)
 		{
+			//CommonLib.takeScreenshots();
 			Log4J.logp.error("Errors in waitForObject  ");
 			return false;
 		}
@@ -97,6 +100,7 @@ public class CommonLib {
 		}
 		catch (Exception e)
 		{
+			CommonLib.takeScreenshots();
 			Log4J.logp.info("---------------- Ending - checkElementPresent False ----------------");
 			return false;
 		}
@@ -186,6 +190,85 @@ public class CommonLib {
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/** 
+	 * 
+	 * This method is use for Select Date from Calendar
+	 * 
+	 * */
+	public static boolean selectDateReservation(String strSampleDate,String strValue)
+	{
+		int intMonth;
+		String strDate, strYear, strMonth;
+		try
+		{
+			driver = ExecutionSetUp.getDriver();
+			homePageWebE = HomePageWebE.getInstance(driver);
+			
+			homePageWebE.lnk_Year.click();
+			Thread.sleep(2000);
+			
+			intMonth = Integer.parseInt(strSampleDate.split("\\/")[0]);
+			strDate = strSampleDate.split("\\/")[1];
+			strYear = strSampleDate.split("\\/")[2];
+			
+			WebElement webYear = driver.findElement(By.xpath("//span[text()='" + strYear + "']"));
+			webYear.click();
+			
+			strMonth = Month.of(intMonth).name();
+			strMonth = strMonth.substring(0,1).toUpperCase() + strMonth.substring(1).toLowerCase();
+			
+			for(int i = 1; i<=12;i++)
+			{
+				System.out.println(homePageWebE.lbl_Month.getText());
+				if(homePageWebE.lbl_Month.getText().contains(strMonth))
+				{
+					driver.findElement(By.xpath("//span[text()='" + strDate + "']")).click();
+					break;
+				}
+				else
+				{
+					Date date = new Date();
+					LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+					int month = localDate.getMonthValue();
+					if(month < intMonth)
+					{
+						homePageWebE.lnk_Right_Pointer_Reservation.click();
+						Thread.sleep(2000);
+						System.out.println(homePageWebE.lbl_Month.getText());
+						if(homePageWebE.lbl_Month.getText().contains(strMonth))
+						{
+							driver.findElement(By.xpath("//span[text()='" + strDate + "']")).click();
+							break;
+						}
+					}
+					else
+					{
+						
+						homePageWebE.lnk_Left_Pointer_Reservation.click();
+						
+						Thread.sleep(2000);
+						System.out.println(homePageWebE.lbl_Month.getText());
+						if(homePageWebE.lbl_Month.getText().contains(strMonth))
+						{
+							driver.findElement(By.xpath("//span[text()='" + strDate + "']")).click();
+							break;
+						}
+					}
+				}
+			}
+			
+			Thread.sleep(4000);
+			return true;
+		}
+		catch(Exception e)
+		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			return false;
 		}
@@ -221,6 +304,7 @@ public class CommonLib {
 		}
 		catch (Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			return null;
 		}
@@ -236,77 +320,77 @@ public class CommonLib {
 		String strFileName;
 		try
 		{
-					//F//ile file = new File("src/main/resources/Files/Campaigns-Sample.xlsx");
+			//F//ile file = new File("src/main/resources/Files/Campaigns-Sample.xlsx");
 					 
-					//StringSelection stringSelection= new StringSelection(file.getAbsolutePath());
+			//StringSelection stringSelection= new StringSelection(file.getAbsolutePath());
 					
-					strFileName = "Campaigns-Sample.xlsx";
+			strFileName = "Campaigns-Sample.xlsx";
 					
-					String uploadFilePath = "/src/main/resources/Files/";
-					String projectDir = System.getProperty("user.dir");
-					String directory = projectDir + uploadFilePath + strFileName;
-					
-					System.out.println(directory);
-
-					StringSelection media = new StringSelection(directory);
-					Toolkit.getDefaultToolkit().getSystemClipboard().setContents(media, null);
+			String uploadFilePath = "/src/main/resources/Files/";
+			String projectDir = System.getProperty("user.dir");
+			String directory = projectDir + uploadFilePath + strFileName;
+			
+			System.out.println(directory);
+			StringSelection media = new StringSelection(directory);
+			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(media, null);
 					 
-					//Copy to clipboard Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+			//Copy to clipboard Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
 					 
-					Robot robot = new Robot();
+			Robot robot = new Robot();
+			 
+			// Cmd + Tab is needed since it launches a Java app and the browser looses focus
 					 
-					// Cmd + Tab is needed since it launches a Java app and the browser looses focus
+			robot.keyPress(KeyEvent.VK_META);
 					 
-					robot.keyPress(KeyEvent.VK_META);
+			robot.keyPress(KeyEvent.VK_TAB);
 					 
-					robot.keyPress(KeyEvent.VK_TAB);
+			robot.keyRelease(KeyEvent.VK_META);
 					 
-					robot.keyRelease(KeyEvent.VK_META);
+			robot.keyRelease(KeyEvent.VK_TAB);
 					 
-					robot.keyRelease(KeyEvent.VK_TAB);
+			robot.delay(500);
 					 
-					robot.delay(500);
+			//Open Goto window
 					 
-					//Open Goto window
+			robot.keyPress(KeyEvent.VK_META);
 					 
-					robot.keyPress(KeyEvent.VK_META);
+			robot.keyPress(KeyEvent.VK_SHIFT);
 					 
-					robot.keyPress(KeyEvent.VK_SHIFT);
+			robot.keyPress(KeyEvent.VK_G);
 					 
-					robot.keyPress(KeyEvent.VK_G);
+			robot.keyRelease(KeyEvent.VK_META);
 					 
-					robot.keyRelease(KeyEvent.VK_META);
+			robot.keyRelease(KeyEvent.VK_SHIFT);
 					 
-					robot.keyRelease(KeyEvent.VK_SHIFT);
+			robot.keyRelease(KeyEvent.VK_G);
 					 
-					robot.keyRelease(KeyEvent.VK_G);
+			//Paste the clipboard value
 					 
-					//Paste the clipboard value
+			robot.keyPress(KeyEvent.VK_META);
 					 
-					robot.keyPress(KeyEvent.VK_META);
+			robot.keyPress(KeyEvent.VK_V);
 					 
-					robot.keyPress(KeyEvent.VK_V);
+			robot.keyRelease(KeyEvent.VK_META);
 					 
-					robot.keyRelease(KeyEvent.VK_META);
+			robot.keyRelease(KeyEvent.VK_V);
 					 
-					robot.keyRelease(KeyEvent.VK_V);
+			//Press Enter key to close the Goto window and Upload window
 					 
-					//Press Enter key to close the Goto window and Upload window
+			robot.keyPress(KeyEvent.VK_ENTER);
 					 
-					robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+			 
+		    robot.delay(500);
 					 
-					robot.keyRelease(KeyEvent.VK_ENTER);
+	    	robot.keyPress(KeyEvent.VK_ENTER);
 					 
-					robot.delay(500);
-					 
-					robot.keyPress(KeyEvent.VK_ENTER);
-					 
-					robot.keyRelease(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
 			
 			return true;
 		}
 		catch (Exception e) {
-			// TODO: handle exception
+			
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			return false;
 		}
@@ -322,7 +406,7 @@ public class CommonLib {
 
 			for (int i = 0; i <= iLoopCount; i++)
 			{
-				dragger.moveToElement(webeScrollArea).click().sendKeys(Keys.UP).build().perform();
+				dragger.moveToElement(webeScrollArea).click().sendKeys(Keys.PAGE_UP).build().perform();
 			}
 
 			return true;
@@ -372,6 +456,7 @@ public class CommonLib {
 		}
 		catch (Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			return false;
 		}
@@ -393,6 +478,7 @@ public class CommonLib {
 		}
 		catch (Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			return false;
 		}
@@ -471,9 +557,81 @@ public class CommonLib {
 		}
 		catch(Exception ex)
 		{
+			CommonLib.takeScreenshots();
 			ex.printStackTrace();
 			return false;
 		}
 	}
 
+	/**
+	 * 
+	 * This method is select Date in Analytics Page
+	 * 
+	 * */
+	public static boolean selectDateAnalytics(String strSampleDate, String strValue)
+	{
+		//String[] strValue;
+		int intMonth;
+		String strDate, strYear, strMonth;
+		try
+		{
+			driver = ExecutionSetUp.getDriver();
+			homePageWebE = HomePageWebE.getInstance(driver);
+			
+			intMonth = Integer.parseInt(strSampleDate.split("\\/")[0]);
+			strDate = strSampleDate.split("\\/")[1];
+			strYear = strSampleDate.split("\\/")[2];
+			
+			//WebElement webYear = driver.findElement(By.xpath("//span[text()='" + strYear + "']"));
+			//webYear.click();
+			
+			strMonth = Month.of(intMonth).name().substring(0, 3);
+			strMonth = strMonth.substring(0,1).toUpperCase() + strMonth.substring(1).toLowerCase();
+			
+			//System.out.println(strMonth);
+			
+			if(strValue.equalsIgnoreCase("End"))
+			{
+				homePageWebE.lnk_Month_EndDate.click();
+				Thread.sleep(2000);
+				
+				homePageWebE.lnk_Month_EndDate.click();
+				Thread.sleep(2000);
+			}
+			else
+			{
+				homePageWebE.lnk_Month.click();
+				Thread.sleep(2000);
+				
+				homePageWebE.lnk_Month.click();
+				Thread.sleep(2000);
+			}
+			
+			WebElement ele = driver.findElement(By.xpath("//div[text()='" + strYear + "']"));
+			ele.click();
+			Thread.sleep(2000);
+			
+			ele = driver.findElement(By.xpath("//div[text()='" + strMonth + "']"));
+			ele.click();
+			Thread.sleep(2000);
+			
+			if(strValue.equalsIgnoreCase("End"))
+			{
+				ele = driver.findElement(By.xpath("(//div[text()='" + strDate + "'])[1]"));
+			}
+			else
+			{
+				ele = driver.findElement(By.xpath("(//div[text()='" + strDate + "'])[2]"));
+			}
+			ele.click();
+			Thread.sleep(2000);
+			return true;
+		}
+		catch(Exception e)
+		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

@@ -49,5 +49,61 @@ public class HomePageLib {
 			return false;
 		}
 	}
+	
+	/**
+	 * 
+	 * This method is check Table and table contents in Analytics Page
+	 * 
+	 * */
+	public static boolean checkTableContents()
+	{
+		boolean bstatus = false;
+		String[] strTableContents = {"Message","Usage","Score","Positivity","Negativity"};
+		try
+		{
+			driver = ExecutionSetUp.getDriver();
+			homePageWebE = HomePageWebE.getInstance(driver);
+			if(CommonLib.checkElementPresent(homePageWebE.tbl_Analytics))
+			{
+				Log4J.logp.info("Table has been displayed");
+				bstatus = true;
+				
+				for(int i = 0;i<homePageWebE.tbl_Contents.size();i++)
+				{
+					//System.out.println(homePageWebE.tbl_Contents.get(i).getText().trim());
+					//System.out.println(strTableContents[i]);
+					if(homePageWebE.tbl_Contents.get(i).getText().trim().equals(strTableContents[i]))
+					{
+						Log4J.logp.info(strTableContents[i] + " has been displayed in Table");
+						bstatus = true;
+					}
+					else
+					{
+						Log4J.logp.info(strTableContents[i] + " Not found in Table");
+						bstatus = false;
+					}
+				}
+			}
+			else
+			{
+				Log4J.logp.info("Table not found");
+				bstatus = false;
+			}
+			if(bstatus == false)
+			{
+				return bstatus;
+			}
+			else
+			{
+				return bstatus;
+			}
+		}
+		catch(Exception e)
+		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 }

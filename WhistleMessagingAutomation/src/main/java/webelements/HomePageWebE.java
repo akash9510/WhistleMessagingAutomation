@@ -61,7 +61,7 @@ public class HomePageWebE {
 	public WebElement lbl_Month;
 	
 	/** to click on Left pointer of Calendar */
-	@FindBy(xpath = "/html/body/div[13]/div/div[1]/div/div/div/div/div[2]/div[1]/div[1]/button[2]")
+	@FindBy(xpath = "/html/body/div[13]/div/div[1]/div/div/div/div/div[2]/div[1]/div[1]/button[1]")
 	public WebElement lnk_Left_Pointer;
 	
 	/** to click on Right pointer of Calendar */
@@ -69,12 +69,28 @@ public class HomePageWebE {
 	public WebElement lnk_Right_Pointer;
 	
 	/** to click on Left pointer of Calendar */
-	@FindBy(xpath = "/html/body/div[14]/div/div[1]/div/div/div/div/div[2]/div[1]/div[1]/button[2]")
+	@FindBy(xpath = "/html/body/div[14]/div/div[1]/div/div/div/div/div[2]/div[1]/div[1]/button[1]")
 	public WebElement lnk_Left_Pointer_Depart;
 	
 	/** to click on Right pointer of Calendar */
 	@FindBy(xpath = "/html/body/div[14]/div/div[1]/div/div/div/div/div[2]/div[1]/div[1]/button[2]")
 	public WebElement lnk_Right_Pointer_Depart;
+	
+	/** to click on Left pointer of Calendar */
+	@FindBy(xpath = "(//button[contains(@style,'overflow: visible')])[1]")
+	public WebElement lnk_Left_Pointer_Reservation;
+	
+	/** to click on Right pointer of Calendar */
+	@FindBy(xpath = "(//button[contains(@style,'overflow: visible')])[2]")
+	public WebElement lnk_Right_Pointer_Reservation;
+	
+	/** to click on Left pointer of Calendar */
+	@FindBy(xpath = "/html/body/div[5]/div/div[1]/div/div/div/div/div[2]/div[1]/div[1]/button[1]")
+	public WebElement lnk_Left_Pointer_Depart_Reservation;
+	
+	/** to click on Right pointer of Calendar */
+	@FindBy(xpath = "/html/body/div[5]/div/div[1]/div/div/div/div/div[2]/div[1]/div[1]/button[2]")
+	public WebElement lnk_Right_Pointer_Depart_Reservation;
 	
 	/** to check Middle Panel after Click on Send button */
 	@FindBy(css = ".ChatMessage__message--bubble.currentUser > span")
@@ -119,6 +135,10 @@ public class HomePageWebE {
 	/** to enter description */
 	@FindBy(id = "textarea1")
 	public WebElement txt_Description;
+	
+	/** to click on Create Survey button */
+	@FindBy(xpath = "//span[text()='Create Survey']")
+	public WebElement btn_CreateSurvey;
 	
 	/** to click on File Upload button */
 	@FindBy(xpath ="//input[contains(@id,'FileUploader')]")
@@ -215,6 +235,10 @@ public class HomePageWebE {
 	/** to click on Archived tab */
 	@FindBy(xpath ="//div[text()='Archive']")
 	public WebElement tab_Archived;
+	
+	/** to check Archive list Row */
+	@FindBy(css = ".ArchiveList__row")
+	public List<WebElement> lst_Archive;
 	
 	/** to scroll the Archive Container */
 	@FindBy(xpath = "//div[@class='ArchiveContainer z-depth-2']")
@@ -381,7 +405,8 @@ public class HomePageWebE {
 	public WebElement btn_AddColumns;
 	
 	/** to get the columns size in Log Sheet */
-	@FindBy(css = ".widget-HeaderCell__value")
+	//@FindBy(css = ".react-grid-Main .widget-HeaderCell__value")
+	@FindBy(xpath = "(//div[@class='react-grid-HeaderRow'])[1]//div[@class='widget-HeaderCell__value']")
 	public List<WebElement> columns_Size;
 	
 	/** to scroll the page Horizontally */
@@ -423,6 +448,118 @@ public class HomePageWebE {
 	/** to click on Relace button */
 	@FindBy(css = ".full-width.btn-green.btn-dark.centered-element")
 	public WebElement btn_Replace;
+	
+	/** to click on Analytics tab */
+	@FindBy(id = "analytics-tab")
+	public WebElement ico_Analytics;
+	
+	/** to click on Start Date  */
+	@FindBy(id = "startDateTimePicker")
+	public WebElement txt_StartDate;
+	
+	/** to click on End Date */
+	@FindBy(id = "endDateTimePicker")
+	public WebElement txt_EndDate;
+	
+	/** to click on Month in Date picker */
+	@FindBy(xpath = "(//div[@class='datepicker--nav-title'])[2]")
+	public WebElement lnk_Month;
+	
+	/** to click on Month in Date picker */
+	@FindBy(xpath = "(//div[@class='datepicker--nav-title'])[1]")
+	public WebElement lnk_Month_EndDate;;
+	
+	/** to scroll the Analytics page */
+	@FindBy(css = ".Panel.OnePanel.z-depth-2.scrollable")
+	public WebElement analytics_Scroll;
+	
+	/** to click on Aggregate radio button */
+	@FindBy(xpath = "//input[@value = 'aggregate']")
+	public WebElement rdo_Aggregate;
+	
+	/** to click on inbound radio button */
+	@FindBy(xpath = "//input[@value = 'inbound']")
+	public WebElement rdo_Inbound;
+	
+	/** to click on Reply radio button */
+	@FindBy(xpath = "//input[@value = 'reply']")
+	public WebElement rdo_Reply;
+	
+	/** to click on Composition button */
+	@FindBy(xpath = "//input[@value = 'composition']")
+	public WebElement rdo_Composition;
+	
+	/** to check table is displayed or not */
+	@FindBy(css = ".Table.undefined")
+	public WebElement tbl_Analytics;
+	
+	/** to check table contents */
+	@FindBy(css = ".Table.undefined > thead > tr > th")
+	public List<WebElement> tbl_Contents;
+	
+	/** to click on Reservation Tab */
+	@FindBy(id = "reservations-tab")
+	public WebElement ico_Reservation;
+	
+	/** to check Reservation Header */
+	@FindBy(css = ".ReservationsList__header")
+	public WebElement lbl_ReservationHeader;
+	
+	/** to click on Add Reservation BUtton */
+	@FindBy(xpath = "//span[text()='Add Reservation']")
+	public WebElement btn_Reservation;
+	
+	/** to enter value in Reservation ID */
+	@FindBy(id = "integration_reservation_id")
+	public WebElement txt_ReservationId;
+	
+	/** to enter value in Room Number */
+	@FindBy(id = "room_number")
+	public WebElement txt_RoomNumber;
+	
+	/** to Enter value in First Name */
+	@FindBy(id = "first_name")
+	public WebElement txt_FirstName;
+	
+	/** to enter value in Last Name */
+	@FindBy(id = "last_name")
+	public WebElement txt_LastName;
+	
+	/** to click on Arrival textbox */
+	@FindBy(id = "arrival")
+	public WebElement txt_Arrival;
+	
+	/** to click on Deprture textbox */
+	@FindBy(id = "departure")
+	public WebElement txt_Departure;
+	
+	/** to enter value in Phone textbox */
+	@FindBy(xpath = "//input[contains(@id,'phone')]")
+	public WebElement txt_Phone;
+	
+	/** to enter value in email textbox */
+	@FindBy(id = "email")
+	public WebElement txt_EmailID;
+	
+	/** to click on Save button */
+	@FindBy(css = ".ActionButton.btn.waves-effect.waves-light.right.danger.undefined")
+	public WebElement btn_Save;
+	
+	/** to get the list of Reservation ID */
+	@FindBy(xpath = "//div[@class='column ReservationsList__id']")
+	public List<WebElement> lbl_ReservationID;
+	
+	/** to get he list of Checkboxes */
+	@FindBy(xpath = "//div[@class='ReservationsList__select']//input")
+	public List<WebElement> chk_Reservation;
+	
+	/** to click on Delete button */
+	@FindBy(css = ".btn.waves-effect.red")
+	public WebElement btn_Delete;
+	
+	/** to click on Confirm Delete button */
+	@FindBy(css = ".confirm.delete")
+	public WebElement btn_ConfirmDelete;
 	
 	static HomePageWebE Instance = null;
 	

@@ -61,6 +61,7 @@ public class MainMethod {
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 		}
 	}

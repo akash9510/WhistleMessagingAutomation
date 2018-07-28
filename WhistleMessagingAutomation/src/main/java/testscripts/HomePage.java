@@ -9,12 +9,15 @@ import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.omg.CORBA.PUBLIC_MEMBER;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -45,6 +48,8 @@ public class HomePage {
 		driver = ExecutionSetUp.getDriver();
 		homePageWebE = HomePageWebE.getInstance(driver);
 		loginWebE = LoginWebE.getInstance(driver);
+		
+		LoginLib.login();
 	}
 	
 	
@@ -61,7 +66,7 @@ public class HomePage {
 		try
 		{
 			softAssertion = new SoftAssert();
-			LoginLib.login();
+			//LoginLib.login();
 			
 			Properties properties = new Properties();
 			properties.load(new FileInputStream("src/main/resources/Properties/data.properties"));
@@ -126,6 +131,7 @@ public class HomePage {
 		}
 		catch (Exception e) {
 			// TODO: handle exception
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "Test ID 4 : Start Conversation Failed");
 		}
@@ -145,7 +151,7 @@ public class HomePage {
 			}
 			
 			softAssertion.assertAll();
-			LoginLib.logout();
+			//LoginLib.logout();.
 		}
 	}
 	
@@ -176,7 +182,7 @@ public class HomePage {
 			
 			softAssertion = new SoftAssert();
 			
-			LoginLib.login();
+			//LoginLib.login();
 			
 			// Test ID 5
 			
@@ -304,6 +310,7 @@ public class HomePage {
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "checkDropdownToggleBehavior Failed");
 		}
@@ -342,7 +349,7 @@ public class HomePage {
 
 			softAssertion.assertAll();
 			
-			LoginLib.logout();
+			//LoginLib.logout();.
 		}
 	}
 	
@@ -351,7 +358,7 @@ public class HomePage {
 	 * This method is use for Start Compaign
 	 * 
 	 * */
-	@Test(description = "Start Compaign",priority = 2)
+	@Test(description = "Start Compaign",priority = 20)
 	public static void startCompaign()
 	{
 		String strGuestName, strPhoneNo, strEmail;
@@ -360,7 +367,7 @@ public class HomePage {
 		{
 			softAssertion = new SoftAssert();
 			
-			LoginLib.login();
+			//LoginLib.login();
 			
 			homePageWebE.ico_GuestChat.click();
 			Thread.sleep(2000);
@@ -415,6 +422,7 @@ public class HomePage {
 		}
 		catch (Exception e) {
 			// TODO: handle exception
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "Test ID 9 : Start Compaign Failed");
 		}
@@ -434,7 +442,7 @@ public class HomePage {
 			}
 			
 			softAssertion.assertAll();
-			LoginLib.logout();
+			//LoginLib.logout();.
 		}
 	}
 	
@@ -450,7 +458,7 @@ public class HomePage {
 		try
 		{
 			softAssertion = new SoftAssert();
-			LoginLib.login();
+			//LoginLib.login();
 			homePageWebE.ico_GuestChat.click();
 			Thread.sleep(2000);
 			
@@ -494,6 +502,7 @@ public class HomePage {
 		}
 		catch (Exception e) {
 			// TODO: handle exception
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "Test ID 10 : Start Survey using Survey Template Failed");
 		}
@@ -513,7 +522,7 @@ public class HomePage {
 			}
 			
 			softAssertion.assertAll();
-			LoginLib.logout();
+			//LoginLib.logout();.
 		}
 	}
 	
@@ -529,7 +538,7 @@ public class HomePage {
 		try
 		{
 			softAssertion = new SoftAssert();
-			LoginLib.login();
+			//LoginLib.login();
 			
 			homePageWebE.ico_GuestChat.click();
 			Thread.sleep(2000);
@@ -538,7 +547,10 @@ public class HomePage {
 			CommonLib.waitForObject(homePageWebE.btn_StartSurvey, "visibility", 10);
 			
 			homePageWebE.btn_StartSurvey.click();
-			CommonLib.waitForObject(homePageWebE.btn_UseSurveyTemplate, "clickable", 10);
+			CommonLib.waitForObject(homePageWebE.btn_CreateSurvey, "clickable", 10);
+			
+			homePageWebE.btn_CreateSurvey.click();
+			Thread.sleep(2000);
 			
 			homePageWebE.txt_Survey_Question.sendKeys("Test Survey Questions ?");
 			Thread.sleep(2000);
@@ -591,6 +603,7 @@ public class HomePage {
 		}
 		catch (Exception e) {
 			// TODO: handle exception
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "Test ID 10 : Start Survey without Template Failed");
 		}
@@ -610,7 +623,7 @@ public class HomePage {
 			}
 			
 			softAssertion.assertAll();
-			LoginLib.logout();
+			//LoginLib.logout();.
 		}
 	}
 	
@@ -635,7 +648,7 @@ public class HomePage {
 			child3 = MainMethod.extent.startTest("Test ID 14 : Archive Conversation");
 			
 			softAssertion = new SoftAssert();
-			LoginLib.login();
+			//LoginLib.login();
 			
 			homePageWebE.ico_GuestChat.click();
 			Thread.sleep(2000);
@@ -701,44 +714,24 @@ public class HomePage {
 			homePageWebE.tab_Archived.click();
 			Thread.sleep(2000);
 			
-			// Scroll Down
-			bstatus = CommonLib.scroll_Page(homePageWebE.scrollBar_Archive,1);
+			bstatus = CommonLib.checkElementPresent(homePageWebE.lst_Archive.get(0));
 			
 			if(bstatus == true)
 			{
-				Log4J.logp.info("Archive Conversation Scroll down successfully");
+				Log4J.logp.info("Archive Conversation displayed in Archived tab");
 				softAssertion.assertTrue(true);
-				child3.log(LogStatus.PASS, "Archive Conversation Scroll down successfully");
+				child3.log(LogStatus.PASS, "Archive Conversation displayed in Archived tab");
 			}
 			else
 			{
-				Log4J.logp.info("Conversation Scroll down un successfully");
+				Log4J.logp.info("Archived Conversation not found");
 				softAssertion.assertTrue(false);
-				child3.log(LogStatus.FAIL, "Archive Conversation Scroll down un successful");
+				child3.log(LogStatus.FAIL, "Archived Conversation not found");
 			}
-			
-			// Scroll up
-			homePageWebE.tab_Archived.click();
-			Thread.sleep(2000);
-			
-			bstatus = CommonLib.scroll_Page_Up(homePageWebE.scrollBar_Archive,1);
-			
-			if(bstatus == true)
-			{
-				Log4J.logp.info("Archive Conversation Scroll up successfully");
-				softAssertion.assertTrue(true);
-				child3.log(LogStatus.PASS, "Archive Conversation Scroll up successfully");
-			}
-			else
-			{
-				Log4J.logp.info("Conversation Scroll up un successfully");
-				softAssertion.assertTrue(false);
-				child3.log(LogStatus.FAIL, "Archive Conversation Scroll up un successful");
-			}		
-			
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "checkDropdownToggleBehavior Failed");
 		}
@@ -773,7 +766,7 @@ public class HomePage {
 
 			softAssertion.assertAll();
 			
-			LoginLib.logout();
+			//LoginLib.logout();.
 		}
 	}
 	
@@ -795,7 +788,7 @@ public class HomePage {
 			child2 = MainMethod.extent.startTest("Test ID 16 : Unblock User");
 			
 			softAssertion = new SoftAssert();
-			LoginLib.login();
+			//LoginLib.login();
 			
 			homePageWebE.ico_GuestChat.click();
 			Thread.sleep(2000);
@@ -858,6 +851,7 @@ public class HomePage {
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "blockUnblockConversation Failed");
 		}
@@ -887,7 +881,7 @@ public class HomePage {
 
 			softAssertion.assertAll();
 			
-			LoginLib.logout();
+			//LoginLib.logout();.
 		}
 	}
 	
@@ -910,7 +904,7 @@ public class HomePage {
 			child2 = MainMethod.extent.startTest("Test ID 13 : Live Archive Conversation");
 			
 			softAssertion = new SoftAssert();
-			LoginLib.login();
+			//LoginLib.login();
 			
 			homePageWebE.ico_Live_Chat.click();
 			Thread.sleep(4000);
@@ -952,47 +946,25 @@ public class HomePage {
 			homePageWebE.tab_Archived.click();
 			Thread.sleep(2000);
 			
-			//WebElement element = driver.findElement(By.id("my-id"));
-			JavascriptExecutor je = ((JavascriptExecutor) driver);
-			je.executeScript("$('.ArchiveContainer').scroll(0,400)");
-			
 			// Scroll Down
-			bstatus = CommonLib.scroll_Page(homePageWebE.scrollBar_Archive,1);
+			bstatus = CommonLib.checkElementPresent(homePageWebE.lst_Archive.get(0));
 			
 			if(bstatus == true)
 			{
-				Log4J.logp.info("Archive Conversation Scroll down successfully");
+				Log4J.logp.info("Archive Conversation displayed");
 				softAssertion.assertTrue(true);
-				child2.log(LogStatus.PASS, "Archive Conversation Scroll down successfully");
+				child2.log(LogStatus.PASS, "Archive Conversation displayed");
 			}
 			else
 			{
-				Log4J.logp.info("Conversation Scroll down un successfully");
+				Log4J.logp.info("Archive Conversation not found");
 				softAssertion.assertTrue(false);
-				child2.log(LogStatus.FAIL, "Archive Conversation Scroll down un successful");
-			}
-			
-			// Scroll up
-			homePageWebE.tab_Archived.click();
-			Thread.sleep(2000);
-			
-			bstatus = CommonLib.scroll_Page_Up(homePageWebE.scrollBar_Archive,1);
-			
-			if(bstatus == true)
-			{
-				Log4J.logp.info("Archive Conversation Scroll up successfully");
-				softAssertion.assertTrue(true);
-				child2.log(LogStatus.PASS, "Archive Conversation Scroll up successfully");
-			}
-			else
-			{
-				Log4J.logp.info("Conversation Scroll up un successfully");
-				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "Archive Conversation not found");
 			}
 		}
 		catch(Exception e)
 		{
-			Log4J.logp.error("Problem found in :: checkLandingPage");
+			Log4J.logp.error("Problem found in :: openLiveChat");
 			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "openLiveChat Failed");
@@ -1023,7 +995,7 @@ public class HomePage {
 
 			softAssertion.assertAll();
 			
-			LoginLib.logout();
+			//LoginLib.logout();.
 		}
 	}
 	
@@ -1042,7 +1014,7 @@ public class HomePage {
 		try
 		{
 			softAssertion = new SoftAssert();
-			LoginLib.login();
+			//LoginLib.login();
 			
 			homePageWebE.ico_Live_Chat.click();
 			Thread.sleep(2000);
@@ -1083,6 +1055,7 @@ public class HomePage {
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "blockLiveConversation Failed");
 		}
@@ -1102,7 +1075,7 @@ public class HomePage {
 			//NewLandingPage.appendChild(actionOption);
 			MainMethod.extent.endTest(blockLiveConversation);
 			softAssertion.assertAll();
-			LoginLib.logout();
+			//LoginLib.logout();.
 		}
 	}
 	
@@ -1130,7 +1103,7 @@ public class HomePage {
 			child4 = MainMethod.extent.startTest("Test ID 23 :  Delete Members to Team Chat");
 			
 			softAssertion = new SoftAssert();
-			LoginLib.login();
+			//LoginLib.login();
 			
 			homePageWebE.ico_TeamChat.click();
 			CommonLib.waitForObject(homePageWebE.btn_CreateChannel, "clickable", 10);
@@ -1244,6 +1217,7 @@ public class HomePage {
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "createDeleteChannel Failed");
 		}
@@ -1282,7 +1256,7 @@ public class HomePage {
 
 			softAssertion.assertAll();
 			
-			LoginLib.logout();
+			//LoginLib.logout();.
 		}
 	}
 	
@@ -1300,6 +1274,8 @@ public class HomePage {
 		ExtentTest translateTeamMessage = MainMethod.extent.startTest("Translate Team chat message").assignCategory("Regression");
 		ExtentTest child1 = null;
 		ExtentTest child2 = null;
+		String[] strTranslateLangauges = {"Spanish","French","German","Dutch","Chinese (Simplified)"};
+		//String[] strTranslateLangauges = {"Chinese (Simplified)"};
 		try
 		{
 			Properties properties = new Properties();
@@ -1308,10 +1284,10 @@ public class HomePage {
 			child1 = MainMethod.extent.startTest("Test ID 24 :  Translate Team chat message after has been sent");
 			child2 = MainMethod.extent.startTest("Test ID 25 : Translate Team chat message before message has been sent");
 			
-			String strValue = properties.getProperty("Translate.Amharic");
+			//String strValue = properties.getProperty("Translate.Amharic");
 			
 			softAssertion = new SoftAssert();
-			LoginLib.login();
+			//LoginLib.login();
 			
 			homePageWebE.ico_TeamChat.click();
 			CommonLib.waitForObject(homePageWebE.btn_CreateChannel, "clickable", 10);
@@ -1319,6 +1295,7 @@ public class HomePage {
 			homePageWebE.btn_CreateChannel.click();
 			CommonLib.waitForObject(homePageWebE.txt_ChannelName, "visibility", 10);
 			
+			homePageWebE.txt_ChannelName.clear();
 			homePageWebE.txt_ChannelName.sendKeys("Translate Channel");
 			Thread.sleep(2000);
 			
@@ -1342,34 +1319,43 @@ public class HomePage {
 			
 			//intSize = homePageWebE.lbl_Languages.size();
 			
-			for(int i = 0;i<5;i++)
+			for(int i = 0;i<strTranslateLangauges.length;i++)
 			{
-				strValue = homePageWebE.lbl_Languages.get(i).getText().trim();
+				//strValue = homePageWebE.lbl_Languages.get(i).getText().trim();
 				
-				homePageWebE.lbl_Languages.get(i).click();
+				WebElement ele = driver.findElement(By.xpath("//span[@role='menuitem']//div[text()='" + strTranslateLangauges[i] + "']"));
+				
+				ele.click();
 				Thread.sleep(2000);
 				
 				homePageWebE.btn_TranslateTo.click();
 				Thread.sleep(4000);
 				
-				 strExpectedTranslate = properties.getProperty("Translate." + strValue);
+				if(strTranslateLangauges[i].contains("Chinese"))
+				{
+					strExpectedTranslate = "这是测试消息";
+				}
+				else
+				{
+					 strExpectedTranslate = properties.getProperty("Translate." + strTranslateLangauges[i]);
+				}
 				
-				 strActualTranslate = homePageWebE.txt_DirectMessage.getText().trim();
+				strActualTranslate = homePageWebE.txt_DirectMessage.getText().trim();
 				
-				//System.out.println(strExpectedTranslate);
-				//System.out.println(strActualTranslate);
+				System.out.println(strExpectedTranslate);
+				System.out.println(strActualTranslate);
 				
 				if(strActualTranslate.equals(strExpectedTranslate))
 				{
 					Log4J.logp.info("Message Translate");
 					softAssertion.assertTrue(true);
-					child2.log(LogStatus.PASS, "Message translate in " + strValue + " language before message has been sent");
+					child2.log(LogStatus.PASS, "Message translate in " + strTranslateLangauges[i] + " language before message has been sent");
 				}
 				else
 				{
 					Log4J.logp.info("Message not translate");
 					softAssertion.assertTrue(false);
-					child2.log(LogStatus.FAIL, "Message not translate in " + strValue + " language before message has been sent");
+					child2.log(LogStatus.FAIL, "Message not translate in " + strTranslateLangauges[i] + " language before message has been sent");
 				}
 				
 				homePageWebE.txt_DirectMessage.clear();
@@ -1405,34 +1391,43 @@ public class HomePage {
 			
 			//intSize = homePageWebE.lbl_Languages.size();
 			
-			for(int i = 0;i<5;i++)
+			for(int i = 0;i<strTranslateLangauges.length;i++)
 			{
-				strValue = homePageWebE.lbl_Languages.get(i).getText().trim();
+				//strValue = homePageWebE.lbl_Languages.get(i).getText().trim();
 				
-				homePageWebE.lbl_Languages.get(i).click();
+				WebElement ele = driver.findElement(By.xpath("//span[@role='menuitem']//div[text()='" + strTranslateLangauges[i] + "']"));
+				
+				ele.click();				
 				Thread.sleep(2000);
 				
 				homePageWebE.btn_TranslateTo.click();
 				Thread.sleep(4000);
 				
-				strExpectedTranslate = properties.getProperty("Translate." + strValue);
+				if(strTranslateLangauges[i].contains("Chinese"))
+				{
+					strExpectedTranslate = "这是测试消息";
+				}
+				else
+				{
+					 strExpectedTranslate = properties.getProperty("Translate." + strTranslateLangauges[i]);
+				}
 				
 				strActualTranslate = homePageWebE.lbl_Templates.get(0).getText().trim();
 				
-				//System.out.println(strExpectedTranslate);
-				//System.out.println(strActualTranslate);
+				System.out.println(strExpectedTranslate);
+				System.out.println(strActualTranslate);
 				
 				if(strActualTranslate.equals(strExpectedTranslate))
 				{
 					Log4J.logp.info("Message Translate");
 					softAssertion.assertTrue(true);
-					child1.log(LogStatus.PASS, "Message translate in " + strValue + " language After message has been sent");
+					child1.log(LogStatus.PASS, "Message translate in " + strTranslateLangauges[i] + " language After message has been sent");
 				}
 				else
 				{
 					Log4J.logp.info("Message not translate");
 					softAssertion.assertTrue(false);
-					child2.log(LogStatus.FAIL, "Message not translate in " + strValue + " language After message has been sent");
+					child2.log(LogStatus.FAIL, "Message not translate in " + strTranslateLangauges[i] + " language After message has been sent");
 				}
 				
 				homePageWebE.lst_Translte.click();
@@ -1454,6 +1449,7 @@ public class HomePage {
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "createDeleteChannel Failed");
 		}
@@ -1462,6 +1458,7 @@ public class HomePage {
 			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
 				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
 			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
 			
 			translateTeamMessage.appendChild(child1);
 			translateTeamMessage.appendChild(child2);
@@ -1482,7 +1479,7 @@ public class HomePage {
 
 			softAssertion.assertAll();
 			
-			LoginLib.logout();
+			//LoginLib.logout();.
 		}
 	}
 	
@@ -1499,7 +1496,7 @@ public class HomePage {
 		try
 		{
 			softAssertion = new SoftAssert();
-			LoginLib.login();
+			//LoginLib.login();
 			
 			homePageWebE.ico_TeamChat.click();
 			CommonLib.waitForObject(homePageWebE.btn_CreateChannel, "clickable", 10);
@@ -1558,6 +1555,7 @@ public class HomePage {
 	
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "insertTemplate Failed");
 		}
@@ -1577,7 +1575,7 @@ public class HomePage {
 			//NewLandingPage.appendChild(actionOption);
 			MainMethod.extent.endTest(insertTemplate);
 			softAssertion.assertAll();
-			LoginLib.logout();
+			//LoginLib.logout();.
 		}
 	}
 	
@@ -1601,7 +1599,7 @@ public class HomePage {
 			 child2  = MainMethod.extent.startTest("Test ID  28 : Clear Direct Chat Search box");
 			
 			softAssertion = new SoftAssert();
-			LoginLib.login();
+			//LoginLib.login();
 			
 			homePageWebE.ico_DirectChat.click();
 			CommonLib.waitForObject(homePageWebE.lnk_TeamMember.get(0), "visibility", 10);
@@ -1660,6 +1658,7 @@ public class HomePage {
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "checkDirectChat Failed");
 		}
@@ -1670,8 +1669,6 @@ public class HomePage {
 			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
 				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
 			
-			
-
 			checkDirectChat.appendChild(child1);
 			checkDirectChat.appendChild(child2);
 
@@ -1691,7 +1688,7 @@ public class HomePage {
 
 			softAssertion.assertAll();
 			
-			LoginLib.logout();
+			//LoginLib.logout();.
 		}
 	}
 		
@@ -1712,18 +1709,20 @@ public class HomePage {
 				child1 = MainMethod.extent.startTest("Test ID 30 :  Add Participants to Log Sheet");
 				child2 = MainMethod.extent.startTest("Test ID 31 : Add Filter Log Sheet");
 				softAssertion = new SoftAssert();
-				LoginLib.login();
+				//LoginLib.login();
 				Properties properties = new Properties();
 				properties.load(new FileInputStream("src/main/resources/Properties/data.properties"));
 				strName = properties.getProperty("username");
 				
 				homePageWebE.ico_LogSheet.click();
 				CommonLib.waitForObject(homePageWebE.btn_AddLogSheet, "clickable", 10);
+				Thread.sleep(2000);
 				
 				homePageWebE.btn_AddLogSheet.click();
 				CommonLib.waitForObject(homePageWebE.log_Sheet, "visibility", 10);
+				Thread.sleep(2000);
 				
-				if(CommonLib.checkElementPresent(homePageWebE.ico_LogSheet))
+				if(CommonLib.checkElementPresent(homePageWebE.log_Sheet))
 				{
 					Log4J.logp.info("Logsheet has been added successfully");
 					softAssertion.assertTrue(true);
@@ -1758,6 +1757,7 @@ public class HomePage {
 			}
 			catch(Exception e)
 			{
+				CommonLib.takeScreenshots();
 				e.printStackTrace();
 				softAssertion.assertTrue(false, "checkLogSheet Failed");
 			}
@@ -1768,8 +1768,6 @@ public class HomePage {
 				if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
 					child2.log(LogStatus.FAIL, "Failed for Unknown status.");
 				
-				
-
 				checkLogSheet.appendChild(child1);
 				checkLogSheet.appendChild(child2);
 
@@ -1789,7 +1787,7 @@ public class HomePage {
 
 				softAssertion.assertAll();
 				
-				LoginLib.logout();
+				//LoginLib.logout();.
 			}
 		}
 		
@@ -1804,28 +1802,45 @@ public class HomePage {
 			int intBeforeColumns, intAfterColumns;
 			String strValue;
 			int intRemoveSize,intDelete;
+			ExtentTest checkColumnsLogSheet = MainMethod.extent.startTest("Add/Deletechange/replace Columns in Log Sheet").assignCategory("Regression");
+			ExtentTest child1 = null;
+			ExtentTest child2 = null;
+			ExtentTest child3 = null;
+			ExtentTest child4 = null;
 			try
 			{
 				softAssertion = new SoftAssert();
-				LoginLib.login();
+				//LoginLib.login();
+				
+				child1 = MainMethod.extent.startTest("Test ID 33 :  Delete Log Sheet Columns");
+				child2 = MainMethod.extent.startTest("Test ID 34 : Replace Deleted Log Sheet Columns");
+				child3 = MainMethod.extent.startTest("Test ID 35 :  Add Log Sheet Columns");
+				child4 = MainMethod.extent.startTest("Test ID 36 : Change Log Sheet Columns");
 				
 				homePageWebE.ico_LogSheet.click();
 				CommonLib.waitForObject(homePageWebE.btn_AddLogSheet, "visibility", 10);
+				Thread.sleep(2000);
 				
 				homePageWebE.btn_EditColumns.click();
 				CommonLib.waitForObject(homePageWebE.btn_SaveColumnn, "clickable", 10);
+				Thread.sleep(2000);
 				
 				intBeforeColumns = homePageWebE.columns_Size.size();
 				
+				System.out.println(intBeforeColumns);
+				
 				homePageWebE.btn_AddColumns.click();
-				Thread.sleep(2000);
+				Thread.sleep(3000);
 				
 				intAfterColumns = homePageWebE.columns_Size.size();
+				
+				System.out.println(intAfterColumns);
 				
 				if(intAfterColumns == intBeforeColumns + 1)
 				{
 					Log4J.logp.info("New Column has been added");
 					softAssertion.assertTrue(true);
+					child3.log(LogStatus.PASS, "New Column has been added");
 					
 					CommonLib.scroll_PageHorizontally(homePageWebE.scroll_Horizontal, 7);
 					
@@ -1846,17 +1861,20 @@ public class HomePage {
 					{
 						Log4J.logp.info("New Column has been added with new name");
 						softAssertion.assertTrue(true);
+						child3.log(LogStatus.PASS, "New Column has been added with new name");
 					}
 					else
 					{
 						Log4J.logp.info("New Column not added with new name");
 						softAssertion.assertTrue(false);
+						child3.log(LogStatus.FAIL, "New Column not added with new name");
 					}
 				}
 				else
 				{
 					Log4J.logp.info("New Column not added");
 					softAssertion.assertTrue(false);
+					child3.log(LogStatus.FAIL, "New Column not added");
 				}
 				
 				// Edit Log Sheet Columns
@@ -1881,11 +1899,13 @@ public class HomePage {
 				{
 					Log4J.logp.info("After Change Columns name New Column has been added with new name");
 					softAssertion.assertTrue(true);
+					child4.log(LogStatus.PASS, "After change columns name new column has been added with new name");
 				}
 				else
 				{
 					Log4J.logp.info("Column name not changed");
 					softAssertion.assertTrue(false);
+					child4.log(LogStatus.FAIL, "Column name not changed");
 				}
 				
 				// Replace Log Sheet Columns
@@ -1918,11 +1938,13 @@ public class HomePage {
 				{
 					Log4J.logp.info("After Replace Columns name New Column has been added with new name");
 					softAssertion.assertTrue(true);
+					child2.log(LogStatus.PASS, "After Replace Columns name new column has been added with new name");
 				}
 				else
 				{
 					Log4J.logp.info("Column name not Replaceed");
 					softAssertion.assertTrue(false);
+					child2.log(LogStatus.FAIL, "Column name not Replaceed");
 				}
 				
 				// Delete Column
@@ -1955,18 +1977,434 @@ public class HomePage {
 				{
 					Log4J.logp.info("Column has been deleted");
 					softAssertion.assertTrue(true);
+					child1.log(LogStatus.PASS, "Column has been deleted");
+					
 				}
 				else
 				{
 					Log4J.logp.info("Column not deleted");
 					softAssertion.assertTrue(false);
+					child1.log(LogStatus.FAIL, "Column not deleted");
 				}
 				
 				
 			}
 			catch(Exception e)
 			{
+				CommonLib.takeScreenshots();
 				e.printStackTrace();
+				softAssertion.assertTrue(false, "checkColumnsLogSheet Failed");
 			}
+			finally
+			{
+				if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+					child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+				if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+					child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+				if (child3.getRunStatus().toString().equalsIgnoreCase("unknown"))
+					child3.log(LogStatus.FAIL, "Failed for Unknown status.");
+				if (child4.getRunStatus().toString().equalsIgnoreCase("unknown"))
+					child4.log(LogStatus.FAIL, "Failed for Unknown status.");
+				
+				checkColumnsLogSheet.appendChild(child1);
+				checkColumnsLogSheet.appendChild(child2);
+				checkColumnsLogSheet.appendChild(child3);
+				checkColumnsLogSheet.appendChild(child4);
+
+				MainMethod.extent.endTest(child1);
+				MainMethod.extent.endTest(child2);
+				MainMethod.extent.endTest(child3);
+				MainMethod.extent.endTest(child4);
+
+				if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL") || child3.getRunStatus().toString().equalsIgnoreCase("FAIL") || child4.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+				{
+					checkColumnsLogSheet.log(LogStatus.FAIL, "checkColumnsLogSheet is failed.");
+				}
+				else
+				{
+					checkColumnsLogSheet.log(LogStatus.PASS, "checkColumnsLogSheet is passed.");
+				}
+				//NewLandingPage.appendChild(actionOption);
+				MainMethod.extent.endTest(checkColumnsLogSheet);
+
+				softAssertion.assertAll();
+				
+				//LoginLib.logout();.
+			}
+		}
+		
+		/**
+		 * 
+		 * This method is check analytics page 
+		 * 
+		 * */
+		@Test(description = "Check Analytics page",priority = 15)
+		public static void checkAnalytics()
+		{
+			//String[] strTableContents = {"Message","Usage","Score","Positivity","Negativity"};
+			String strDate;
+			boolean bstatus = false;
+			ExtentTest checkAnalytics = MainMethod.extent.startTest("Check Analytics Page").assignCategory("Regression");
+			ExtentTest child1 = null;
+			ExtentTest child2 = null;
+			ExtentTest child3 = null;
+			ExtentTest child4 = null;
+			ExtentTest child5 = null;
+			try
+			{
+				softAssertion = new SoftAssert();
+				
+				child1 = MainMethod.extent.startTest("Test ID 37 : Choose Analyticd Start and End Dates");
+				child2 = MainMethod.extent.startTest("Test ID 38 : Validate Message analysis for Aggregate");
+				child3 = MainMethod.extent.startTest("Test ID 39 : Validate Message analysis for Inbound");
+				child4 = MainMethod.extent.startTest("Test ID 40 : Validate Message analysis for Reply");
+				child5 = MainMethod.extent.startTest("Test ID 41 : Validate Message analysis for Composition");
+				
+				homePageWebE.ico_Analytics.click();
+				CommonLib.waitForObject(homePageWebE.txt_StartDate, "Visibility", 20);
+				
+				// Check with adding start Date and Edn Date
+				
+				homePageWebE.txt_StartDate.click();
+				Thread.sleep(2000);
+				
+				CommonLib.selectDateAnalytics("07/22/2018","");
+				
+				//JavascriptExecutor js = (JavascriptExecutor)driver; 
+				
+				//strDate = (String) js.executeScript("$('#startDateTimePicker').val()");
+				
+				strDate = homePageWebE.txt_StartDate.getAttribute("value");
+				System.out.println(strDate);
+				if(strDate.contains("07/22/2018"))
+				{
+					Log4J.logp.info("Start Date has been added");
+					softAssertion.assertTrue(true);
+					child1.log(LogStatus.PASS, "Start date has been added");
+				}
+				else
+				{
+					Log4J.logp.info("Start Date not added");
+					softAssertion.assertTrue(false);
+					child1.log(LogStatus.FAIL, "Start date not added");
+				}
+				
+				homePageWebE.txt_EndDate.click();
+				Thread.sleep(2000);
+				
+				CommonLib.selectDateAnalytics("07/25/2018","End");
+				
+				//strDate = (String) js.executeScript("$('#endDateTimePicker').val()");
+				
+				strDate = homePageWebE.txt_EndDate.getAttribute("value");
+				System.out.println(strDate);
+				if(strDate.contains("07/25/2018"))
+				{
+					Log4J.logp.info("End Date has been added");
+					softAssertion.assertTrue(true);
+					child1.log(LogStatus.PASS, "End date has been added");
+				}
+				else
+				{
+					Log4J.logp.info("End Date not added");
+					softAssertion.assertTrue(false);
+					child1.log(LogStatus.FAIL, "End date not added");
+				}
+				
+				CommonLib.scroll_Page(homePageWebE.analytics_Scroll, 1);
+				Thread.sleep(2000);
+				
+				// Check aggregate option
+				
+				homePageWebE.rdo_Aggregate.click();
+				Thread.sleep(2000);
+				
+				CommonLib.scroll_Page(homePageWebE.analytics_Scroll, 1);
+				Thread.sleep(2000);
+				
+				bstatus = HomePageLib.checkTableContents();
+				
+				if(bstatus == true)
+				{
+					Log4J.logp.info("Table and Contents has been displayed in Aggregate");
+					softAssertion.assertTrue(true);
+					child2.log(LogStatus.PASS, "Table and content has been displayed in Aggregate");
+				}
+				else
+				{
+					Log4J.logp.info("Table and Contents not displayed in Aggregate");
+					softAssertion.assertTrue(false);
+					child2.log(LogStatus.FAIL, "Table and content not displayed in Aggregate");
+				}
+				
+				// Check Inbound option
+				
+				CommonLib.scroll_Page_Up(homePageWebE.analytics_Scroll, 1);
+				Thread.sleep(2000);
+				
+				homePageWebE.rdo_Inbound.click();
+				Thread.sleep(2000);
+				
+				CommonLib.scroll_Page(homePageWebE.analytics_Scroll, 1);
+				Thread.sleep(2000);
+				
+				bstatus = HomePageLib.checkTableContents();
+				
+				if(bstatus == true)
+				{
+					Log4J.logp.info("Table and Contents has been displayed in Inbound");
+					softAssertion.assertTrue(true);
+					child3.log(LogStatus.PASS, "Table and content has been displayed in Inbound");
+				}
+				else
+				{
+					Log4J.logp.info("Table and Contents not displayed in Inbound");
+					softAssertion.assertTrue(false);
+					child3.log(LogStatus.FAIL, "Table and content not displayed in Inbound");
+				}
+				
+				// Check Reply option
+				
+				CommonLib.scroll_Page_Up(homePageWebE.analytics_Scroll, 1);
+				Thread.sleep(2000);
+				
+				homePageWebE.rdo_Reply.click();
+				Thread.sleep(2000);
+				
+				CommonLib.scroll_Page(homePageWebE.analytics_Scroll, 1);
+				Thread.sleep(2000);
+				
+				bstatus = HomePageLib.checkTableContents();
+				
+				if(bstatus == true)
+				{
+					Log4J.logp.info("Table and Contents has been displayed in Reply");
+					softAssertion.assertTrue(true);
+					child4.log(LogStatus.PASS, "Table and content has been displayed in Reply");
+				}
+				else
+				{
+					Log4J.logp.info("Table and Contents not displayed in Reply");
+					softAssertion.assertTrue(false);
+					child4.log(LogStatus.FAIL, "Table and content not displayed in Reply");
+				}
+				
+				// Check Compposition option
+				
+				CommonLib.scroll_Page_Up(homePageWebE.analytics_Scroll, 1);
+				Thread.sleep(2000);
+				
+				homePageWebE.rdo_Composition.click();
+				Thread.sleep(2000);
+				
+				CommonLib.scroll_Page(homePageWebE.analytics_Scroll, 1);
+				Thread.sleep(2000);
+				
+				bstatus = HomePageLib.checkTableContents();
+				
+				if(bstatus == true)
+				{
+					Log4J.logp.info("Table and Contents has been displayed in Composition");
+					softAssertion.assertTrue(true);
+					child5.log(LogStatus.PASS, "Table and content has been displayed in Composition");
+				}
+				else
+				{
+					Log4J.logp.info("Table and Contents not displayed in Composition");
+					softAssertion.assertTrue(false);
+					child5.log(LogStatus.FAIL, "Table and content not displayed in Composition");
+					
+				}
+				
+			}
+			catch(Exception e)
+			{
+				CommonLib.takeScreenshots();
+				e.printStackTrace();
+				softAssertion.assertTrue(false, "checkAnalytics Failed");
+			}
+			finally
+			{
+				if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+					child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+				if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+					child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+				if (child3.getRunStatus().toString().equalsIgnoreCase("unknown"))
+					child3.log(LogStatus.FAIL, "Failed for Unknown status.");
+				if (child4.getRunStatus().toString().equalsIgnoreCase("unknown"))
+					child4.log(LogStatus.FAIL, "Failed for Unknown status.");
+				if (child5.getRunStatus().toString().equalsIgnoreCase("unknown"))
+					child5.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+				checkAnalytics.appendChild(child1);
+				checkAnalytics.appendChild(child2);
+				checkAnalytics.appendChild(child3);
+				checkAnalytics.appendChild(child4);
+				checkAnalytics.appendChild(child5);
+
+				MainMethod.extent.endTest(child1);
+				MainMethod.extent.endTest(child2);
+				MainMethod.extent.endTest(child3);
+				MainMethod.extent.endTest(child4);
+				MainMethod.extent.endTest(child5);
+
+				if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL") || child3.getRunStatus().toString().equalsIgnoreCase("FAIL") || child4.getRunStatus().toString().equalsIgnoreCase("FAIL") || child5.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+				{
+					checkAnalytics.log(LogStatus.FAIL, "checkAnalytics is failed.");
+				}
+				else
+				{
+					checkAnalytics.log(LogStatus.PASS, "checkAnalytics is passed.");
+				}
+				//NewLandingPage.appendChild(actionOption);
+				MainMethod.extent.endTest(checkAnalytics);
+
+				softAssertion.assertAll();
+				
+				//LoginLib.logout();.
+			}
+		}
+		
+		/**
+		 * 
+		 * This method is check Reservation tab
+		 * 
+		 * */
+		@Test(description = "Check Reservation",priority = 16)
+		public static void checkReservation()
+		{
+			String strReservationId, strRoomNumber, strArrival, strDepart, strPhone, strEmail, strFirstName, strLastName;
+			ExtentTest checkReservation = MainMethod.extent.startTest("Check Reservation").assignCategory("Regression");
+			ExtentTest child1 = null;
+			ExtentTest child2 = null;
+			try
+			{
+				softAssertion = new SoftAssert();
+				
+				child1 = MainMethod.extent.startTest("Test ID 42 : Validate Number Reservation");
+				child2 = MainMethod.extent.startTest("Test ID 43 : Validate Add Reservation");
+				
+				homePageWebE.ico_Reservation.click();
+				CommonLib.waitForObject(homePageWebE.lbl_ReservationHeader, "visibility", 10);
+				
+				Properties properties = new Properties();
+				properties.load(new FileInputStream("src/main/resources/Properties/data.properties"));
+				strReservationId = properties.getProperty("ResevationId");
+				strRoomNumber = properties.getProperty("RoomNumber");
+				strFirstName = properties.getProperty("FirstName");
+				strLastName = properties.getProperty("LastName");
+				strDepart = properties.getProperty("depart");
+				strArrival = properties.getProperty("arrival");
+				strPhone = properties.getProperty("phone");
+				strEmail = properties.getProperty("email");
+				
+				if(CommonLib.checkElementPresent(homePageWebE.lbl_ReservationHeader))
+				{
+					Log4J.logp.info("Reservation count has been displayed in Reservation page");
+					softAssertion.assertTrue(true);
+					child1.log(LogStatus.PASS, "Reservation cound has been displayed in Reservation page");
+				}
+				else
+				{
+					Log4J.logp.info("Resevration count not displayed");
+					softAssertion.assertTrue(false);
+					child1.log(LogStatus.FAIL, "Reservation cound not displayed");
+				}
+				
+				homePageWebE.btn_Reservation.click();
+				CommonLib.waitForObject(homePageWebE.btn_Save, "visibility", 10);
+				
+				homePageWebE.txt_ReservationId.sendKeys(strReservationId);
+				Thread.sleep(2000);
+				homePageWebE.txt_RoomNumber.sendKeys(strRoomNumber);
+				Thread.sleep(2000);
+				homePageWebE.txt_FirstName.sendKeys(strFirstName);
+				Thread.sleep(2000);
+				homePageWebE.txt_LastName.sendKeys(strLastName);
+				Thread.sleep(2000);
+				homePageWebE.txt_Arrival.click();
+				Thread.sleep(2000);
+				
+				CommonLib.selectDateReservation(strArrival, "Arrival");
+				Thread.sleep(2000);
+				
+				homePageWebE.txt_Departure.click();
+				Thread.sleep(2000);
+				
+				CommonLib.selectDateReservation(strDepart, "Depart");
+				Thread.sleep(2000);
+				
+				homePageWebE.txt_Phone.sendKeys(strPhone);
+				Thread.sleep(2000);
+				
+				homePageWebE.txt_EmailID.sendKeys(strEmail);
+				Thread.sleep(2000);
+				
+				homePageWebE.btn_Save.click();
+				CommonLib.waitForObject(homePageWebE.lbl_ReservationID.get(0), "visibility", 20);
+				
+				if(homePageWebE.lbl_ReservationID.get(0).getText().trim().equals(strReservationId))
+				{
+					Log4J.logp.info("Reservation has been added in reservation table");
+					softAssertion.assertTrue(true);
+					child2.log(LogStatus.PASS, "Reservation has been added in reservation table");
+				}
+				else
+				{
+					Log4J.logp.info("Reservation not added");
+					softAssertion.assertTrue(false);
+					child2.log(LogStatus.FAIL, "Reservation not added");
+				}
+				
+				homePageWebE.chk_Reservation.get(0).click();
+				Thread.sleep(2000);
+				
+				homePageWebE.btn_Delete.click();
+				CommonLib.waitForObject(homePageWebE.btn_ConfirmDelete, "visibility", 10);
+				
+				homePageWebE.btn_ConfirmDelete.click();
+				Thread.sleep(5000);
+				CommonLib.waitForObject(loginWebE.lbl_UserName, "visibility", 30);
+			}
+			catch(Exception e)
+			{
+				CommonLib.takeScreenshots();
+				e.printStackTrace();
+				softAssertion.assertTrue(false, "checkLogSheet Failed");
+			}
+			finally
+			{
+				if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+					child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+				if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+					child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+				
+				checkReservation.appendChild(child1);
+				checkReservation.appendChild(child2);
+
+				MainMethod.extent.endTest(child1);
+				MainMethod.extent.endTest(child2);
+
+				if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+				{
+					checkReservation.log(LogStatus.FAIL, "checkLogSheet is failed.");
+				}
+				else
+				{
+					checkReservation.log(LogStatus.PASS, "checkLogSheet is passed.");
+				}
+				//NewLandingPage.appendChild(actionOption);
+				MainMethod.extent.endTest(checkReservation);
+
+				softAssertion.assertAll();
+				
+				//LoginLib.logout();.
+			}
+		}
+		
+		@AfterClass
+		public static void homePageAfterClass()
+		{
+			LoginLib.logout();
 		}
 }

@@ -11,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import library.CommonLib;
 import library.Log4J;
 
 public class ExecutionSetUp {
@@ -71,8 +72,8 @@ public class ExecutionSetUp {
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
-			
 			return false;
 		}
 	}
@@ -91,6 +92,7 @@ public class ExecutionSetUp {
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			return false;
 		}

@@ -89,6 +89,7 @@ public class LoginPage {
 		}
 		catch (Exception e) {
 			// TODO: handle exception
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "Test ID 1 : Login Failed");
 		}
@@ -157,6 +158,7 @@ public class LoginPage {
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			Log4J.logp.info("Failed : Test ID 3 : Forget Passowrd ?");
 			softAssertion.assertTrue(false,"Test ID 3 : Failed");
@@ -216,6 +218,7 @@ public class LoginPage {
 		}
 		catch(Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false,"checkLogout");
 		}

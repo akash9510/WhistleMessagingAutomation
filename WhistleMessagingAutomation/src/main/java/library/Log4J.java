@@ -60,6 +60,7 @@ public class Log4J {
 		}
 		catch (Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
 		}
 
