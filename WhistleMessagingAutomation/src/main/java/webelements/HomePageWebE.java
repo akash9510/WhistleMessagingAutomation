@@ -549,6 +549,10 @@ public class HomePageWebE {
 	@FindBy(xpath = "//div[@class='column ReservationsList__id']")
 	public List<WebElement> lbl_ReservationID;
 	
+	/** to get the list of Room NUmber */
+	@FindBy(xpath = "(//a[@class='ReservationsList__Columns']//div)[2]")
+	public WebElement lbl_RoomNumber;
+	
 	/** to get he list of Checkboxes */
 	@FindBy(xpath = "//div[@class='ReservationsList__select']//input")
 	public List<WebElement> chk_Reservation;
@@ -560,6 +564,10 @@ public class HomePageWebE {
 	/** to click on Confirm Delete button */
 	@FindBy(css = ".confirm.delete")
 	public WebElement btn_ConfirmDelete;
+	
+	/** to enter value in search bar */
+	@FindBy(id = "search")
+	public WebElement txt_SearchReservation;
 	
 	static HomePageWebE Instance = null;
 	

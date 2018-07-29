@@ -57,7 +57,7 @@ public class LoginPage {
 		ExtentTest Login = MainMethod.extent.startTest("Test ID 1 : Login","User should be able to Login in the application").assignCategory("Regression").assignCategory("LoginPage");
 		try
 		{
-			Log4J.logp.info("Started - Test ID 1 : Login");
+			Log4J.logp.info("***** Started : Login *****");
 			
 			softAssertion = new SoftAssert();
 			
@@ -85,7 +85,7 @@ public class LoginPage {
 				Login.log(LogStatus.FAIL, "Login Un - Successfull");
 			}
 			
-			Log4J.logp.info("Ended Test ID 1 : Login");
+			Log4J.logp.info("**** Ended : Login ****");
 		}
 		catch (Exception e) {
 			// TODO: handle exception
@@ -125,7 +125,7 @@ public class LoginPage {
 		ExtentTest ForgetPassword = MainMethod.extent.startTest("Test ID 3 : Forget Passowrd ?").assignCategory("Regression");
 		try
 		{
-			Log4J.logp.info("Started - Test ID 3 : Forget Passowrd ?");
+			Log4J.logp.info("**** Started : Forget Passowrd ? ****");
 			
 			softAssertion = new SoftAssert();
 			
@@ -154,7 +154,7 @@ public class LoginPage {
 				ForgetPassword.log(LogStatus.FAIL, "Not found any message");
 			}
 			
-			Log4J.logp.info("Ended - Test ID 3 : Forget Passowrd ?");
+			Log4J.logp.info("**** Ended : Forget Passowrd ? ****");
 		}
 		catch(Exception e)
 		{
@@ -195,6 +195,8 @@ public class LoginPage {
 		ExtentTest checkLogout = MainMethod.extent.startTest("Test ID 94 : Logout").assignCategory("Regression");
 		try
 		{
+			Log4J.logp.info("**** Started : checkLogout ****");
+			
 			softAssertion = new SoftAssert();
 			LoginLib.login();
 			Thread.sleep(2000);
@@ -213,7 +215,7 @@ public class LoginPage {
 				softAssertion.assertTrue(false);
 				checkLogout.log(LogStatus.FAIL, "Logout un - successfully");
 			}
-			
+			Log4J.logp.info("**** Ended : checkLogout ****");
 			
 		}
 		catch(Exception e)

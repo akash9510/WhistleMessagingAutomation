@@ -35,6 +35,8 @@ public class LoginWebE {
 	@FindBy(css = ".animated.slideInRight.center-align")
 	public WebElement lbl_SuccessMessage;
 	
+	
+	
 	static LoginWebE Instance = null;
 	
 	public static LoginWebE getInstance(WebDriver driver)
