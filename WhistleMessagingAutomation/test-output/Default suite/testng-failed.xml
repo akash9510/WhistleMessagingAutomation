@@ -3,18 +3,18 @@
 <suite name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="framework.MainMethod">
+      <class name="testscripts.HomePage">
         <methods>
-          <include name="driverStart"/>
+          <include name="startSurveyWithoutTemplate"/>
+          <include name="openLiveChat"/>
+          <include name="startConversation"/>
+          <include name="checkDropdownToggleBehavior"/>
+          <include name="startSurveyUsingSurveyTemplate"/>
+          <include name="beforeClassHomePage"/>
+          <include name="openDeleteConversation"/>
+          <include name="blockUnblockConversation"/>
         </methods>
-      </class> <!-- framework.MainMethod -->
-      <class name="testscripts.LoginPage">
-        <methods>
-          <include name="checkLogin"/>
-          <include name="loginAfterClass"/>
-          <include name="loginBeforeClass"/>
-        </methods>
-      </class> <!-- testscripts.LoginPage -->
+      </class> <!-- testscripts.HomePage -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

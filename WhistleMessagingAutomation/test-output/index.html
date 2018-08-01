@@ -23,7 +23,7 @@
     <div class="top-banner-root">
       <span class="top-banner-title-font">Test results</span>
       <br/>
-      <span class="top-banner-font-1">1 suite, 1 failed test</span>
+      <span class="top-banner-font-1">1 suite</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -37,7 +37,7 @@
         <div class="rounded-window">
           <div class="suite-header light-rounded-window-top">
             <a href="#" class="navigator-link" panel-name="suite-WhistleMessaging">
-              <span class="suite-name border-failed">WhistleMessaging</span>
+              <span class="suite-name border-passed">WhistleMessaging</span>
             </a> <!-- navigator-link -->
           </div> <!-- suite-header light-rounded-window-top -->
           <div class="navigator-suite-content">
@@ -90,21 +90,21 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">1 method, 1 failed,   </span>
+                    <span class="method-stats">1 method,   1 passed</span>
                   </li>
                   <li>
-                    <span class="method-list-title failed">Failed methods</span>
-                    <span class="show-or-hide-methods failed">
-                      <a href="#" panel-name="suite-WhistleMessaging" class="hide-methods failed suite-WhistleMessaging"> (hide)</a> <!-- hide-methods failed suite-WhistleMessaging -->
-                      <a href="#" panel-name="suite-WhistleMessaging" class="show-methods failed suite-WhistleMessaging"> (show)</a> <!-- show-methods failed suite-WhistleMessaging -->
+                    <span class="method-list-title passed">Passed methods</span>
+                    <span class="show-or-hide-methods passed">
+                      <a href="#" panel-name="suite-WhistleMessaging" class="hide-methods passed suite-WhistleMessaging"> (hide)</a> <!-- hide-methods passed suite-WhistleMessaging -->
+                      <a href="#" panel-name="suite-WhistleMessaging" class="show-methods passed suite-WhistleMessaging"> (show)</a> <!-- show-methods passed suite-WhistleMessaging -->
                     </span>
-                    <div class="method-list-content failed suite-WhistleMessaging">
+                    <div class="method-list-content passed suite-WhistleMessaging">
                       <span>
-                        <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-WhistleMessaging" title="testscripts.LoginPage" hash-for-method="checkLogin">checkLogin</a> <!-- method navigator-link -->
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-WhistleMessaging" title="testscripts.HomePage" hash-for-method="checkTemplates">checkTemplates</a> <!-- method navigator-link -->
                       </span>
                       <br/>
-                    </div> <!-- method-list-content failed suite-WhistleMessaging -->
+                    </div> <!-- method-list-content passed suite-WhistleMessaging -->
                   </li>
                 </ul>
               </div> <!-- suite-section-content -->
@@ -116,27 +116,23 @@
     <div class="wrapper">
       <div class="main-panel-root">
         <div panel-name="suite-WhistleMessaging" class="panel WhistleMessaging">
-          <div class="suite-WhistleMessaging-class-failed">
+          <div class="suite-WhistleMessaging-class-passed">
             <div class="main-panel-header rounded-window-top">
-              <img src="failed.png"/>
-              <span class="class-name">testscripts.LoginPage</span>
+              <img src="passed.png"/>
+              <span class="class-name">testscripts.HomePage</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="checkLogin">
-                  </a> <!-- checkLogin -->
-                  <span class="method-name">checkLogin</span>
-                  <div class="stack-trace">java.lang.AssertionError: expected [true] but found [false]
-	at testscripts.LoginPage.checkLogin(LoginPage.java:76)
-... Removed 28 stack frames
-</div> <!-- stack-trace -->
+                  <a name="checkTemplates">
+                  </a> <!-- checkTemplates -->
+                  <span class="method-name">checkTemplates</span>
                   <em>
-(Check User should be able to login in the applicatin)                  </em>
+(Check templates)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
-          </div> <!-- suite-WhistleMessaging-class-failed -->
+          </div> <!-- suite-WhistleMessaging-class-passed -->
         </div> <!-- panel WhistleMessaging -->
         <div panel-name="test-xml-WhistleMessaging" class="panel">
           <div class="main-panel-header rounded-window-top">
@@ -150,7 +146,11 @@
   &lt;test name=&quot;Regression suite 1&quot;&gt;
     &lt;classes&gt;
       &lt;class name=&quot;framework.MainMethod&quot;/&gt;
-      &lt;class name=&quot;testscripts.LoginPage&quot;/&gt;
+      &lt;class name=&quot;testscripts.HomePage&quot;&gt;
+        &lt;methods&gt;
+          &lt;include name=&quot;checkTemplates&quot;/&gt;
+        &lt;/methods&gt;
+      &lt;/class&gt; &lt;!-- testscripts.HomePage --&gt;
     &lt;/classes&gt;
   &lt;/test&gt; &lt;!-- Regression suite 1 --&gt;
 &lt;/suite&gt; &lt;!-- WhistleMessaging --&gt;
@@ -192,14 +192,14 @@ data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'checkLogin')
-data.setCell(0, 2, 'testscripts.LoginPage')
-data.setCell(0, 3, 30172);
+data.setCell(0, 1, 'checkTemplates')
+data.setCell(0, 2, 'testscripts.HomePage')
+data.setCell(0, 3, 24476);
 window.suiteTableData['WhistleMessaging']= { tableData: data, tableDiv: 'times-div-WhistleMessaging'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 30 seconds</span>
+              <span class="suite-total-time">Total running time: 24 seconds</span>
               <div id="times-div-WhistleMessaging">
               </div> <!-- times-div-WhistleMessaging -->
             </div> <!-- times-div -->
@@ -214,9 +214,60 @@ return data;
         </div> <!-- panel -->
         <div panel-name="ignored-methods-WhistleMessaging" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">0 ignored methods</span>
+            <span class="header-content">23 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
+            <div class="ignored-class-div">
+              <span class="ignored-class-name">testscripts.HomePage</span>
+              <div class="ignored-methods-div">
+                <span class="ignored-method-name">startSurveyWithoutTemplate</span>
+                <br/>
+                <span class="ignored-method-name">startConversation</span>
+                <br/>
+                <span class="ignored-method-name">checkDepartment</span>
+                <br/>
+                <span class="ignored-method-name">startCompaign</span>
+                <br/>
+                <span class="ignored-method-name">checkReservation</span>
+                <br/>
+                <span class="ignored-method-name">checkSettingMenu</span>
+                <br/>
+                <span class="ignored-method-name">uploadReservation</span>
+                <br/>
+                <span class="ignored-method-name">checkAnalytics</span>
+                <br/>
+                <span class="ignored-method-name">blockLiveConversation</span>
+                <br/>
+                <span class="ignored-method-name">createDeleteChannel</span>
+                <br/>
+                <span class="ignored-method-name">translateTeamMessage</span>
+                <br/>
+                <span class="ignored-method-name">blockUnblockConversation</span>
+                <br/>
+                <span class="ignored-method-name">checkEscalation</span>
+                <br/>
+                <span class="ignored-method-name">checkValidationReservation</span>
+                <br/>
+                <span class="ignored-method-name">openLiveChat</span>
+                <br/>
+                <span class="ignored-method-name">checkDirectChat</span>
+                <br/>
+                <span class="ignored-method-name">checkColumnsLogSheet</span>
+                <br/>
+                <span class="ignored-method-name">checkCompanyMenu</span>
+                <br/>
+                <span class="ignored-method-name">checkLogSheet</span>
+                <br/>
+                <span class="ignored-method-name">startSurveyUsingSurveyTemplate</span>
+                <br/>
+                <span class="ignored-method-name">checkDropdownToggleBehavior</span>
+                <br/>
+                <span class="ignored-method-name">openDeleteConversation</span>
+                <br/>
+                <span class="ignored-method-name">insertTemplate</span>
+                <br/>
+              </div> <!-- ignored-methods-div -->
+            </div> <!-- ignored-class-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
         <div panel-name="chronological-WhistleMessaging" class="panel">
@@ -232,27 +283,25 @@ return data;
               </div> <!-- configuration-suite before -->
             </div> <!-- chronological-class -->
             <div class="chronological-class">
-              <div class="chronological-class-name">testscripts.LoginPage</div> <!-- chronological-class-name -->
+              <div class="chronological-class-name">testscripts.HomePage</div> <!-- chronological-class-name -->
               <div class="configuration-class before">
-                <span class="method-name">loginBeforeClass</span>
-                <span class="method-start">6644 ms</span>
+                <span class="method-name">beforeClassHomePage</span>
+                <span class="method-start">6848 ms</span>
               </div> <!-- configuration-class before -->
               <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">checkLogin</span>
-                <span class="method-start">6645 ms</span>
+                <span class="method-name">checkTemplates</span>
+                <span class="method-start">16516 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-class after">
-                <span class="method-name">loginAfterClass</span>
-                <span class="method-start">36820 ms</span>
+                <span class="method-name">homePageAfterClass</span>
+                <span class="method-start">40993 ms</span>
               </div> <!-- configuration-class after -->
             </div> <!-- chronological-class -->
             <div class="chronological-class">
               <div class="chronological-class-name">framework.MainMethod</div> <!-- chronological-class-name -->
               <div class="configuration-suite after">
                 <span class="method-name">driverEnd</span>
-                <span class="method-start">36842 ms</span>
+                <span class="method-start">51540 ms</span>
               </div> <!-- configuration-suite after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

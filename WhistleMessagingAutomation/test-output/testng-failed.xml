@@ -5,7 +5,6 @@
     <classes>
       <class name="testscripts.LoginPage">
         <methods>
-          <include name="checkLogin"/>
           <include name="loginAfterClass"/>
           <include name="loginBeforeClass"/>
         </methods>
@@ -16,6 +15,13 @@
           <include name="driverStart"/>
         </methods>
       </class> <!-- framework.MainMethod -->
+      <class name="testscripts.HomePage">
+        <methods>
+          <include name="startCompaign"/>
+          <include name="beforeClassHomePage"/>
+          <include name="homePageAfterClass"/>
+        </methods>
+      </class> <!-- testscripts.HomePage -->
     </classes>
   </test> <!-- Regression suite 1(failed) -->
 </suite> <!-- Failed suite [WhistleMessaging] -->

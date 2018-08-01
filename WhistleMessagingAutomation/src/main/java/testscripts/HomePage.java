@@ -340,7 +340,7 @@ public class HomePage
 			{
 				checkDropdownToggleBehavior.log(LogStatus.PASS, "checkDropdownToggleBehavior is passed.");
 			}
-			//NewLandingPage.appendChild(actionOption);
+
 			MainMethod.extent.endTest(checkDropdownToggleBehavior);
 
 			softAssertion.assertAll();
@@ -382,7 +382,7 @@ public class HomePage
 			homePageWebE.btn_FileUpload.click();
 			Thread.sleep(2000);
 
-			CommonLib.uploadFile();
+			CommonLib.uploadFile("Campaigns-Sample.xlsx");
 			Thread.sleep(2000);
 
 			homePageWebE.btn_AddGuestCompaign.click();
@@ -778,7 +778,7 @@ public class HomePage
 			{
 				openDeleteConversation.log(LogStatus.PASS, "openDeleteConversation is passed.");
 			}
-			//NewLandingPage.appendChild(actionOption);
+
 			MainMethod.extent.endTest(openDeleteConversation);
 
 			softAssertion.assertAll();
@@ -897,7 +897,7 @@ public class HomePage
 			{
 				blockUnblockConversation.log(LogStatus.PASS, "blockUnblockConversation is passed.");
 			}
-			//NewLandingPage.appendChild(actionOption);
+
 			MainMethod.extent.endTest(blockUnblockConversation);
 
 			softAssertion.assertAll();
@@ -1014,7 +1014,7 @@ public class HomePage
 			{
 				openLiveChat.log(LogStatus.PASS, "openLiveChat is passed.");
 			}
-			//NewLandingPage.appendChild(actionOption);
+
 			MainMethod.extent.endTest(openLiveChat);
 
 			softAssertion.assertAll();
@@ -1098,7 +1098,7 @@ public class HomePage
 			{
 				blockLiveConversation.log(LogStatus.PASS, "blockUnblockConversation is passed.");
 			}
-			//NewLandingPage.appendChild(actionOption);
+
 			MainMethod.extent.endTest(blockLiveConversation);
 			softAssertion.assertAll();
 			//LoginLib.logout();.
@@ -1279,7 +1279,7 @@ public class HomePage
 			{
 				createDeleteChannel.log(LogStatus.PASS, "createDeleteChannel is passed.");
 			}
-			//NewLandingPage.appendChild(actionOption);
+
 			MainMethod.extent.endTest(createDeleteChannel);
 
 			softAssertion.assertAll();
@@ -1505,7 +1505,7 @@ public class HomePage
 			{
 				translateTeamMessage.log(LogStatus.PASS, "translateTeamMessage is passed.");
 			}
-			//NewLandingPage.appendChild(actionOption);
+
 			MainMethod.extent.endTest(translateTeamMessage);
 
 			softAssertion.assertAll();
@@ -1606,7 +1606,7 @@ public class HomePage
 			{
 				insertTemplate.log(LogStatus.PASS, "insertTemplate is passed.");
 			}
-			//NewLandingPage.appendChild(actionOption);
+
 			MainMethod.extent.endTest(insertTemplate);
 			softAssertion.assertAll();
 			//LoginLib.logout();.
@@ -1720,7 +1720,7 @@ public class HomePage
 			{
 				checkDirectChat.log(LogStatus.PASS, "checkDirectChat is passed.");
 			}
-			//NewLandingPage.appendChild(actionOption);
+
 			MainMethod.extent.endTest(checkDirectChat);
 
 			softAssertion.assertAll();
@@ -1823,7 +1823,7 @@ public class HomePage
 			{
 				checkLogSheet.log(LogStatus.PASS, "checkLogSheet is passed.");
 			}
-			//NewLandingPage.appendChild(actionOption);
+
 			MainMethod.extent.endTest(checkLogSheet);
 
 			softAssertion.assertAll();
@@ -2067,7 +2067,7 @@ public class HomePage
 			{
 				checkColumnsLogSheet.log(LogStatus.PASS, "checkColumnsLogSheet is passed.");
 			}
-			//NewLandingPage.appendChild(actionOption);
+
 			MainMethod.extent.endTest(checkColumnsLogSheet);
 
 			softAssertion.assertAll();
@@ -2302,7 +2302,7 @@ public class HomePage
 			{
 				checkAnalytics.log(LogStatus.PASS, "checkAnalytics is passed.");
 			}
-			//NewLandingPage.appendChild(actionOption);
+
 			MainMethod.extent.endTest(checkAnalytics);
 
 			softAssertion.assertAll();
@@ -2722,6 +2722,688 @@ public class HomePage
 			MainMethod.extent.endTest(checkValidationReservation);
 			softAssertion.assertAll();
 			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
+	 * This method is use for Upload reservation
+	 * 
+	 */
+	@Test(description = "Upload Reservation", priority = 18)
+	public static void uploadReservation()
+	{
+		ExtentTest uploadReservation = MainMethod.extent.startTest("Test ID 51 : Validate Reservation Uploaded ");
+		try
+		{
+			Log4J.logp.info("**** Started : uploadReservation ****");
+
+			softAssertion = new SoftAssert();
+
+			homePageWebE.ico_Reservation.click();
+			CommonLib.waitForObject(homePageWebE.btn_Reservation, "visibility", 10);
+
+			homePageWebE.btn_UploadReservation.click();
+			Thread.sleep(2000);
+
+			CommonLib.uploadFile("Reservations-Sample.xlsx");
+			Thread.sleep(5000);
+
+			if (homePageWebE.lbl_ReservationID.get(0).getText().trim().equals("1234567"))
+			{
+				Log4J.logp.info("Reservation added with uploading file");
+				softAssertion.assertTrue(false);
+				uploadReservation.log(LogStatus.PASS, "Reservation added with uploading file");
+			}
+			else
+			{
+				Log4J.logp.info("Reservation not added");
+				softAssertion.assertTrue(true);
+				uploadReservation.log(LogStatus.FAIL, "Reservation not added uploading file");
+			}
+
+			homePageWebE.chk_Reservation.get(0).click();
+			Thread.sleep(2000);
+
+			homePageWebE.btn_Delete.click();
+			CommonLib.waitForObject(homePageWebE.btn_ConfirmDelete, "visibility", 10);
+
+			homePageWebE.btn_ConfirmDelete.click();
+			Thread.sleep(5000);
+			CommonLib.waitForObject(loginWebE.lbl_UserName, "visibility", 30);
+
+			Log4J.logp.info("**** Ended : uploadReservation ****");
+		}
+		catch (Exception e)
+		{
+			// TODO: handle exception
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "Test ID 51 : Start Conversation Failed");
+		}
+		finally
+		{
+
+			if (uploadReservation.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				uploadReservation.log(LogStatus.FAIL, "Test ID 51 : Failed for Unknown status.");
+			MainMethod.extent.endTest(uploadReservation);
+
+			if (uploadReservation.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				uploadReservation.log(LogStatus.FAIL, "Test ID 51 : Upload Reservation is failed.");
+			}
+			else
+			{
+				uploadReservation.log(LogStatus.PASS, "Test ID 51 : Upload Reservation is passed.");
+			}
+
+			softAssertion.assertAll();
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
+	 * This method is check menu of Left Navigation panel of Company tab
+	 * 
+	 */
+	@Test(description = "Check Menu of Company tab", priority = 19)
+	public static void checkCompanyMenu()
+	{
+		String[] strCompanyMenu = { "Settings", "Departments", "Templates", "Autoresponders", "Campaign History", "Surveys", "Messaging Services", "Reports", "Integrations", "Automated Messages" };
+		ExtentTest checkCompanyMenu = MainMethod.extent.startTest("Test ID 52 : Validate Settings Tab");
+		try
+		{
+			Log4J.logp.info("**** Started : checkCompanyMenu ****");
+
+			softAssertion = new SoftAssert();
+
+			homePageWebE.ico_Company.click();
+			CommonLib.waitForObject(homePageWebE.lbl_CompanyMenu.get(0), "visibility", 10);
+
+			for (int i = 0; i < strCompanyMenu.length; i++)
+			{
+				if (strCompanyMenu[i].equals(homePageWebE.lbl_CompanyMenu.get(i).getText().trim()))
+				{
+					Log4J.logp.info(strCompanyMenu[i] + " has been displayed in Left navigation panel of Company page");
+					softAssertion.assertTrue(true);
+					checkCompanyMenu.log(LogStatus.PASS, strCompanyMenu[i] + " has been displayed in Left navigation panel of Company page");
+				}
+				else
+				{
+					Log4J.logp.info(strCompanyMenu[i] + " Not found in Left navigation panel of Company page");
+					softAssertion.assertTrue(false);
+					checkCompanyMenu.log(LogStatus.PASS, strCompanyMenu[i] + " Not found in Left navigation panel of Company page");
+				}
+			}
+
+			Log4J.logp.info("**** Ended : checkCompanyMenu ****");
+		}
+		catch (Exception e)
+		{
+			// TODO: handle exception
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "Test ID 52 : checkCompanyMenu Failed");
+		}
+		finally
+		{
+
+			if (checkCompanyMenu.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				checkCompanyMenu.log(LogStatus.FAIL, "Test ID 52 : Failed for Unknown status.");
+			MainMethod.extent.endTest(checkCompanyMenu);
+
+			if (checkCompanyMenu.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkCompanyMenu.log(LogStatus.FAIL, "Test ID 52 : checkCompanyMenu is failed.");
+			}
+			else
+			{
+				checkCompanyMenu.log(LogStatus.PASS, "Test ID 52 : checkCompanyMenu is passed.");
+			}
+
+			softAssertion.assertAll();
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
+	 * This method is check Setting menu of Left Navigation Panel in Company Page
+	 * 
+	 */
+	@Test(description = "Check Setting menu in Company Page", priority = 21)
+	public static void checkSettingMenu()
+	{
+		String strCompanyName, strActualTimeZone, strExpectedTimeZone;
+		ExtentTest checkSettingMenu = MainMethod.extent.startTest("Check Setting menu in Company Page").assignCategory("Regeression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		try
+		{
+			Log4J.logp.info("**** Started : checkSettingMenu ****");
+
+			child1 = MainMethod.extent.startTest("Test ID 53 : Validate Changing Company Name");
+			child2 = MainMethod.extent.startTest("Test ID : Validate Changing Timezone");
+
+			softAssertion = new SoftAssert();
+			strCompanyName = "New Company Name";
+
+			homePageWebE.ico_Company.click();
+			CommonLib.waitForObject(homePageWebE.lbl_LeftCompanyName, "visibility", 10);
+
+			homePageWebE.lbl_CompanyMenu.get(0).click();
+			CommonLib.waitForObject(homePageWebE.txt_CompanyDetails.get(0), "visibility", 10);
+
+			// Enter Company Name
+			homePageWebE.txt_CompanyDetails.get(0).click();
+			Thread.sleep(2000);
+			homePageWebE.txt_CompanyDetails.get(0).clear();
+			homePageWebE.txt_CompanyDetails.get(0).sendKeys(strCompanyName);
+			Thread.sleep(2000);
+
+			if (homePageWebE.lbl_LeftCompanyName.getText().trim().equals(strCompanyName))
+			{
+				Log4J.logp.info("Company name has been changed and updated on Left Navigation panel");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Comany name has been changes and updated on Left Navigation Panel");
+			}
+			else
+			{
+				Log4J.logp.info("Company name not updated on Left Navigation panel");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Company name not updated on Left Navigation Panel");
+			}
+
+			if (homePageWebE.lst_WhistleDropdown.getText().trim().equals(strCompanyName))
+			{
+				Log4J.logp.info("Company name has been changed and updated on Whistle Dropdown");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Comany name has been changes and updated on Whistle Dropdown");
+			}
+			else
+			{
+				Log4J.logp.info("Company name not updated on Whistle Dropdown");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Company name not updated on Whistle Dropdown");
+			}
+
+			// Change TimeZone
+			homePageWebE.txt_CompanyDetails.get(1).click();
+			Thread.sleep(2000);
+
+			strExpectedTimeZone = homePageWebE.lst_TimeZone.get(3).getText();
+
+			homePageWebE.lst_TimeZone.get(3).click();
+			Thread.sleep(2000);
+
+			strActualTimeZone = homePageWebE.txt_CompanyDetails.get(1).getAttribute("value");
+			strActualTimeZone = strActualTimeZone.replace("  ", " ");
+			System.out.println(strActualTimeZone.trim());
+			System.out.println(strExpectedTimeZone.trim());
+
+			if (strActualTimeZone.trim().equals(strExpectedTimeZone.trim()))
+			{
+				Log4J.logp.info("TimeZone has been updated");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "TimeZone has been updated");
+			}
+			else
+			{
+				Log4J.logp.info("Timezone not updated");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "Timezone not updated");
+			}
+
+			Log4J.logp.info("**** Ended : checkSettingMenu ****");
+		}
+		catch (Exception e)
+		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "checkSettingMenu Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			checkSettingMenu.appendChild(child1);
+			checkSettingMenu.appendChild(child2);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkSettingMenu.log(LogStatus.FAIL, "checkSettingMenu is failed.");
+			}
+			else
+			{
+				checkSettingMenu.log(LogStatus.PASS, "checkSettingMenu is passed.");
+			}
+
+			MainMethod.extent.endTest(checkSettingMenu);
+
+			softAssertion.assertAll();
+
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
+	 * This method is check Escalation in Setting Page
+	 * 
+	 */
+	@Test(description = "Check Escalation in Setting Page", priority = 22)
+	public static void checkEscalation()
+	{
+		String strName, strPhoneNo, strValue;
+		int intBefore, intAfter;
+		ExtentTest checkEscalation = MainMethod.extent.startTest("Check Escalation in Setting Page").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		ExtentTest child3 = null;
+		try
+		{
+			Log4J.logp.info("**** Started : checkEscalation ****");
+
+			child1 = MainMethod.extent.startTest("Test Id 60 : Validate adding message escalation");
+			child2 = MainMethod.extent.startTest("Test Id 61 : Validate editing message escalation");
+			child3 = MainMethod.extent.startTest("Test Id 62 : Validate deleting message escalation");
+
+			softAssertion = new SoftAssert();
+
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("src/main/resources/Properties/data.properties"));
+			strName = properties.getProperty("Name");
+			strPhoneNo = properties.getProperty("Phone");
+
+			homePageWebE.ico_Company.click();
+			CommonLib.waitForObject(homePageWebE.lbl_LeftCompanyName, "visibility", 10);
+
+			homePageWebE.lbl_CompanyMenu.get(0).click();
+			CommonLib.waitForObject(homePageWebE.txt_CompanyDetails.get(0), "visibility", 10);
+
+			CommonLib.scroll_Page(homePageWebE.scrollbar_Setting, 3);
+			Thread.sleep(2000);
+
+			intBefore = homePageWebE.lst_Escalation.size();
+
+			homePageWebE.btn_Escalation.click();
+			CommonLib.waitForObject(homePageWebE.txt_EscalationName, "visibility", 10);
+
+			homePageWebE.txt_EscalationName.sendKeys(strName);
+			Thread.sleep(2000);
+
+			homePageWebE.txt_EscalationPhone.sendKeys(strPhoneNo);
+			Thread.sleep(2000);
+
+			homePageWebE.chk_Toggle.get(0).click();
+			Thread.sleep(2000);
+
+			homePageWebE.btn_EscalationConfirm.click();
+			Thread.sleep(4000);
+
+			intAfter = homePageWebE.lst_Escalation.size();
+
+			System.out.println(intAfter);
+			System.out.println(intBefore + 1);
+
+			if (intAfter == intBefore + 1)
+			{
+				Log4J.logp.info("Escalation has been added in Eacalation table");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Escalation has been added in Escalation table");
+			}
+			else
+			{
+				Log4J.logp.info("Escalation not added in Eacalation table");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Escalation not added in Escalation table");
+			}
+
+			// Edit Escalation
+
+			CommonLib.scroll_Page(homePageWebE.scrollbar_Setting, 2);
+			Thread.sleep(2000);
+
+			strName = properties.getProperty("EditName");
+			strPhoneNo = properties.getProperty("EditPhone");
+
+			homePageWebE.btn_EscalationEdit.get(intAfter - 1).click();
+			CommonLib.waitForObject(homePageWebE.txt_EscalationName, "visibility", 10);
+
+			homePageWebE.txt_EscalationName.clear();
+			homePageWebE.txt_EscalationName.sendKeys(strName);
+			Thread.sleep(2000);
+
+			homePageWebE.txt_EscalationPhone.clear();
+			homePageWebE.txt_EscalationPhone.sendKeys(strPhoneNo);
+			Thread.sleep(2000);
+
+			homePageWebE.btn_EscalationConfirm.click();
+			Thread.sleep(5000);
+
+			WebElement ele = driver.findElement(By.xpath("(((//div[@class='Settings CompanyContainer']//table)[3]//tbody//tr)[" + intAfter + "]//td)[1]"));
+			strValue = ele.getText().trim();
+
+			System.out.println(strValue);
+			System.out.println(strName);
+
+			if (strValue.equals(strName))
+			{
+				Log4J.logp.info("Escalation has been edited");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "Escalation has been edited");
+			}
+			else
+			{
+				Log4J.logp.info("Escalation not edited");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "Escalation not edited");
+			}
+
+			// Remove Escalation
+
+			homePageWebE.btn_EscalationRemove.get(intAfter - 1).click();
+			Thread.sleep(3000);
+
+			homePageWebE.btn_EscalationRemoveConfirm.click();
+			Thread.sleep(5000);
+
+			intAfter = homePageWebE.lst_Escalation.size();
+
+			if (intAfter == intBefore)
+			{
+				Log4J.logp.info("Escalation has been removed from Eacalation table");
+				softAssertion.assertTrue(true);
+				child3.log(LogStatus.PASS, "Escalation has been removed from Escalation table");
+			}
+			else
+			{
+				Log4J.logp.info("Escalation not removed from Eacalation table");
+				softAssertion.assertTrue(false);
+				child3.log(LogStatus.FAIL, "Escalation not removed from Escalation table");
+			}
+
+			Log4J.logp.info("**** Ended : checkEscalation ****");
+		}
+		catch (Exception e)
+		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "checkEscalation Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child3.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child3.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			checkEscalation.appendChild(child1);
+			checkEscalation.appendChild(child2);
+			checkEscalation.appendChild(child3);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+			MainMethod.extent.endTest(child3);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL") || child3.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkEscalation.log(LogStatus.FAIL, "checkEscalation is failed.");
+			}
+			else
+			{
+				checkEscalation.log(LogStatus.PASS, "checkEscalation is passed.");
+			}
+
+			MainMethod.extent.endTest(checkEscalation);
+
+			softAssertion.assertAll();
+
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
+	 * This method is check Department in Setting Page
+	 * 
+	 */
+	@Test(description = "Check Department", priority = 23)
+	public static void checkDepartment()
+	{
+		String strDepartment;
+		int intBeforeSize, intAfterSize, intSize;
+		ExtentTest checkDepartment = MainMethod.extent.startTest("Check Department");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		try
+		{
+			Log4J.logp.info("**** Started : checkDepartment ****");
+
+			child1 = MainMethod.extent.startTest("Test ID 63 : Validate setting default department to tag new message without a department");
+			child2 = MainMethod.extent.startTest("Test ID 64 : Validate adding department name");
+
+			softAssertion = new SoftAssert();
+
+			homePageWebE.ico_Company.click();
+			CommonLib.waitForObject(homePageWebE.lbl_LeftCompanyName, "visibility", 10);
+
+			homePageWebE.lbl_CompanyMenu.get(1).click();
+			CommonLib.waitForObject(homePageWebE.txt_Department, "visibility", 10);
+
+			// Add Department
+
+			strDepartment = "Test Department";
+
+			intBeforeSize = homePageWebE.lst_Department.size();
+
+			homePageWebE.txt_Department.clear();
+			homePageWebE.txt_Department.sendKeys(strDepartment);
+			Thread.sleep(2000);
+
+			homePageWebE.btn_DepartmentSubmit.click();
+			Thread.sleep(3000);
+
+			intAfterSize = homePageWebE.lst_Department.size();
+
+			System.out.println(intAfterSize);
+			System.out.println(intBeforeSize);
+
+			if (intAfterSize == intBeforeSize + 1)
+			{
+				Log4J.logp.info("Department has been added");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "Department has been added");
+			}
+			else
+			{
+				Log4J.logp.info("Department not added");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "Department not added");
+			}
+
+			Thread.sleep(3000);
+
+			// Set Default Department
+
+			homePageWebE.lst_DepartmentDropdown.click();
+			Thread.sleep(2000);
+
+			WebElement ele = driver.findElement(By.xpath("//ul[contains(@id,'select-options')]//span[text()='" + strDepartment + "']"));
+			ele.click();
+			Thread.sleep(1000);
+
+			System.out.println(homePageWebE.lbl_DefaultMessage.getText().trim());
+
+			if (homePageWebE.lbl_DefaultMessage.getText().trim().equals(strDepartment + " set as default department."))
+			{
+				Log4J.logp.info("Department has been set as default");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Department has been set as default");
+			}
+			else
+			{
+				Log4J.logp.info("Department not set as default");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Department not set as default");
+			}
+
+			homePageWebE.lst_DepartmentDropdown.click();
+			Thread.sleep(2000);
+
+			homePageWebE.lbl_DepartmentList.get(0).click();
+			Thread.sleep(2000);
+
+			ele = driver.findElement(By.xpath("//div[text()='" + strDepartment + "']//i"));
+			ele.click();
+
+			homePageWebE.btn_ConfirmDepartment.click();
+			Thread.sleep(3000);
+
+			Log4J.logp.info("**** Ended : checkDepartment ****");
+		}
+		catch (Exception e)
+		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "checkDepartment Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			checkDepartment.appendChild(child1);
+			checkDepartment.appendChild(child2);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkDepartment.log(LogStatus.FAIL, "checkDepartment is failed.");
+			}
+			else
+			{
+				checkDepartment.log(LogStatus.PASS, "checkDepartment is passed.");
+			}
+
+			MainMethod.extent.endTest(checkDepartment);
+
+			softAssertion.assertAll();
+
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
+	 * This method is check Templates
+	 * 
+	 */
+	@Test(description = "Check templates", priority = 24)
+	public static void checkTemplates()
+	{
+		int intBefore, intAfter;
+		try
+		{
+			Log4J.logp.info("**** Started : checkTemplates ****");
+
+			softAssertion = new SoftAssert();
+
+			homePageWebE.ico_Company.click();
+			CommonLib.waitForObject(homePageWebE.lbl_LeftCompanyName, "visibility", 10);
+
+			homePageWebE.lbl_CompanyMenu.get(2).click();
+			CommonLib.waitForObject(homePageWebE.btn_NewTemplate, "visibility", 10);
+
+			intBefore = homePageWebE.lbl_TemplateTitle.size();
+
+			homePageWebE.btn_NewTemplate.click();
+			CommonLib.waitForObject(homePageWebE.txt_TemplateTitle, "visibility", 10);
+
+			homePageWebE.txt_TemplateTitle.clear();
+			homePageWebE.txt_TemplateTitle.sendKeys("New Test Template");
+			Thread.sleep(2000);
+
+			homePageWebE.txt_TemplateMessage.clear();
+			homePageWebE.txt_TemplateMessage.sendKeys("New Test Message");
+			Thread.sleep(2000);
+
+			homePageWebE.btn_EscalationConfirm.click();
+			Thread.sleep(3000);
+
+			intAfter = homePageWebE.lbl_TemplateTitle.size();
+
+			if (intAfter == intBefore + 1)
+			{
+				Log4J.logp.info("Template has been added");
+				softAssertion.assertTrue(true);
+			}
+			else
+			{
+				Log4J.logp.info("Template not added");
+				softAssertion.assertTrue(false);
+			}
+
+			// Editing template
+
+			CommonLib.scroll_Page(homePageWebE.scrollbar_Templates, 6);
+			Thread.sleep(3000);
+
+			homePageWebE.lbl_TemplateTitle.get(intAfter - 1).clear();
+			homePageWebE.lbl_TemplateTitle.get(intAfter - 1).sendKeys("Edit New Template");
+			Thread.sleep(2000);
+			String strValue = homePageWebE.lbl_TemplateTitle.get(intAfter - 1).getAttribute("value");
+
+			if (strValue.equals("Edit New Template"))
+			{
+				Log4J.logp.info("Template has been edited successfully");
+				softAssertion.assertTrue(true);
+			}
+			else
+			{
+				Log4J.logp.info("Template not edited successfully");
+				softAssertion.assertTrue(false);
+			}
+
+			// Remove template
+
+			homePageWebE.ico_RemoveTemplate.get(intAfter - 1).click();
+			Thread.sleep(2000);
+
+			homePageWebE.btn_ConfirmDepartment.click();
+			Thread.sleep(3000);
+
+			intAfter = homePageWebE.lbl_TemplateTitle.size();
+
+			if (intAfter == intBefore)
+			{
+				Log4J.logp.info("Template has been removed");
+				softAssertion.assertTrue(true);
+			}
+			else
+			{
+				Log4J.logp.info("Template not removed");
+				softAssertion.assertTrue(false);
+			}
+
+			Log4J.logp.info("**** Ended : checkTemplates ****");
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 
