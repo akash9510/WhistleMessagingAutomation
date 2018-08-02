@@ -2876,15 +2876,20 @@ public class HomePage
 	public static void checkSettingMenu()
 	{
 		String strCompanyName, strActualTimeZone, strExpectedTimeZone;
+		int intBefore, intAfter;
 		ExtentTest checkSettingMenu = MainMethod.extent.startTest("Check Setting menu in Company Page").assignCategory("Regeression");
 		ExtentTest child1 = null;
 		ExtentTest child2 = null;
+		ExtentTest child3 = null;
+		ExtentTest child4 = null;
 		try
 		{
 			Log4J.logp.info("**** Started : checkSettingMenu ****");
 
 			child1 = MainMethod.extent.startTest("Test ID 53 : Validate Changing Company Name");
-			child2 = MainMethod.extent.startTest("Test ID : Validate Changing Timezone");
+			child2 = MainMethod.extent.startTest("Test ID 54 : Validate Changing Timezone");
+			child3 = MainMethod.extent.startTest("Test ID 58 : Validate deleting department");
+			child4 = MainMethod.extent.startTest("Test ID 59 : Validate adding department");
 
 			softAssertion = new SoftAssert();
 			strCompanyName = "New Company Name";
@@ -2894,11 +2899,13 @@ public class HomePage
 
 			homePageWebE.lbl_CompanyMenu.get(0).click();
 			CommonLib.waitForObject(homePageWebE.txt_CompanyDetails.get(0), "visibility", 10);
+			Thread.sleep(2000);
 
 			// Enter Company Name
 			homePageWebE.txt_CompanyDetails.get(0).click();
-			Thread.sleep(2000);
+			//Thread.sleep(2000);
 			homePageWebE.txt_CompanyDetails.get(0).clear();
+			Thread.sleep(1000);
 			homePageWebE.txt_CompanyDetails.get(0).sendKeys(strCompanyName);
 			Thread.sleep(2000);
 
@@ -2955,9 +2962,59 @@ public class HomePage
 				child2.log(LogStatus.FAIL, "Timezone not updated");
 			}
 
+			// Add Department
+
+			CommonLib.scroll_Page(homePageWebE.scrollbar_Setting, 1);
+			Thread.sleep(2000);
+
+			intBefore = homePageWebE.lbl_DepartmentCount.size();
+
+			homePageWebE.btn_AddDepartment.get(0).click();
+			Thread.sleep(2000);
+
+			homePageWebE.lnk_Department.click();
+			Thread.sleep(2000);
+
+			intAfter = homePageWebE.lbl_DepartmentCount.size();
+
+			if (intAfter == intBefore + 1)
+			{
+				Log4J.logp.info("Department has been added in Setting page");
+				softAssertion.assertTrue(true);
+				child4.log(LogStatus.PASS, "Department has been added in setting page");
+			}
+			else
+			{
+				Log4J.logp.info("Department not added in Setting page");
+				softAssertion.assertTrue(false);
+				child4.log(LogStatus.FAIL, "Department not added in setting page");
+			}
+
+			// Remove Department
+
+			homePageWebE.ico_RemoveDepartment.get(intAfter - 1).click();
+			Thread.sleep(2000);
+
+			intAfter = homePageWebE.lbl_DepartmentCount.size();
+
+			if (intAfter == intBefore)
+			{
+				Log4J.logp.info("Department has been removed");
+				softAssertion.assertTrue(true);
+				child3.log(LogStatus.PASS, "Department has been removed");
+			}
+			else
+			{
+				Log4J.logp.info("Department not removed from Setting page");
+				softAssertion.assertTrue(false);
+				child3.log(LogStatus.FAIL, "Department not removed");
+			}
+
 			Log4J.logp.info("**** Ended : checkSettingMenu ****");
 		}
-		catch (Exception e)
+		catch (
+
+		Exception e)
 		{
 			CommonLib.takeScreenshots();
 			e.printStackTrace();
@@ -2969,14 +3026,22 @@ public class HomePage
 				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
 			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
 				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child3.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child3.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child4.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child4.log(LogStatus.FAIL, "Failed for Unknown status.");
 
 			checkSettingMenu.appendChild(child1);
 			checkSettingMenu.appendChild(child2);
+			checkSettingMenu.appendChild(child3);
+			checkSettingMenu.appendChild(child4);
 
 			MainMethod.extent.endTest(child1);
 			MainMethod.extent.endTest(child2);
+			MainMethod.extent.endTest(child3);
+			MainMethod.extent.endTest(child4);
 
-			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL") || child3.getRunStatus().toString().equalsIgnoreCase("FAIL") || child4.getRunStatus().toString().equalsIgnoreCase("FAIL"))
 			{
 				checkSettingMenu.log(LogStatus.FAIL, "checkSettingMenu is failed.");
 			}
@@ -3316,9 +3381,20 @@ public class HomePage
 	public static void checkTemplates()
 	{
 		int intBefore, intAfter;
+		String strEmoji, strActualEmoji;
+		ExtentTest checkTemplates = MainMethod.extent.startTest("Check Templates").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		ExtentTest child3 = null;
+		ExtentTest child4 = null;
 		try
 		{
 			Log4J.logp.info("**** Started : checkTemplates ****");
+
+			child1 = MainMethod.extent.startTest("Test ID 65 : Validate adding template");
+			child2 = MainMethod.extent.startTest("Test ID 66 : Validate deleting template");
+			child3 = MainMethod.extent.startTest("Test ID 67 : Validate adding emoji");
+			child4 = MainMethod.extent.startTest("Test ID 68 : Validate editing template");
 
 			softAssertion = new SoftAssert();
 
@@ -3350,11 +3426,13 @@ public class HomePage
 			{
 				Log4J.logp.info("Template has been added");
 				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "New Template has beena added");
 			}
 			else
 			{
 				Log4J.logp.info("Template not added");
 				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Template not added+");
 			}
 
 			// Editing template
@@ -3371,11 +3449,49 @@ public class HomePage
 			{
 				Log4J.logp.info("Template has been edited successfully");
 				softAssertion.assertTrue(true);
+				child4.log(LogStatus.PASS, "Template has been edited successfully");
 			}
 			else
 			{
 				Log4J.logp.info("Template not edited successfully");
 				softAssertion.assertTrue(false);
+				child4.log(LogStatus.FAIL, "Template not edited successfully");
+			}
+
+			// Add Emojis
+			CommonLib.scroll_Page(homePageWebE.scrollbar_Templates, 1);
+			Thread.sleep(3000);
+
+			homePageWebE.ico_Emojis.get(intAfter - 1).click();
+			Thread.sleep(2000);
+
+			homePageWebE.ico_Smiley.click();
+			Thread.sleep(2000);
+
+			Actions actions = new Actions(driver);
+			actions.moveToElement(homePageWebE.ico_SubEmojis.get(0)).build().perform();
+
+			strEmoji = homePageWebE.lbl_EmojiText.getText().trim();
+
+			homePageWebE.ico_SubEmojis.get(0).click();
+			Thread.sleep(2000);
+
+			strActualEmoji = homePageWebE.lbl_TemplateMessage.get(intAfter - 1).getText().trim();
+
+			System.out.println(strActualEmoji);
+			System.out.println(strEmoji);
+
+			if (strActualEmoji.contains(strEmoji))
+			{
+				Log4J.logp.info("Emoji has been added");
+				softAssertion.assertTrue(true);
+				child3.log(LogStatus.PASS, "Emoji has been added");
+			}
+			else
+			{
+				Log4J.logp.info("Emoji not added");
+				softAssertion.assertTrue(false);
+				child3.log(LogStatus.FAIL, "Emoji not added");
 			}
 
 			// Remove template
@@ -3392,18 +3508,55 @@ public class HomePage
 			{
 				Log4J.logp.info("Template has been removed");
 				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "Template has been removed");
 			}
 			else
 			{
 				Log4J.logp.info("Template not removed");
 				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "Template not removed");
 			}
 
 			Log4J.logp.info("**** Ended : checkTemplates ****");
 		}
 		catch (Exception e)
 		{
+			CommonLib.takeScreenshots();
 			e.printStackTrace();
+			softAssertion.assertTrue(false, "checkTemplates Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child3.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child3.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child4.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child4.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			checkTemplates.appendChild(child1);
+			checkTemplates.appendChild(child2);
+			checkTemplates.appendChild(child3);
+			checkTemplates.appendChild(child4);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+			MainMethod.extent.endTest(child3);
+			MainMethod.extent.endTest(child4);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL") || child3.getRunStatus().toString().equalsIgnoreCase("FAIL") || child4.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkTemplates.log(LogStatus.FAIL, "checkTemplates is failed.");
+			}
+			else
+			{
+				checkTemplates.log(LogStatus.PASS, "checkTemplates is passed.");
+			}
+			MainMethod.extent.endTest(checkTemplates);
+			softAssertion.assertAll();
+			//LoginLib.logout();.
 		}
 	}
 

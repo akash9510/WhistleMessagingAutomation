@@ -28,7 +28,7 @@
        <include name="checkLogSheet" />
        <include name="checkColumnsLogSheet" />
        <include name="checkAnalytics" />-->
-       <include name="checkTemplates" />
+       <include name="checkSettingMenu" />
       </methods>
       </class>
     </classes>

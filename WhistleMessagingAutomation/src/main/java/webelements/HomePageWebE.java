@@ -699,6 +699,38 @@ public class HomePageWebE
 	@FindBy(css = ".Panel.TemplatesPanel")
 	public WebElement		scrollbar_Templates;
 
+	/** to click on Emoji icon */
+	@FindBy(css = ".material-icons.EmojiPicker__button")
+	public List<WebElement>	ico_Emojis;
+
+	/** to click on Smiley and People icon */
+	@FindBy(xpath = "//span[@title='Smileys & People']")
+	public WebElement		ico_Smiley;
+
+	/** tom click on emojis */
+	@FindBy(xpath = "//div[@data-name='Smileys & People']/..//span[@class='emoji-mart-emoji']")
+	public List<WebElement>	ico_SubEmojis;
+
+	/** to gettext of emoji */
+	@FindBy(xpath = "//div[@class='emoji-mart-preview-data']//span")
+	public WebElement		lbl_EmojiText;
+
+	/** to click on Add Department button */
+	@FindBy(css = ".chip.selected.add")
+	public List<WebElement>	btn_AddDepartment;
+
+	/** to click on Department */
+	@FindBy(xpath = "//ul[@class='dropdown-content active']//span")
+	public WebElement		lnk_Department;
+
+	/** to check count of Department */
+	@FindBy(xpath = "(//td[@class='user-tags'])[1]//div[@class='chip undefined']")
+	public List<WebElement>	lbl_DepartmentCount;
+
+	/** to click on remove icon of Department */
+	@FindBy(xpath = "(//td[@class='user-tags'])[1]//div[@class='chip undefined']//i")
+	public List<WebElement>	ico_RemoveDepartment;
+
 	static HomePageWebE		Instance	= null;
 
 	public static HomePageWebE getInstance(WebDriver driver)
