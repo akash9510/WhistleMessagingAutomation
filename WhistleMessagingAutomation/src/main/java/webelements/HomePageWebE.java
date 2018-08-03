@@ -731,6 +731,30 @@ public class HomePageWebE
 	@FindBy(xpath = "(//td[@class='user-tags'])[1]//div[@class='chip undefined']//i")
 	public List<WebElement>	ico_RemoveDepartment;
 
+	/** to enter value in AutoResponder textbox */
+	@FindBy(id = "textarea1")
+	public WebElement		txt_AutoResponders;
+
+	/** to click on Me tab */
+	@FindBy(id = "me-tab")
+	public WebElement		ico_Me;
+
+	/** to click on Left nevigation menu */
+	@FindBy(css = ".NavigationSidebar__ListItem > a")
+	public List<WebElement>	lnk_MeMenu;
+
+	/** to check help desk text */
+	@FindBy(id = "title-text")
+	public WebElement		lbl_Helpdesk;
+
+	/** to click on Notification toggle */
+	@FindBy(xpath = "//div[@class='MiddleContainer MiddleContainer--fullwidth']//input[@id='notifications']")
+	public WebElement		ico_MeNotification;
+
+	/** to check background color of Notification */
+	@FindBy(xpath = "(//div[@class='MiddleContainer MiddleContainer--fullwidth']//input[@id='notifications']/..//div[contains(@style,'background-color')])[1]")
+	public WebElement		lbl_MeNotificationBackground;
+
 	static HomePageWebE		Instance	= null;
 
 	public static HomePageWebE getInstance(WebDriver driver)

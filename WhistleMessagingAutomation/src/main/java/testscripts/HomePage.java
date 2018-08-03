@@ -2730,7 +2730,7 @@ public class HomePage
 	 * This method is use for Upload reservation
 	 * 
 	 */
-	@Test(description = "Upload Reservation", priority = 18)
+	@Test(description = "Upload Reservation", priority = 30)
 	public static void uploadReservation()
 	{
 		ExtentTest uploadReservation = MainMethod.extent.startTest("Test ID 51 : Validate Reservation Uploaded ");
@@ -2752,13 +2752,13 @@ public class HomePage
 			if (homePageWebE.lbl_ReservationID.get(0).getText().trim().equals("1234567"))
 			{
 				Log4J.logp.info("Reservation added with uploading file");
-				softAssertion.assertTrue(false);
+				softAssertion.assertTrue(true);
 				uploadReservation.log(LogStatus.PASS, "Reservation added with uploading file");
 			}
 			else
 			{
 				Log4J.logp.info("Reservation not added");
-				softAssertion.assertTrue(true);
+				softAssertion.assertTrue(false);
 				uploadReservation.log(LogStatus.FAIL, "Reservation not added uploading file");
 			}
 
@@ -3555,6 +3555,317 @@ public class HomePage
 				checkTemplates.log(LogStatus.PASS, "checkTemplates is passed.");
 			}
 			MainMethod.extent.endTest(checkTemplates);
+			softAssertion.assertAll();
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
+	 * To check Auto Responders
+	 * 
+	 */
+	@Test(description = "Check Autoresponders text", priority = 25)
+	public static void checkAutoResponders()
+	{
+		String strValue;
+		ExtentTest checkAutoResponders = MainMethod.extent.startTest("Test ID 69 : Validate editing AutoResponders Message");
+		try
+		{
+			Log4J.logp.info("**** Started : checkAutoResponders ****");
+
+			strValue = "Test AutoResponders";
+
+			softAssertion = new SoftAssert();
+
+			homePageWebE.ico_Company.click();
+			CommonLib.waitForObject(homePageWebE.lbl_LeftCompanyName, "visibility", 10);
+
+			homePageWebE.lbl_CompanyMenu.get(3).click();
+			CommonLib.waitForObject(homePageWebE.txt_AutoResponders, "visibility", 10);
+
+			homePageWebE.txt_AutoResponders.clear();
+			homePageWebE.txt_AutoResponders.sendKeys(strValue);
+			Thread.sleep(2000);
+
+			driver.navigate().refresh();
+			CommonLib.waitForObject(homePageWebE.txt_AutoResponders, "visibility", 10);
+			Thread.sleep(2000);
+
+			if (homePageWebE.txt_AutoResponders.getText().trim().equals(strValue))
+			{
+				Log4J.logp.info("Auto Responders edited successfully");
+				softAssertion.assertTrue(true);
+				checkAutoResponders.log(LogStatus.PASS, "AutoResponders edited successfully");
+			}
+			else
+			{
+				Log4J.logp.info("Auto Responders not edited");
+				softAssertion.assertTrue(false);
+				checkAutoResponders.log(LogStatus.FAIL, "Auto Responders not edited");
+			}
+
+			Log4J.logp.info("**** Ended : checkAutoResponders ****");
+		}
+		catch (Exception e)
+		{
+			// TODO: handle exception
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "Test ID 69 : checkAutoResponders Failed");
+		}
+		finally
+		{
+
+			if (checkAutoResponders.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				checkAutoResponders.log(LogStatus.FAIL, "Test ID 69 : Failed for Unknown status.");
+			MainMethod.extent.endTest(checkAutoResponders);
+
+			if (checkAutoResponders.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkAutoResponders.log(LogStatus.FAIL, "Test ID 69 : checkCompanyMenu is failed.");
+			}
+			else
+			{
+				checkAutoResponders.log(LogStatus.PASS, "Test ID 69 : checkCompanyMenu is passed.");
+			}
+
+			softAssertion.assertAll();
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
+	 * This method is check Me tab
+	 * 
+	 */
+	@Test(description = "Check Me tab", priority = 26)
+	public static void checkMeTab()
+	{
+		String strBackground;
+		ExtentTest checkMeTab = MainMethod.extent.startTest("Check Me tab").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		ExtentTest child3 = null;
+		ExtentTest child4 = null;
+		ExtentTest child5 = null;
+		ExtentTest child6 = null;
+		try
+		{
+			Log4J.logp.info("**** Started : checkMeTab ****");
+
+			child1 = MainMethod.extent.startTest("Test ID 89 : Validate Notifcation ");
+			child2 = MainMethod.extent.startTest("Test ID 90 : Validate Privacy Policy");
+			child3 = MainMethod.extent.startTest("Test ID 91 : Validate Term of Service");
+			child4 = MainMethod.extent.startTest("Test ID 92 : Validate Privacy Policy");
+			child5 = MainMethod.extent.startTest("Test ID 93 : Validate Helpdesk");
+			child6 = MainMethod.extent.startTest("Test ID 94 : Validate Logout");
+
+			softAssertion = new SoftAssert();
+
+			homePageWebE.ico_Me.click();
+			Thread.sleep(3000);
+
+			// Check Notification option
+
+			if (homePageWebE.lnk_MeMenu.get(0).getText().trim().equals("Notifications"))
+			{
+				Log4J.logp.info("Notification option has been displayed");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Notification option has been displayed");
+
+				homePageWebE.ico_MeNotification.click();
+				Thread.sleep(2000);
+
+				strBackground = homePageWebE.lbl_MeNotificationBackground.getCssValue("background-color");
+				Log4J.logp.info(strBackground);
+
+				if (strBackground.trim().equalsIgnoreCase("rgba(189, 189, 189, 1)"))
+				{
+					Log4J.logp.info("Notification toggle is off");
+					softAssertion.assertTrue(true);
+					child1.log(LogStatus.PASS, "Notification toggle is off");
+
+					homePageWebE.ico_MeNotification.click();
+					Thread.sleep(2000);
+
+					strBackground = homePageWebE.lbl_MeNotificationBackground.getCssValue("background-color");
+					Log4J.logp.info(strBackground);
+					if (strBackground.trim().equalsIgnoreCase("rgba(0, 179, 134, 0.5)"))
+					{
+						Log4J.logp.info("After click on Notification toggle it will be on");
+						softAssertion.assertTrue(true);
+						child3.log(LogStatus.PASS, "After click on Notification toggle it will be on");
+
+						homePageWebE.ico_MeNotification.click();
+						Thread.sleep(2000);
+					}
+					else
+					{
+						Log4J.logp.info("Notification toggle does not on after click on it");
+						softAssertion.assertTrue(false);
+						child3.log(LogStatus.FAIL, "Notification toggle does not on after click on it");
+					}
+				}
+
+			}
+			else
+			{
+				Log4J.logp.info("Not found Notification option");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Not found notification Option");
+			}
+
+			// Check Privacy Policy
+
+			if (homePageWebE.lnk_MeMenu.get(1).getText().trim().equals("Privacy Policy"))
+			{
+				Log4J.logp.info("Privacy Policy option has been displayed");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "Privacy Policy option has been displayed");
+				child4.log(LogStatus.PASS, "Privacy Policy option has been displayed");
+			}
+			else
+			{
+				Log4J.logp.info("Not found Privacy Policy option");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "Not found Privacy Policy option");
+				child4.log(LogStatus.FAIL, "Not found Privacy Policy option");
+			}
+
+			// Check Terms of Service
+
+			if (homePageWebE.lnk_MeMenu.get(2).getText().trim().equals("Terms of Service"))
+			{
+				Log4J.logp.info("Terms of Service option has been displayed");
+				softAssertion.assertTrue(true);
+				child3.log(LogStatus.PASS, "Terms of Service option has been displayed");
+			}
+			else
+			{
+				Log4J.logp.info("Not found Terms of Service option");
+				softAssertion.assertTrue(false);
+				child3.log(LogStatus.FAIL, "Not found terms of Service option");
+			}
+
+			// Check Help Desk
+
+			if (homePageWebE.lnk_MeMenu.get(3).getText().trim().contains("Help Desk"))
+			{
+				Log4J.logp.info("Help Desk option has been displayed");
+				softAssertion.assertTrue(true);
+				child5.log(LogStatus.PASS, "Help Desk option has been displayed");
+
+				homePageWebE.lnk_MeMenu.get(3).click();
+				Thread.sleep(3000);
+
+				ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+				driver.switchTo().window(tabs.get(1));
+				CommonLib.waitForObject(homePageWebE.lbl_Helpdesk, "visibility", 30);
+				if (homePageWebE.lbl_Helpdesk.getText().trim().equals("Security FAQ"))
+				{
+					Log4J.logp.info("user will redirected on helpdesk page");
+					softAssertion.assertTrue(true);
+					child5.log(LogStatus.PASS, "user will redirected on helpdesk page");
+				}
+				else
+				{
+					Log4J.logp.info("Helpdesk page not opened");
+					softAssertion.assertTrue(false);
+					child5.log(LogStatus.FAIL, "Helpdesk page not opened");
+				}
+				driver.close();
+				driver.switchTo().window(tabs.get(0));
+			}
+			else
+			{
+				Log4J.logp.info("Not found Help Desk option");
+				softAssertion.assertTrue(false);
+				child5.log(LogStatus.FAIL, "Not found Help Desk option");
+
+			}
+
+			// Check Logout
+
+			if (homePageWebE.lnk_MeMenu.get(4).getText().trim().equals("Logout"))
+			{
+				Log4J.logp.info("Logout option has been displayed");
+				softAssertion.assertTrue(true);
+				child6.log(LogStatus.PASS, "Logout option has been displayed");
+
+				homePageWebE.lnk_MeMenu.get(4).click();
+				CommonLib.waitForObject(loginWebE.txt_EmailAdd, "visibility", 10);
+
+				if (CommonLib.checkElementPresent(loginWebE.txt_EmailAdd) == true)
+				{
+					Log4J.logp.info("Logout successfully");
+					softAssertion.assertTrue(true);
+					child6.log(LogStatus.PASS, "Logout successfully");
+
+					LoginLib.login();
+				}
+				else
+				{
+					Log4J.logp.info("Logout un - successfully");
+					softAssertion.assertTrue(false);
+					child6.log(LogStatus.FAIL, "Logout un - successfully");
+				}
+			}
+			else
+			{
+				Log4J.logp.info("Not found Logout option");
+				softAssertion.assertTrue(false);
+				child6.log(LogStatus.FAIL, "Not found Logout");
+			}
+
+			Log4J.logp.info("**** Ended : checkMeTab ****");
+		}
+		catch (Exception e)
+		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "checkMeTab Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child3.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child3.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child4.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child4.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child5.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child5.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child6.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child6.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			checkMeTab.appendChild(child1);
+			checkMeTab.appendChild(child2);
+			checkMeTab.appendChild(child3);
+			checkMeTab.appendChild(child4);
+			checkMeTab.appendChild(child5);
+			checkMeTab.appendChild(child6);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+			MainMethod.extent.endTest(child3);
+			MainMethod.extent.endTest(child4);
+			MainMethod.extent.endTest(child5);
+			MainMethod.extent.endTest(child6);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL") || child3.getRunStatus().toString().equalsIgnoreCase("FAIL") || child4.getRunStatus().toString().equalsIgnoreCase("FAIL")
+					|| child5.getRunStatus().toString().equalsIgnoreCase("FAIL") || child6.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkMeTab.log(LogStatus.FAIL, "checkMeTab is failed.");
+			}
+			else
+			{
+				checkMeTab.log(LogStatus.PASS, "checkMeTab is passed.");
+			}
+			MainMethod.extent.endTest(checkMeTab);
 			softAssertion.assertAll();
 			//LoginLib.logout();.
 		}
