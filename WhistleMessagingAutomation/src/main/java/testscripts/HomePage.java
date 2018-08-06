@@ -3060,6 +3060,161 @@ public class HomePage
 
 	/**
 	 * 
+	 * This method use for check User
+	 * 
+	 */
+	@Test(description = " Check user Admin or not or Remove user", priority = 155)
+	public static void checkUserAdmin()
+	{
+		String strAttribute, strActual, strExpected;
+		ExtentTest checkUserAdmin = MainMethod.extent.startTest("Check user Admin or not or Remove user").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		ExtentTest child3 = null;
+		try
+		{
+			Log4J.logp.info("**** Started : checkUserAdmin ****");
+
+			child1 = MainMethod.extent.startTest("Test ID  55 : Validate adding user as admin");
+			child2 = MainMethod.extent.startTest("Test ID  56 : Validate Removing User");
+			child3 = MainMethod.extent.startTest("Test ID  57 : Validate removing user as admin");
+
+			softAssertion = new SoftAssert();
+
+			homePageWebE.ico_Company.click();
+			CommonLib.waitForObject(homePageWebE.lbl_LeftCompanyName, "visibility", 10);
+
+			homePageWebE.lbl_CompanyMenu.get(0).click();
+			CommonLib.waitForObject(homePageWebE.txt_CompanyDetails.get(0), "visibility", 10);
+
+			CommonLib.scroll_Page(homePageWebE.scrollbar_Setting, 1);
+			Thread.sleep(2000);
+
+			// Click on checkbox and check user admin or not
+
+			homePageWebE.chk_Admin.get(0).click();
+			Thread.sleep(2000);
+
+			//driver.navigate().refresh();
+			//CommonLib.waitForObject(homePageWebE.txt_CompanyDetails.get(0), "visibility", 10);
+
+			//CommonLib.scroll_Page(homePageWebE.scrollbar_Setting, 1);
+			//Thread.sleep(2000);
+
+			strAttribute = homePageWebE.chk_Admin.get(0).getAttribute("class");
+
+			System.out.println(strAttribute);
+
+			if (strAttribute.equalsIgnoreCase("Active"))
+			{
+				Log4J.logp.info("User is Admin");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "User is Admin");
+			}
+			else
+			{
+				Log4J.logp.info("User is not admin");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "User is not Admin");
+			}
+
+			// Remove User as admin
+
+			homePageWebE.chk_Admin.get(0).click();
+			Thread.sleep(2000);
+
+			driver.navigate().refresh();
+			CommonLib.waitForObject(homePageWebE.txt_CompanyDetails.get(0), "visibility", 10);
+
+			CommonLib.scroll_Page(homePageWebE.scrollbar_Setting, 1);
+			Thread.sleep(2000);
+
+			strAttribute = homePageWebE.chk_Admin.get(0).getAttribute("class");
+
+			System.out.println(strAttribute);
+
+			if (strAttribute.equalsIgnoreCase(""))
+			{
+				Log4J.logp.info("Removed user as Admin");
+				softAssertion.assertTrue(true);
+				child3.log(LogStatus.PASS, "Removed user as Admin");
+			}
+			else
+			{
+				Log4J.logp.info("User is not removed as admin");
+				softAssertion.assertTrue(false);
+				child3.log(LogStatus.FAIL, "User is not removed as Admin");
+
+			}
+
+			// Remove user
+
+			strActual = homePageWebE.lbl_UserEmail.get(0).getText().trim();
+
+			System.out.println(strActual);
+
+			homePageWebE.ico_RemoveUser.get(0).click();
+			Thread.sleep(2000);
+
+			homePageWebE.btn_ConfirmRemoveUser.click();
+			Thread.sleep(2000);
+
+			strExpected = homePageWebE.lbl_UserEmail.get(0).getText().trim();
+
+			if (strExpected.equals(strActual))
+			{
+				Log4J.logp.info("User is not removed");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "user is not removed");
+			}
+			else
+			{
+				Log4J.logp.info("User is removed");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "User is removed");
+			}
+
+			Log4J.logp.info("**** Ended : checkUserAdmin ****");
+		}
+		catch (Exception e)
+		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "checkUserAdmin Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child3.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child3.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			checkUserAdmin.appendChild(child1);
+			checkUserAdmin.appendChild(child2);
+			checkUserAdmin.appendChild(child3);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+			MainMethod.extent.endTest(child3);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL") || child3.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkUserAdmin.log(LogStatus.FAIL, "checkUserAdmin is failed.");
+			}
+			else
+			{
+				checkUserAdmin.log(LogStatus.PASS, "checkUserAdmin is passed.");
+			}
+			MainMethod.extent.endTest(checkUserAdmin);
+			softAssertion.assertAll();
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
 	 * This method is check Escalation in Setting Page
 	 * 
 	 */
@@ -3637,6 +3792,144 @@ public class HomePage
 
 	/**
 	 * 
+	 * This method is check Compaign history
+	 * 
+	 */
+	@Test(description = "Check Compaign history", priority = 201)
+	public static void checkCompaignHistory()
+	{
+		String strArrivalDate, strDepartDate;
+		ExtentTest checkCompaignHistory = MainMethod.extent.startTest("Check Compaign history").assignCategory("Regeression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		try
+		{
+			Log4J.logp.info("**** Started : checkCompaignHistory ****");
+
+			child1 = MainMethod.extent.startTest("Test ID 70 : Validate campaign history");
+			child2 = MainMethod.extent.startTest("Test ID 71 : Validate follow up message");
+
+			softAssertion = new SoftAssert();
+
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("src/main/resources/Properties/data.properties"));
+			strArrivalDate = properties.getProperty("arrivaldate");
+			strDepartDate = properties.getProperty("departdate");
+
+			homePageWebE.ico_Company.click();
+			CommonLib.waitForObject(homePageWebE.lbl_LeftCompanyName, "visibility", 10);
+
+			homePageWebE.lbl_CompanyMenu.get(4).click();
+			CommonLib.waitForObject(homePageWebE.btn_Pagination.get(0), "visibility", 10);
+
+			homePageWebE.btn_Pagination.get(0).click();
+			CommonLib.waitForObject(homePageWebE.tbl_CompaignHistory, "visibility", 10);
+
+			if (CommonLib.checkElementPresent(homePageWebE.tbl_CompaignHistory))
+			{
+				Log4J.logp.info("Compaign history found after click on Next button of Pagination");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Compaign history found after click on Next button of Pagination");
+			}
+			else
+			{
+				Log4J.logp.info("Compaign history not found after click on Next button of Pagination");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Compaign history not found after click on Next button of Pagination");
+			}
+
+			homePageWebE.btn_Pagination.get(0).click();
+			CommonLib.waitForObject(homePageWebE.tbl_CompaignHistory, "visibility", 10);
+
+			if (CommonLib.checkElementPresent(homePageWebE.tbl_CompaignHistory))
+			{
+				Log4J.logp.info("Compaign history found after click on previous button of Pagination");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Compaign history found after click on previous button of Pagination");
+			}
+			else
+			{
+				Log4J.logp.info("Compaign history not found after click on previous button of Pagination");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Compaign history not found after click on previous button of Pagination");
+			}
+
+			// Check Send follow up
+
+			homePageWebE.lnk_CompaignHistory.get(0).click();
+			Thread.sleep(2000);
+
+			homePageWebE.lnk_SendFolloUp.get(0).click();
+			Thread.sleep(2000);
+
+			homePageWebE.txt_CompaignArrival.click();
+			Thread.sleep(2000);
+
+			CommonLib.selectDateReservation(strArrivalDate, "Arrival");
+			Thread.sleep(2000);
+
+			homePageWebE.txt_CompaignDeparture.click();
+			Thread.sleep(2000);
+
+			CommonLib.selectDateReservation(strDepartDate, "Depart");
+			Thread.sleep(2000);
+
+			homePageWebE.txt_CompaignMessageBox.sendKeys("Test Message");
+			Thread.sleep(2000);
+
+			homePageWebE.btn_CompaignSend.click();
+			Thread.sleep(5000);
+
+			if (homePageWebE.lbl_FollowUpSent.get(0).getText().contains("Follow up Sent"))
+			{
+				Log4J.logp.info("Follow Up has been sent successfully");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "Follow up has been sent successfully");
+			}
+			else
+			{
+				Log4J.logp.info("Follow up not sent");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "Follow up not sent");
+			}
+
+			Log4J.logp.info("**** Ended : checkCompaignHistory ****");
+		}
+		catch (Exception e)
+		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "checkCompaignHistory Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			checkCompaignHistory.appendChild(child1);
+			checkCompaignHistory.appendChild(child2);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkCompaignHistory.log(LogStatus.FAIL, "checkCompaignHistory is failed.");
+			}
+			else
+			{
+				checkCompaignHistory.log(LogStatus.PASS, "checkCompaignHistory is passed.");
+			}
+			MainMethod.extent.endTest(checkCompaignHistory);
+			softAssertion.assertAll();
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
 	 * This method is check Me tab
 	 * 
 	 */
@@ -3866,6 +4159,374 @@ public class HomePage
 				checkMeTab.log(LogStatus.PASS, "checkMeTab is passed.");
 			}
 			MainMethod.extent.endTest(checkMeTab);
+			softAssertion.assertAll();
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
+	 * This method is check Report in Company page
+	 * 
+	 */
+	@Test(description = "Check Reports in Company Page", priority = 100)
+	public static void checkReport()
+	{
+		String strEmail;
+		int intBefore, intAfter;
+		ExtentTest checkReport = MainMethod.extent.startTest("Check Reports in Company Page").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		try
+		{
+			Log4J.logp.info("**** Started : checkReport ****");
+
+			softAssertion = new SoftAssert();
+
+			child1 = MainMethod.extent.startTest("Test ID 83 : Validate Report recipients");
+			child2 = MainMethod.extent.startTest("Test ID 84 : Validate Report recipients removal");
+
+			strEmail = "renee.pellum@gmail.com";
+
+			homePageWebE.ico_Company.click();
+			CommonLib.waitForObject(homePageWebE.lbl_LeftCompanyName, "visibility", 10);
+
+			homePageWebE.lbl_CompanyMenu.get(7).click();
+			CommonLib.waitForObject(homePageWebE.btn_AddReport, "visibility", 10);
+			Thread.sleep(2000);
+
+			intBefore = homePageWebE.btn_RemoveReport.size();
+
+			homePageWebE.btn_AddReport.click();
+			Thread.sleep(2000);
+
+			homePageWebE.txt_Report.clear();
+			homePageWebE.txt_Report.sendKeys(strEmail);
+			Thread.sleep(2000);
+
+			homePageWebE.btn_ConfirmReport.click();
+			Thread.sleep(4000);
+
+			intAfter = homePageWebE.btn_RemoveReport.size();
+
+			System.out.println(intAfter);
+			System.out.println(intBefore);
+
+			if (intAfter == intBefore + 1)
+			{
+				Log4J.logp.info("Report has been added");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Report has been added");
+			}
+			else
+			{
+				Log4J.logp.info("Report not added");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Report not added");
+			}
+
+			// Delete Report
+
+			homePageWebE.btn_RemoveReport.get(intAfter - 1).click();
+			Thread.sleep(2000);
+
+			homePageWebE.btn_ConfirmDepartment.click();
+			Thread.sleep(3000);
+
+			intAfter = homePageWebE.btn_RemoveReport.size();
+
+			if (intAfter == intBefore)
+			{
+				Log4J.logp.info("Report has been removed from table");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "Report has been removed");
+			}
+			else
+			{
+				Log4J.logp.info("Report not removed");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "Report not removed");
+			}
+
+			Log4J.logp.info("**** Ended : checkReport ****");
+		}
+		catch (Exception e)
+		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "checkReport Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			checkReport.appendChild(child1);
+			checkReport.appendChild(child2);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkReport.log(LogStatus.FAIL, "checkReport is failed.");
+			}
+			else
+			{
+				checkReport.log(LogStatus.PASS, "checkReport is passed.");
+			}
+			MainMethod.extent.endTest(checkReport);
+			softAssertion.assertAll();
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
+	 * This method is use for check Integration
+	 * 
+	 */
+	@Test(description = "Check Integration", priority = 102)
+	public static void checkIntegration()
+	{
+		ExtentTest checkIntegration = MainMethod.extent.startTest("Test ID 85 : Validate Integration").assignCategory("Regression");
+		try
+		{
+			Log4J.logp.info("**** Started : checkIntegration ****");
+
+			softAssertion = new SoftAssert();
+			homePageWebE.ico_Company.click();
+			CommonLib.waitForObject(homePageWebE.lbl_LeftCompanyName, "visibility", 10);
+
+			homePageWebE.lbl_CompanyMenu.get(8).click();
+			CommonLib.waitForObject(homePageWebE.lnk_MoreInfo, "visibility", 10);
+			Thread.sleep(2000);
+
+			if (CommonLib.checkElementPresent(homePageWebE.lnk_MoreInfo))
+			{
+				Log4J.logp.info("More Info link has been displayed in Integration page");
+				softAssertion.assertTrue(true);
+				checkIntegration.log(LogStatus.PASS, "More Info link has been displayed in Integration page");
+			}
+			else
+			{
+				Log4J.logp.info("Not found More Info link");
+				softAssertion.assertTrue(false);
+				checkIntegration.log(LogStatus.FAIL, "Not found More Info link");
+			}
+
+			Log4J.logp.info("**** Ended : checkIntegration ****");
+		}
+		catch (Exception e)
+		{
+			// TODO: handle exception
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "Test ID 85 : checkIntegration Failed");
+		}
+		finally
+		{
+
+			if (checkIntegration.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				checkIntegration.log(LogStatus.FAIL, "Test ID 85 : Failed for Unknown status.");
+			MainMethod.extent.endTest(checkIntegration);
+
+			if (checkIntegration.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkIntegration.log(LogStatus.FAIL, "Test ID 85 : checkIntegration is failed.");
+			}
+			else
+			{
+				checkIntegration.log(LogStatus.PASS, "Test ID 85 : checkIntegration is passed.");
+			}
+
+			softAssertion.assertAll();
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
+	 * This method is use for check Automated Mesages
+	 * 
+	 */
+	@Test(description = "Check Automated messages", priority = 151)
+	public static void checkAutomatedMessage()
+	{
+		String strValue, strEditValue;
+		ExtentTest checkAutomatedMessage = MainMethod.extent.startTest("Check Automated messages").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		ExtentTest child3 = null;
+		ExtentTest child4 = null;
+		try
+		{
+			Log4J.logp.info("**** Started : checkAutomatedMessage ****");
+
+			child1 = MainMethod.extent.startTest("Test ID 86 : Validate Automate message");
+			child2 = MainMethod.extent.startTest("Test ID 87 : Validate Editing Automate message");
+			child3 = MainMethod.extent.startTest("Test ID 88 : Validate Enabled/Disabled");
+			child4 = MainMethod.extent.startTest("Test ID 86 : Validate Automate message");
+
+			strValue = "Test Automated Message";
+			strEditValue = "Test edit Automated Message";
+
+			softAssertion = new SoftAssert();
+
+			homePageWebE.ico_Company.click();
+			CommonLib.waitForObject(homePageWebE.lbl_LeftCompanyName, "visibility", 10);
+
+			homePageWebE.lbl_CompanyMenu.get(9).click();
+			CommonLib.waitForObject(homePageWebE.btn_AddAutomated, "visibility", 10);
+			Thread.sleep(2000);
+
+			homePageWebE.btn_AddAutomated.click();
+			Thread.sleep(2000);
+
+			homePageWebE.txt_AutomatedMessage.sendKeys(strValue);
+			Thread.sleep(2000);
+
+			homePageWebE.lst_Recipients.click();
+			Thread.sleep(2000);
+
+			homePageWebE.list_Recipients.get(2).click();
+			Thread.sleep(2000);
+
+			homePageWebE.btn_UseSurveyTemplate.click();
+			Thread.sleep(2000);
+
+			homePageWebE.lnk_SurveyTemplates.get(0).click();
+			Thread.sleep(2000);
+
+			homePageWebE.btn_CreateAutomated.click();
+			CommonLib.waitForObject(homePageWebE.lbl_AutomatedTitle.get(0), "visibility", 10);
+
+			if (homePageWebE.lbl_AutomatedTitle.get(0).getText().trim().equals(strValue))
+			{
+				Log4J.logp.info("Automated message has been added");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Automated message has been added");
+				child4.log(LogStatus.PASS, "Automated message has been added");
+			}
+			else
+			{
+				Log4J.logp.info("Automated message not added");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Automated message not added");
+				child4.log(LogStatus.FAIL, "Automated message not added");
+			}
+
+			// Edit Automated message
+
+			homePageWebE.lnk_EditAutomated.get(0).click();
+			Thread.sleep(2000);
+
+			homePageWebE.txt_AutomatedMessage.clear();
+			homePageWebE.txt_AutomatedMessage.sendKeys(strEditValue);
+			Thread.sleep(2000);
+
+			homePageWebE.lst_Recipients.click();
+			Thread.sleep(2000);
+
+			homePageWebE.list_Recipients.get(0).click();
+			Thread.sleep(2000);
+
+			homePageWebE.btn_UseSurveyTemplate.click();
+			Thread.sleep(2000);
+
+			homePageWebE.lnk_SurveyTemplates.get(3).click();
+			Thread.sleep(2000);
+
+			homePageWebE.btn_CreateAutomated.click();
+			CommonLib.waitForObject(homePageWebE.lbl_AutomatedTitle.get(0), "visibility", 10);
+
+			if (homePageWebE.lbl_AutomatedTitle.get(0).getText().trim().equals(strEditValue))
+			{
+				Log4J.logp.info("Automated message has been edited");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "Automated message has been Edited");
+			}
+			else
+			{
+				Log4J.logp.info("Automated message not edited");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "Automated message not edited");
+			}
+
+			// Enable/Disable Automated message
+			Thread.sleep(3000);
+			if (homePageWebE.rdo_DisEna.get(0).getText().trim().equals("Enabled"))
+			{
+				Log4J.logp.info("Auomated message has been enabled");
+				softAssertion.assertTrue(true);
+				child3.log(LogStatus.PASS, "Automated message has been enabled");
+			}
+			else
+			{
+				Log4J.logp.info("Auomated message not enabled");
+				softAssertion.assertTrue(false);
+				child3.log(LogStatus.FAIL, "Automated message not enabled");
+			}
+
+			//Thread.sleep(3000);
+			homePageWebE.ico_Checkbox.get(0).click();
+			Thread.sleep(2000);
+			homePageWebE.ico_Checkbox.get(0).click();
+			Thread.sleep(2000);
+
+			if (homePageWebE.rdo_DisEna.get(0).getText().trim().equals("Disabled"))
+			{
+				Log4J.logp.info("Auomated message has been Disabled");
+				softAssertion.assertTrue(true);
+				child3.log(LogStatus.PASS, "Automated message has been disabled");
+			}
+			else
+			{
+				Log4J.logp.info("Auomated message not Disabled");
+				softAssertion.assertTrue(false);
+				child3.log(LogStatus.FAIL, "Automated message not Disabled");
+			}
+
+			Log4J.logp.info("**** Ended : checkAutomatedMessage ****");
+		}
+		catch (Exception e)
+		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "checkAutomatedMessage Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child3.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child3.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child4.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child4.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			checkAutomatedMessage.appendChild(child1);
+			checkAutomatedMessage.appendChild(child2);
+			checkAutomatedMessage.appendChild(child3);
+			checkAutomatedMessage.appendChild(child4);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+			MainMethod.extent.endTest(child3);
+			MainMethod.extent.endTest(child4);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL") || child3.getRunStatus().toString().equalsIgnoreCase("FAIL") || child4.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkAutomatedMessage.log(LogStatus.FAIL, "checkAutomatedMessage is failed.");
+			}
+			else
+			{
+				checkAutomatedMessage.log(LogStatus.PASS, "checkAutomatedMessage is passed.");
+			}
+			MainMethod.extent.endTest(checkAutomatedMessage);
 			softAssertion.assertAll();
 			//LoginLib.logout();.
 		}

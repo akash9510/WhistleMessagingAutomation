@@ -755,6 +755,170 @@ public class HomePageWebE
 	@FindBy(xpath = "(//div[@class='MiddleContainer MiddleContainer--fullwidth']//input[@id='notifications']/..//div[contains(@style,'background-color')])[1]")
 	public WebElement		lbl_MeNotificationBackground;
 
+	/** to click on Add Report RECIPENT button */
+	@FindBy(css = ".btn.waves-effect.waves-light.right")
+	public WebElement		btn_AddReport;
+
+	/** to enter value in Email Text box of Report */
+	@FindBy(xpath = "//div[@class='ReportsModal']//input[@type='text']")
+	public WebElement		txt_Report;
+
+	/** to click on Confirm button for Report */
+	@FindBy(css = ".ActionButton.modal-action.waves-effect.btn-flat.confirm.undefined")
+	public WebElement		btn_ConfirmReport;
+
+	/** to click on Remove icon of Report */
+	@FindBy(css = ".btn.waves-effect.waves-light.red")
+	public List<WebElement>	btn_RemoveReport;
+
+	/** to click on More Info in Integration Page */
+	@FindBy(xpath = "//a[@title='More Info']")
+	public WebElement		lnk_MoreInfo;
+
+	/** to click on New Automated Message buttobn */
+	@FindBy(css = ".btn.waves-effect.waves-light.right.undefined")
+	public WebElement		btn_AddAutomated;
+
+	/** to enter value in Automated message */
+	@FindBy(id = "scheduled-message-title")
+	public WebElement		txt_AutomatedMessage;
+
+	/** to click on Receipients dropdown */
+	@FindBy(id = "scheduled-message-recipients")
+	public WebElement		lst_Recipients;
+
+	/** to click on Receipients list */
+	@FindBy(xpath = "//span[@role='menuitem']")
+	public List<WebElement>	list_Recipients;
+
+	/** to click on Use Durvey Template button */
+	@FindBy(css = ".chip.selected.add")
+	public WebElement		btn_SurveyTemplate;
+
+	/** to click on Survey Template text */
+	@FindBy(css = ".TemplateModal__template-text")
+	public List<WebElement>	lnk_SurveyTemplates;
+
+	/** to click on Create button */
+	@FindBy(css = ".SendMessageButton")
+	public WebElement		btn_CreateAutomated;
+
+	/** to check title of Scheduled messgae */
+	@FindBy(css = ".ScheduleCard__title")
+	public List<WebElement>	lbl_AutomatedTitle;
+
+	/** to click on Edit icon automated message */
+	@FindBy(css = ".ScheduleCard__reccurance")
+	public List<WebElement>	lnk_EditAutomated;
+
+	/** to click on One Time and Repeate radio button */
+	@FindBy(xpath = "//input[@name='recurring']")
+	public List<WebElement>	rdo_OneTimeRepeating;
+
+	/** to disable enable Automated message */
+	@FindBy(xpath = "//div[@class='ScheduledMessages CompanyContainer']//label")
+	public List<WebElement>	rdo_DisEna;
+
+	/** to disable */
+	@FindBy(xpath = "//div[contains(@class,'MiddleContainer')]//input[@type='checkbox']")
+	public List<WebElement>	ico_Checkbox;
+
+	/** to click on Checkbox of Admin */
+	@FindBy(xpath = "//td[@class='user-admin']//label")
+	public List<WebElement>	chk_Admin;
+
+	/** to click on Remove icon of Admin */
+	@FindBy(css = ".material-icons.right.red-text")
+	public List<WebElement>	ico_RemoveUser;
+
+	/** to click on Confirm button of user */
+	@FindBy(xpath = "//div[@id='removeUser']//button[@class='ActionButton modal-action waves-effect btn-flat confirm delete ']")
+	public WebElement		btn_ConfirmRemoveUser;
+
+	/** to get the lable of User email */
+	@FindBy(xpath = "(//table[@class='Table card'])[1]//td[@class='user-email']")
+	public List<WebElement>	lbl_UserEmail;
+
+	/** to click on Pagination button in Compaign History */
+	@FindBy(xpath = "(//div[contains(@class,'PaginationArrows')])[1]//button")
+	public List<WebElement>	btn_Pagination;
+
+	/** to check Compaign History */
+	@FindBy(css = ".Table.undefined")
+	public WebElement		tbl_CompaignHistory;
+
+	/** to click on Row of Compaign history */
+	@FindBy(xpath = "//table//tbody//tr[@class='pointer']")
+	public List<WebElement>	lnk_CompaignHistory;
+
+	/** to click on Send Follow Up button */
+	@FindBy(css = ".actions-center.primary-color")
+	public List<WebElement>	lnk_SendFolloUp;
+
+	/** to click on Arrival Textbox */
+	@FindBy(id = "new-convo-arrival")
+	public WebElement		txt_CompaignArrival;
+
+	/** to click on Departure textbox */
+	@FindBy(id = "new-convo-departure")
+	public WebElement		txt_CompaignDeparture;
+
+	/** to click on textbox of Compaign history */
+	@FindBy(id = "campaign_follow_up_start_convo_msg_box")
+	public WebElement		txt_CompaignMessageBox;
+
+	/** to check follow up sent or not */
+	@FindBy(css = ".green-text.flex-center")
+	public List<WebElement>	lbl_FollowUpSent;
+
+	/** to click on Send button */
+	@FindBy(xpath = "//div[@class='StartConversationView']//div[@class='SendMessageButton']")
+	public WebElement		btn_CompaignSend;
+
+	/** to click on Survey Template tab */
+	@FindBy(xpath = "//div[text()='Survey Templates']")
+	public WebElement		tab_SurveyTemplates;
+
+	/** to click on Create New Template button */
+	@FindBy(xpath = "//a[text()='Create New Template']")
+	public WebElement		btn_CreateNewTemplate;
+
+	/** to enter value in new survey name */
+	@FindBy(id = "new-survey-template-name")
+	public WebElement		txt_NewSurveyName;
+
+	/** to enter value in Survey Question */
+	@FindBy(id = "new-survey-template-question")
+	public WebElement		txt_SurveyQuestion;
+
+	/** to click on Add Answer option */
+	@FindBy(css = ".chip.selected.add")
+	public WebElement		btn_AddAnswerOption;
+
+	/** to enter value in choice */
+	@FindBy(id = "new-survey-template-choice-2")
+	public WebElement		txt_AnswerOption;
+
+	/** to click on Create Survey button */
+	@FindBy(css = ".ActionButton.btn.waves-effect.waves-light.right.danger")
+	public WebElement		btn_CreateSurveyNew;
+
+	/** to check Survey Template */
+	@FindBy(css = ".SurveyTemplates__title")
+	public List<WebElement>	lbl_SurveyTitle;
+
+	/** to click on Survey Chart */
+	@FindBy(css = ".SurveyTemplates__results.SurveyTemplates__card-action")
+	public List<WebElement>	ico_SurveyCharts;
+
+	/** to click on Survey Edit */
+	@FindBy(css = ".SurveyTemplates__edit.SurveyTemplates__card-action")
+	public List<WebElement>	ico_SurveyEdit;
+
+	/** to check Survey Details */
+	@FindBy(css = ".SurveyResultsDetail")
+	public WebElement		survey_Results;
+
 	static HomePageWebE		Instance	= null;
 
 	public static HomePageWebE getInstance(WebDriver driver)
