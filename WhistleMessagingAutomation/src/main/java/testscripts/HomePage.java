@@ -1,7 +1,9 @@
 package testscripts;
 
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
@@ -39,7 +41,6 @@ public class HomePage
 		driver = ExecutionSetUp.getDriver();
 		homePageWebE = HomePageWebE.getInstance(driver);
 		loginWebE = LoginWebE.getInstance(driver);
-
 		LoginLib.login();
 	}
 
@@ -263,9 +264,6 @@ public class HomePage
 					Log4J.logp.info("After click on Notification toggle it will be on");
 					softAssertion.assertTrue(true);
 					Child3.log(LogStatus.PASS, "After click on Notification toggle it will be on");
-
-					homePageWebE.ico_NotificationToggel.click();
-					Thread.sleep(2000);
 				}
 				else
 				{
@@ -354,7 +352,7 @@ public class HomePage
 	 * This method is use for Start Compaign
 	 * 
 	 */
-	@Test(description = "Start Compaign", priority = 20)
+	@Test(description = "Start Compaign", priority = 33)
 	public static void startCompaign()
 	{
 		String strGuestName, strPhoneNo, strEmail;
@@ -382,7 +380,7 @@ public class HomePage
 			homePageWebE.btn_FileUpload.click();
 			Thread.sleep(2000);
 
-			CommonLib.uploadFile("Campaigns-Sample.xlsx");
+			CommonLib.uploadFile("Campaigns-Sample.xlsx", "Cmpaign");
 			Thread.sleep(2000);
 
 			homePageWebE.btn_AddGuestCompaign.click();
@@ -444,7 +442,9 @@ public class HomePage
 			}
 
 			softAssertion.assertAll();
-			//LoginLib.logout();.
+
+			//driver.switchTo().defaultContent();
+			//LoginLib.logout();
 		}
 	}
 
@@ -1298,7 +1298,7 @@ public class HomePage
 	{
 		ArrayList<String> arrExpectedTeam = new ArrayList<String>();
 		//int intSize;
-		String strExpectedTranslate, strActualTranslate;
+		String strExpectedTranslate, strActualTranslate, strTranslate;
 		ExtentTest translateTeamMessage = MainMethod.extent.startTest("Translate Team chat message").assignCategory("Regression");
 		ExtentTest child1 = null;
 		ExtentTest child2 = null;
@@ -1317,6 +1317,11 @@ public class HomePage
 
 			//String strValue = properties.getProperty("Translate.Amharic");
 
+			SimpleDateFormat format = new SimpleDateFormat("ddMMyyyyHHmmss");
+			Date date = new Date();
+
+			strTranslate = format.format(date);
+
 			softAssertion = new SoftAssert();
 			//LoginLib.login();
 
@@ -1327,7 +1332,7 @@ public class HomePage
 			CommonLib.waitForObject(homePageWebE.txt_ChannelName, "visibility", 10);
 
 			homePageWebE.txt_ChannelName.clear();
-			homePageWebE.txt_ChannelName.sendKeys("Translate Channel");
+			homePageWebE.txt_ChannelName.sendKeys(strTranslate);
 			Thread.sleep(2000);
 
 			for (int i = 0; i < 3; i++)
@@ -1522,7 +1527,7 @@ public class HomePage
 	@Test(description = "Insert Template in Team Chat message ", priority = 11)
 	public static void insertTemplate()
 	{
-		String strExpectedTemplateValue, strAcualTemplateValue;
+		String strExpectedTemplateValue, strAcualTemplateValue, strTranslate;
 		ExtentTest insertTemplate = MainMethod.extent.startTest("Test ID 26 : Insert Template in Team Chat Message").assignCategory("Regeression");
 		try
 		{
@@ -1535,10 +1540,15 @@ public class HomePage
 			homePageWebE.ico_TeamChat.click();
 			CommonLib.waitForObject(homePageWebE.btn_CreateChannel, "clickable", 10);
 
+			SimpleDateFormat format = new SimpleDateFormat("ddMMyyyyHHmmss");
+			Date date = new Date();
+
+			strTranslate = format.format(date);
+
 			homePageWebE.btn_CreateChannel.click();
 			CommonLib.waitForObject(homePageWebE.txt_ChannelName, "visibility", 10);
 
-			homePageWebE.txt_ChannelName.sendKeys("Template Insert Channel");
+			homePageWebE.txt_ChannelName.sendKeys(strTranslate);
 			Thread.sleep(2000);
 
 			for (int i = 0; i < 3; i++)
@@ -1755,23 +1765,23 @@ public class HomePage
 
 			homePageWebE.ico_LogSheet.click();
 			CommonLib.waitForObject(homePageWebE.btn_AddLogSheet, "clickable", 10);
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 
 			homePageWebE.btn_AddLogSheet.click();
 			CommonLib.waitForObject(homePageWebE.log_Sheet, "visibility", 10);
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 
 			if (CommonLib.checkElementPresent(homePageWebE.log_Sheet))
 			{
 				Log4J.logp.info("Logsheet has been added successfully");
 				softAssertion.assertTrue(true);
-				child1.log(LogStatus.PASS, "Participants has been added in Log Sheet");
+				child1.log(LogStatus.PASS, "Logsheet has been added in Log Sheet");
 			}
 			else
 			{
 				Log4J.logp.info("Logsheet not added");
 				softAssertion.assertTrue(false);
-				child1.log(LogStatus.FAIL, "Participants not added");
+				child1.log(LogStatus.FAIL, "Logsheet not added");
 			}
 
 			// Filter
@@ -1828,7 +1838,7 @@ public class HomePage
 
 			softAssertion.assertAll();
 
-			//LoginLib.logout();.
+			//LoginLib.logout();
 		}
 	}
 
@@ -2339,9 +2349,14 @@ public class HomePage
 			homePageWebE.ico_Reservation.click();
 			CommonLib.waitForObject(homePageWebE.lbl_ReservationHeader, "visibility", 10);
 
+			SimpleDateFormat format = new SimpleDateFormat("ddMMyyyyHHmmss");
+			Date date = new Date();
+
+			strReservationId = format.format(date);
+
 			Properties properties = new Properties();
 			properties.load(new FileInputStream("src/main/resources/Properties/data.properties"));
-			strReservationId = properties.getProperty("ResevationId");
+			//strReservationId = properties.getProperty("ResevationId");
 			strRoomNumber = properties.getProperty("RoomNumber");
 			strFirstName = properties.getProperty("FirstName");
 			strLastName = properties.getProperty("LastName");
@@ -2393,7 +2408,8 @@ public class HomePage
 			Thread.sleep(2000);
 
 			homePageWebE.btn_Save.click();
-			CommonLib.waitForObject(homePageWebE.lbl_ReservationID.get(0), "visibility", 20);
+			//CommonLib.waitForObject(homePageWebE.lbl_ReservationID.get(0), "visibility", 20);
+			Thread.sleep(3000);
 
 			if (homePageWebE.lbl_ReservationID.get(0).getText().trim().equals(strReservationId))
 			{
@@ -2730,13 +2746,17 @@ public class HomePage
 	 * This method is use for Upload reservation
 	 * 
 	 */
-	@Test(description = "Upload Reservation", priority = 30)
+	@Test(description = "Upload Reservation", priority = 34)
 	public static void uploadReservation()
 	{
 		ExtentTest uploadReservation = MainMethod.extent.startTest("Test ID 51 : Validate Reservation Uploaded ");
 		try
 		{
 			Log4J.logp.info("**** Started : uploadReservation ****");
+
+			//LoginLib.login();
+
+			//driver = ExecutionSetUp.getDriver();
 
 			softAssertion = new SoftAssert();
 
@@ -2746,7 +2766,7 @@ public class HomePage
 			homePageWebE.btn_UploadReservation.click();
 			Thread.sleep(2000);
 
-			CommonLib.uploadFile("Reservations-Sample.xlsx");
+			CommonLib.uploadFile("Reservations-Sample.xlsx","");
 			Thread.sleep(5000);
 
 			if (homePageWebE.lbl_ReservationID.get(0).getText().trim().equals("1234567"))
@@ -2872,7 +2892,7 @@ public class HomePage
 	 * This method is check Setting menu of Left Navigation Panel in Company Page
 	 * 
 	 */
-	@Test(description = "Check Setting menu in Company Page", priority = 21)
+	@Test(description = "Check Setting menu in Company Page", priority = 20)
 	public static void checkSettingMenu()
 	{
 		String strCompanyName, strActualTimeZone, strExpectedTimeZone;
@@ -3063,7 +3083,7 @@ public class HomePage
 	 * This method use for check User
 	 * 
 	 */
-	@Test(description = " Check user Admin or not or Remove user", priority = 155)
+	@Test(description = " Check user Admin or not or Remove user", priority = 21)
 	public static void checkUserAdmin()
 	{
 		String strAttribute, strActual, strExpected;
@@ -3149,18 +3169,18 @@ public class HomePage
 
 			// Remove user
 
-			strActual = homePageWebE.lbl_UserEmail.get(0).getText().trim();
-
+			/*strActual = homePageWebE.lbl_UserEmail.get(0).getText().trim();
+			
 			System.out.println(strActual);
-
+			
 			homePageWebE.ico_RemoveUser.get(0).click();
 			Thread.sleep(2000);
-
+			
 			homePageWebE.btn_ConfirmRemoveUser.click();
 			Thread.sleep(2000);
-
+			
 			strExpected = homePageWebE.lbl_UserEmail.get(0).getText().trim();
-
+			
 			if (strExpected.equals(strActual))
 			{
 				Log4J.logp.info("User is not removed");
@@ -3172,7 +3192,7 @@ public class HomePage
 				Log4J.logp.info("User is removed");
 				softAssertion.assertTrue(true);
 				child2.log(LogStatus.PASS, "User is removed");
-			}
+			}*/
 
 			Log4J.logp.info("**** Ended : checkUserAdmin ****");
 		}
@@ -3795,7 +3815,7 @@ public class HomePage
 	 * This method is check Compaign history
 	 * 
 	 */
-	@Test(description = "Check Compaign history", priority = 201)
+	@Test(description = "Check Compaign history", priority = 26)
 	public static void checkCompaignHistory()
 	{
 		String strArrivalDate, strDepartDate;
@@ -3933,7 +3953,7 @@ public class HomePage
 	 * This method is check Me tab
 	 * 
 	 */
-	@Test(description = "Check Me tab", priority = 26)
+	@Test(description = "Check Me tab", priority = 27)
 	public static void checkMeTab()
 	{
 		String strBackground;
@@ -3962,7 +3982,7 @@ public class HomePage
 
 			// Check Notification option
 
-			if (homePageWebE.lnk_MeMenu.get(0).getText().trim().equals("Notifications"))
+			if (homePageWebE.lnk_MeMenu.get(1).getText().trim().equals("Notifications"))
 			{
 				Log4J.logp.info("Notification option has been displayed");
 				softAssertion.assertTrue(true);
@@ -4012,7 +4032,7 @@ public class HomePage
 
 			// Check Privacy Policy
 
-			if (homePageWebE.lnk_MeMenu.get(1).getText().trim().equals("Privacy Policy"))
+			if (homePageWebE.lnk_MeMenu.get(2).getText().trim().equals("Privacy Policy"))
 			{
 				Log4J.logp.info("Privacy Policy option has been displayed");
 				softAssertion.assertTrue(true);
@@ -4029,7 +4049,7 @@ public class HomePage
 
 			// Check Terms of Service
 
-			if (homePageWebE.lnk_MeMenu.get(2).getText().trim().equals("Terms of Service"))
+			if (homePageWebE.lnk_MeMenu.get(3).getText().trim().equals("Terms of Service"))
 			{
 				Log4J.logp.info("Terms of Service option has been displayed");
 				softAssertion.assertTrue(true);
@@ -4044,13 +4064,13 @@ public class HomePage
 
 			// Check Help Desk
 
-			if (homePageWebE.lnk_MeMenu.get(3).getText().trim().contains("Help Desk"))
+			if (homePageWebE.lnk_MeMenu.get(4).getText().trim().contains("Help Desk"))
 			{
 				Log4J.logp.info("Help Desk option has been displayed");
 				softAssertion.assertTrue(true);
 				child5.log(LogStatus.PASS, "Help Desk option has been displayed");
 
-				homePageWebE.lnk_MeMenu.get(3).click();
+				homePageWebE.lnk_MeMenu.get(4).click();
 				Thread.sleep(3000);
 
 				ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
@@ -4081,13 +4101,13 @@ public class HomePage
 
 			// Check Logout
 
-			if (homePageWebE.lnk_MeMenu.get(4).getText().trim().equals("Logout"))
+			if (homePageWebE.lnk_MeMenu.get(5).getText().trim().equals("Logout"))
 			{
 				Log4J.logp.info("Logout option has been displayed");
 				softAssertion.assertTrue(true);
 				child6.log(LogStatus.PASS, "Logout option has been displayed");
 
-				homePageWebE.lnk_MeMenu.get(4).click();
+				homePageWebE.lnk_MeMenu.get(5).click();
 				CommonLib.waitForObject(loginWebE.txt_EmailAdd, "visibility", 10);
 
 				if (CommonLib.checkElementPresent(loginWebE.txt_EmailAdd) == true)
@@ -4169,7 +4189,7 @@ public class HomePage
 	 * This method is check Report in Company page
 	 * 
 	 */
-	@Test(description = "Check Reports in Company Page", priority = 100)
+	@Test(description = "Check Reports in Company Page", priority = 28)
 	public static void checkReport()
 	{
 		String strEmail;
@@ -4228,9 +4248,10 @@ public class HomePage
 			// Delete Report
 
 			homePageWebE.btn_RemoveReport.get(intAfter - 1).click();
+			CommonLib.waitForObject(homePageWebE.btn_ConfirmDeleteReport, "visibility", 20);
 			Thread.sleep(2000);
 
-			homePageWebE.btn_ConfirmDepartment.click();
+			homePageWebE.btn_ConfirmDeleteReport.click();
 			Thread.sleep(3000);
 
 			intAfter = homePageWebE.btn_RemoveReport.size();
@@ -4288,7 +4309,7 @@ public class HomePage
 	 * This method is use for check Integration
 	 * 
 	 */
-	@Test(description = "Check Integration", priority = 102)
+	@Test(description = "Check Integration", priority = 29)
 	public static void checkIntegration()
 	{
 		ExtentTest checkIntegration = MainMethod.extent.startTest("Test ID 85 : Validate Integration").assignCategory("Regression");
@@ -4352,7 +4373,7 @@ public class HomePage
 	 * This method is use for check Automated Mesages
 	 * 
 	 */
-	@Test(description = "Check Automated messages", priority = 151)
+	@Test(description = "Check Automated messages", priority = 30)
 	public static void checkAutomatedMessage()
 	{
 		String strValue, strEditValue;
@@ -4527,6 +4548,334 @@ public class HomePage
 				checkAutomatedMessage.log(LogStatus.PASS, "checkAutomatedMessage is passed.");
 			}
 			MainMethod.extent.endTest(checkAutomatedMessage);
+			softAssertion.assertAll();
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
+	 * This method is use for create survey template
+	 * 
+	 */
+	@Test(description = "Check Survey Templates", priority = 31)
+	public static void checkSurveys()
+	{
+		String strValue, strEditValue;
+		ExtentTest checkSurveys = MainMethod.extent.startTest("Check Survey Templates").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		ExtentTest child3 = null;
+		ExtentTest child4 = null;
+		ExtentTest child5 = null;
+		try
+		{
+			Log4J.logp.info("**** Started : checkSurveys ****");
+
+			softAssertion = new SoftAssert();
+
+			child1 = MainMethod.extent.startTest("Test ID : 72 Validate Edit Surveys");
+			child2 = MainMethod.extent.startTest("Test ID : 73 Validate Create Survey Templates");
+			child3 = MainMethod.extent.startTest("Test ID : 74 Validate Stats");
+			child4 = MainMethod.extent.startTest("Test ID : 75 Validate Edit Survey Templates");
+			child5 = MainMethod.extent.startTest("Test ID : 76 Validate Delete Templates");
+
+			strValue = "Test Survey Template";
+			strEditValue = "Test Edit Survey Template";
+
+			homePageWebE.ico_Company.click();
+			CommonLib.waitForObject(homePageWebE.lbl_LeftCompanyName, "visibility", 10);
+
+			homePageWebE.lbl_CompanyMenu.get(5).click();
+			CommonLib.waitForObject(homePageWebE.tab_SurveyTemplates, "visibility", 10);
+			Thread.sleep(2000);
+
+			homePageWebE.tab_SurveyTemplates.click();
+			CommonLib.waitForObject(homePageWebE.btn_CreateNewTemplate, "clickable", 10);
+
+			homePageWebE.btn_CreateNewTemplate.click();
+			Thread.sleep(2000);
+
+			homePageWebE.txt_NewSurveyName.sendKeys(strValue);
+			Thread.sleep(2000);
+
+			homePageWebE.txt_SurveyQuestion.sendKeys("Test Questions");
+			Thread.sleep(2000);
+
+			homePageWebE.btn_AddAnswerOption.click();
+			Thread.sleep(2000);
+
+			homePageWebE.txt_AnswerOption.sendKeys("None");
+			Thread.sleep(2000);
+
+			homePageWebE.btn_CreateSurveyNew.click();
+			CommonLib.waitForObject(homePageWebE.lbl_SurveyTitle.get(0), "visibility", 20);
+
+			if (homePageWebE.lbl_SurveyTitle.get(0).getText().trim().equals(strValue))
+			{
+				Log4J.logp.info("Survey Template has been added");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "survey Template has been added");
+			}
+			else
+			{
+				Log4J.logp.info("Survey Template not added");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "survey Template not added");
+			}
+
+			// Edit Survey Template
+
+			homePageWebE.ico_SurveyEdit.get(0).click();
+			CommonLib.waitForObject(homePageWebE.txt_NewSurveyName, "visibility", 10);
+
+			homePageWebE.txt_NewSurveyName.clear();
+			homePageWebE.txt_NewSurveyName.sendKeys(strEditValue);
+			Thread.sleep(2000);
+
+			homePageWebE.btn_CreateSurveyNew.click();
+			CommonLib.waitForObject(homePageWebE.lbl_SurveyTitle.get(0), "visibility", 20);
+
+			if (homePageWebE.lbl_SurveyTitle.get(0).getText().trim().equals(strEditValue))
+			{
+				Log4J.logp.info("Survey Template has been Edited");
+				softAssertion.assertTrue(true);
+				child1.log(LogStatus.PASS, "Survey Template has been Edited");
+				child4.log(LogStatus.PASS, "Survey Template has been Edited");
+			}
+			else
+			{
+				Log4J.logp.info("Survey Template not Edited");
+				softAssertion.assertTrue(false);
+				child1.log(LogStatus.FAIL, "Survey Template Not Edited");
+				child4.log(LogStatus.FAIL, "Survey Template not Edited");
+			}
+
+			//  Delete Template
+			homePageWebE.ico_SurveyEdit.get(0).click();
+			CommonLib.waitForObject(homePageWebE.txt_NewSurveyName, "visibility", 10);
+
+			CommonLib.scroll_Page(homePageWebE.scrollbar_Surveys, 2);
+			Thread.sleep(2000);
+
+			homePageWebE.btn_AddFollowUp.click();
+			Thread.sleep(2000);
+
+			homePageWebE.btn_AddFollowUpAnswer.click();
+			Thread.sleep(2000);
+
+			homePageWebE.lst_AddAnswer.get(0).click();
+			Thread.sleep(2000);
+
+			homePageWebE.txt_SendMinutes.sendKeys("30");
+			Thread.sleep(2000);
+
+			homePageWebE.btn_UseSurveyTemplateFollow.click();
+			Thread.sleep(2000);
+
+			homePageWebE.list_SurveyTemplatesFollow.get(0).click();
+			Thread.sleep(2000);
+
+			homePageWebE.btn_FollowUpSave.click();
+			CommonLib.waitForObject(homePageWebE.lbl_SuccessFollowUpMessage, "visibility", 20);
+
+			if (homePageWebE.lbl_SuccessFollowUpMessage.getText().contains("Survey Template saved!"))
+			{
+				Log4J.logp.info("Follow up Template has been added");
+				softAssertion.assertTrue(true);
+				child5.log(LogStatus.PASS, "Follow up Template has added ");
+			}
+			else
+			{
+				Log4J.logp.info("Follow Up Template not added");
+				softAssertion.assertTrue(false);
+				child5.log(LogStatus.FAIL, "Follow up Template not added ");
+			}
+			Thread.sleep(3000);
+
+			// Delete Template
+
+			homePageWebE.ico_DeleteFollowup.click();
+			CommonLib.waitForObject(homePageWebE.lbl_SuccessFollowUpMessage, "visibility", 20);
+			Thread.sleep(2000);
+
+			if (homePageWebE.lbl_SuccessFollowUpMessage.getText().contains("Automated Follow-Up Message removed!"))
+			{
+				Log4J.logp.info("Survey Template has been removed");
+				softAssertion.assertTrue(true);
+				child5.log(LogStatus.PASS, "Follow up Template has been removed ");
+			}
+			else
+			{
+				Log4J.logp.info("Survey Template not removed");
+				softAssertion.assertTrue(false);
+				child5.log(LogStatus.FAIL, "Follow up Template not removed ");
+			}
+
+			homePageWebE.btn_CreateSurveyNew.click();
+			CommonLib.waitForObject(homePageWebE.lbl_SurveyTitle.get(0), "visibility", 20);
+
+			// Check Stats
+
+			homePageWebE.ico_SurveyCharts.get(0).click();
+			CommonLib.waitForObject(homePageWebE.survey_Results, "visibility", 10);
+
+			if (CommonLib.checkElementPresent(homePageWebE.survey_Results))
+			{
+				Log4J.logp.info("Survey Charts displayed");
+				softAssertion.assertTrue(true);
+				child3.log(LogStatus.PASS, "Survey Charts displayed");
+			}
+			else
+			{
+				Log4J.logp.info("Not found survey Charts");
+				softAssertion.assertTrue(false);
+				child3.log(LogStatus.FAIL, "Survey Charts not displayed");
+			}
+
+			Log4J.logp.info("**** Ended : checkSurveys ****");
+		}
+		catch (Exception e)
+		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "checkSurveys Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child3.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child3.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child4.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child4.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child5.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child5.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			checkSurveys.appendChild(child1);
+			checkSurveys.appendChild(child2);
+			checkSurveys.appendChild(child3);
+			checkSurveys.appendChild(child4);
+			checkSurveys.appendChild(child5);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+			MainMethod.extent.endTest(child3);
+			MainMethod.extent.endTest(child4);
+			MainMethod.extent.endTest(child5);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL") || child3.getRunStatus().toString().equalsIgnoreCase("FAIL") || child4.getRunStatus().toString().equalsIgnoreCase("FAIL")
+					|| child5.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkSurveys.log(LogStatus.FAIL, "checkSurveys is failed.");
+			}
+			else
+			{
+				checkSurveys.log(LogStatus.PASS, "checkSurveys is passed.");
+			}
+			MainMethod.extent.endTest(checkSurveys);
+			softAssertion.assertAll();
+			//LoginLib.logout();.
+		}
+	}
+
+	/**
+	 * 
+	 * This method is check Messaging service
+	 * 
+	 */
+	@Test(description = "Check Messaging Service", priority = 32)
+	public static void checkMessagingService()
+	{
+		String[] strServices = { "SMS", "Email", "Chargerback", "Discotech", "Enterprise Rent-A-Car", "Facebook Messenger", "TripAdvisor", "Viator", "Viber" };
+		ExtentTest checkMessagingService = MainMethod.extent.startTest("Check messaging Services").assignCategory("Regression");
+		ExtentTest child1 = null;
+		ExtentTest child2 = null;
+		try
+		{
+			Log4J.logp.info("**** Started : checkMessagingService ****");
+
+			child1 = MainMethod.extent.startTest("Test ID 77 : Validate messaging service");
+			child2 = MainMethod.extent.startTest("Test ID 78 : Validate sign up");
+
+			softAssertion = new SoftAssert();
+
+			homePageWebE.ico_Company.click();
+			CommonLib.waitForObject(homePageWebE.lbl_LeftCompanyName, "visibility", 10);
+
+			homePageWebE.lbl_CompanyMenu.get(6).click();
+			CommonLib.waitForObject(homePageWebE.lnk_SignUp, "visibility", 10);
+			Thread.sleep(2000);
+
+			for (int i = 0; i < strServices.length; i++)
+			{
+				if (homePageWebE.lbl_MessageService.get(i).getText().trim().contains(strServices[i]))
+				{
+					Log4J.logp.info(strServices[i] + " ::  has been displayed in Messagin service page");
+					softAssertion.assertTrue(true);
+					child1.log(LogStatus.PASS, strServices[i] + " ::  has been displayed in Messagin service page");
+				}
+				else
+				{
+					Log4J.logp.info(strServices[i] + " :: not found in Messagin service page");
+					softAssertion.assertTrue(false);
+					child1.log(LogStatus.FAIL, strServices[i] + " :: not found in Messagin service page");
+				}
+			}
+
+			// Check Sign up link
+
+			homePageWebE.lnk_SignUp.click();
+			CommonLib.waitForObject(homePageWebE.signUp_Window, "visibility", 10);
+
+			if (CommonLib.checkElementPresent(homePageWebE.signUp_Window))
+			{
+				Log4J.logp.info("Sign Up pop-up has been displayed after click on Sign up link");
+				softAssertion.assertTrue(true);
+				child2.log(LogStatus.PASS, "Sign Up pop-up has been displayed after click on Sign up link");
+			}
+			else
+			{
+				Log4J.logp.info("Sign Up pop-up not found");
+				softAssertion.assertTrue(false);
+				child2.log(LogStatus.FAIL, "Sign Up pop-up not found");
+			}
+
+			homePageWebE.btn_CancelSignUp.click();
+			Thread.sleep(2000);
+
+			Log4J.logp.info("**** Started : checkMessagingService ****");
+		}
+		catch (Exception e)
+		{
+			CommonLib.takeScreenshots();
+			e.printStackTrace();
+			softAssertion.assertTrue(false, "checkAutomatedMessage Failed");
+		}
+		finally
+		{
+			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
+			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+
+			checkMessagingService.appendChild(child1);
+			checkMessagingService.appendChild(child2);
+
+			MainMethod.extent.endTest(child1);
+			MainMethod.extent.endTest(child2);
+
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			{
+				checkMessagingService.log(LogStatus.FAIL, "checkMessagingService is failed.");
+			}
+			else
+			{
+				checkMessagingService.log(LogStatus.PASS, "checkMessagingService is passed.");
+			}
+			MainMethod.extent.endTest(checkMessagingService);
 			softAssertion.assertAll();
 			//LoginLib.logout();.
 		}

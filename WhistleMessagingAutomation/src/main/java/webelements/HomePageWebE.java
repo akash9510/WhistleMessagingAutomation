@@ -748,11 +748,11 @@ public class HomePageWebE
 	public WebElement		lbl_Helpdesk;
 
 	/** to click on Notification toggle */
-	@FindBy(xpath = "//div[@class='MiddleContainer MiddleContainer--fullwidth']//input[@id='notifications']")
+	@FindBy(xpath = "(//input[@id='notifications'])[1]")
 	public WebElement		ico_MeNotification;
 
 	/** to check background color of Notification */
-	@FindBy(xpath = "(//div[@class='MiddleContainer MiddleContainer--fullwidth']//input[@id='notifications']/..//div[contains(@style,'background-color')])[1]")
+	@FindBy(xpath = "(//input[@id='notifications']/..//div[contains(@style,'background-color')])[3]")
 	public WebElement		lbl_MeNotificationBackground;
 
 	/** to click on Add Report RECIPENT button */
@@ -770,6 +770,10 @@ public class HomePageWebE
 	/** to click on Remove icon of Report */
 	@FindBy(css = ".btn.waves-effect.waves-light.red")
 	public List<WebElement>	btn_RemoveReport;
+
+	/** to click on Confirm Delete Report */
+	@FindBy(xpath = "(//div[@id='removeRecipient']//button)[1]")
+	public WebElement		btn_ConfirmDeleteReport;
 
 	/** to click on More Info in Integration Page */
 	@FindBy(xpath = "//a[@title='More Info']")
@@ -918,6 +922,74 @@ public class HomePageWebE
 	/** to check Survey Details */
 	@FindBy(css = ".SurveyResultsDetail")
 	public WebElement		survey_Results;
+
+	/** to click on Add Follow up button */
+	@FindBy(css = ".btn.waves-effect.waves-light.right.undefined")
+	public WebElement		btn_AddFollowUp;
+
+	/** to click on Add Answer button */
+	@FindBy(css = ".dropdown-button .chip.selected.add")
+	public WebElement		btn_AddFollowUpAnswer;
+
+	/** to click on yes or not */
+	@FindBy(xpath = "//ul[@class='dropdown-content active']//span")
+	public List<WebElement>	lst_AddAnswer;
+
+	/** to enter value in Receiving Response */
+	@FindBy(id = "scheduled-message-delay")
+	public WebElement		txt_SendMinutes;
+
+	/** to click on Use Survey Template */
+	@FindBy(xpath = "//div[@class='AutomatedMessageEditor__survey-select']//div")
+	public WebElement		btn_UseSurveyTemplateFollow;
+
+	/** to click on Survey Templates */
+	@FindBy(xpath = "//div[@id='survey-template-modal']//strong")
+	public List<WebElement>	list_SurveyTemplatesFollow;
+
+	/** to enter value in Chat message box */
+	@FindBy(css = ".ChatMessageBox__input")
+	public WebElement		txt_FollowupMessage;
+
+	/** Scroll Survey */
+	@FindBy(css = ".Panel.SurveysContainer")
+	public WebElement		scrollbar_Surveys;
+
+	/** to click on Save button */
+	@FindBy(css = ".SendMessageButton")
+	public WebElement		btn_FollowUpSave;
+
+	/** to check message */
+	@FindBy(css = ".toast")
+	public WebElement		lbl_SuccessFollowUpMessage;
+
+	/** to click on Delere icon */
+	@FindBy(css = ".IconButton")
+	public WebElement		ico_DeleteFollowup;
+
+	/** to check message service */
+	@FindBy(xpath = "//table//div[@class='ChatTypeBadge']/..")
+	public List<WebElement>	lbl_MessageService;
+
+	/** to click on Sign Up link */
+	@FindBy(xpath = "//a[contains(text(),'Sign up!')]")
+	public WebElement		lnk_SignUp;
+
+	/** to check Sign Up window */
+	@FindBy(id = "chargerbackAgreement")
+	public WebElement		signUp_Window;
+
+	/** to click on Cancel button */
+	@FindBy(xpath = "//div[@id='chargerbackAgreement']//button[text()='CANCEL']")
+	public WebElement		btn_CancelSignUp;
+
+	/** to click on Delete icon */
+	@FindBy(css = ".material-icons.remove-icon")
+	public WebElement		ico_DeleteMessage;
+
+	/** to click on Confirm button */
+	@FindBy(xpath = "//div[@id='removeFacebook']//button[text()='CONFIRM']")
+	public WebElement		btn_ConfirmMessage;
 
 	static HomePageWebE		Instance	= null;
 

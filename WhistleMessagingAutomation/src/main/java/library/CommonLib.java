@@ -310,7 +310,7 @@ public class CommonLib
 	 * This method is use for Upload file
 	 * 
 	 */
-	public static boolean uploadFile(String strFileName)
+	public static boolean uploadFile(String strFileName, String strValue)
 	{
 		//String strFileName;
 		try
@@ -335,15 +335,18 @@ public class CommonLib
 
 			// Cmd + Tab is needed since it launches a Java app and the browser looses focus
 
-			robot.keyPress(KeyEvent.VK_META);
+			if (strValue.equalsIgnoreCase("Cmpaign"))
+			{
+				robot.keyPress(KeyEvent.VK_META);
 
-			robot.keyPress(KeyEvent.VK_TAB);
+				robot.keyPress(KeyEvent.VK_TAB);
 
-			robot.keyRelease(KeyEvent.VK_META);
+				robot.keyRelease(KeyEvent.VK_META);
 
-			robot.keyRelease(KeyEvent.VK_TAB);
+				robot.keyRelease(KeyEvent.VK_TAB);
 
-			robot.delay(500);
+				robot.delay(500);
+			}
 
 			//Open Goto window
 
@@ -368,6 +371,7 @@ public class CommonLib
 			robot.keyRelease(KeyEvent.VK_META);
 
 			robot.keyRelease(KeyEvent.VK_V);
+			robot.delay(1000);
 
 			//Press Enter key to close the Goto window and Upload window
 
@@ -375,11 +379,13 @@ public class CommonLib
 
 			robot.keyRelease(KeyEvent.VK_ENTER);
 
-			robot.delay(500);
+			robot.delay(1000);
 
 			robot.keyPress(KeyEvent.VK_ENTER);
 
 			robot.keyRelease(KeyEvent.VK_ENTER);
+
+			//robot = null;
 
 			return true;
 		}
