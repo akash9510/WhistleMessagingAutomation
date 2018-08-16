@@ -142,6 +142,7 @@ public class CommonLib
 					Date date = new Date();
 					LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 					int month = localDate.getMonthValue();
+					System.out.println(month + " " + intMonth);
 					if (month < intMonth)
 					{
 						if (strValue.equals("Depart"))

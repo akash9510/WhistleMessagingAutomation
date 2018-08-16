@@ -218,6 +218,10 @@ public class HomePageWebE
 	@FindBy(css = ".ConversationList__convo")
 	public List<WebElement>	conversation_list;
 
+	/** to get the Archive lise */
+	@FindBy(css = ".ArchiveList__row")
+	public List<WebElement>	list_Archive;
+
 	/** to scroll the conversation */
 	@FindBy(css = ".GuestChatSidebar__department-container.has-segment")
 	public WebElement		scrollbar_Conversation;
@@ -269,6 +273,10 @@ public class HomePageWebE
 	/** to get the names of Live Chat */
 	@FindBy(css = ".info__name")
 	public List<WebElement>	lbl_LiveChatNames;
+
+	/** to get the names */
+	@FindBy(xpath = "//tr[@class='ArchiveList__row']//td")
+	public List<WebElement>	lbl_ArchiveNames;
 
 	/** to click on Team Chat icon */
 	@FindBy(id = "team-chat-tab")

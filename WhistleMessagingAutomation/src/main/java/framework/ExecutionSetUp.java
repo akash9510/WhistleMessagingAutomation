@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.safari.SafariDriver;
 
 import library.CommonLib;
 import library.Log4J;
@@ -64,6 +65,16 @@ public class ExecutionSetUp
 				driver = new FirefoxDriver();
 
 				driver.manage().window().maximize();
+			}
+			else if (strBrowserName.equals("safari"))
+			{
+				Log4J.logp.info("This is Safari browser");
+
+				//System.setProperty("webdriver.gecko.driver", "src/main/resources/Drivers/geckodriver");
+
+				driver = new SafariDriver();
+
+				//driver.manage().window().maximize();
 			}
 
 			Log4J.logp.info("Ended :::: LaunchBrowser");

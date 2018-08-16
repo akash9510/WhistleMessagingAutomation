@@ -58,7 +58,7 @@ public class HomePage
 		{
 
 			Log4J.logp.info("**** Started : startConversation ****");
-
+			driver.navigate().refresh();
 			softAssertion = new SoftAssert();
 			//LoginLib.login();
 
@@ -71,7 +71,7 @@ public class HomePage
 			strDepartDate = properties.getProperty("departdate");
 
 			//homePageWebE.txt_GuestName.clear();
-			homePageWebE.txt_GuestName.sendKeys(strGuestName);
+			homePageWebE.txt_GuestName.sendKeys("te");
 			Thread.sleep(8000);
 
 			homePageWebE.lst_SearchResults.get(0).click();
@@ -91,15 +91,15 @@ public class HomePage
 
 			bstatus = CommonLib.selectDate(strDepartDate, "Depart");
 
-			//homePageWebE.txt_Notes.clear();
+			homePageWebE.txt_Notes.clear();
 			homePageWebE.txt_Notes.sendKeys("Test Notes");
 			Thread.sleep(2000);
 
-			//homePageWebE.txt_Email.clear();
+			homePageWebE.txt_Email.clear();
 			homePageWebE.txt_Email.sendKeys(strEmail);
 			Thread.sleep(2000);
 
-			//shomePageWebE.txt_Message.clear();
+			homePageWebE.txt_Message.clear();
 			homePageWebE.txt_Message.sendKeys("Hello");
 			Thread.sleep(4000);
 
@@ -171,7 +171,7 @@ public class HomePage
 		{
 
 			Log4J.logp.info("**** Started : checkDropdownToggleBehavior ****");
-
+			driver.navigate().refresh();
 			Child1 = MainMethod.extent.startTest("Test ID 5 : Whistle Dropdown Toolbar");
 			Child2 = MainMethod.extent.startTest("Test ID 6 : Turn Sound ON/OFF");
 			Child3 = MainMethod.extent.startTest("Test ID 7 : Turn Notification ON/OFF");
@@ -360,7 +360,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : startCompaign ****");
-
+			driver.navigate().refresh();
 			softAssertion = new SoftAssert();
 
 			//LoginLib.login();
@@ -460,7 +460,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : startSurveyUsingSurveyTemplate ****");
-
+			driver.navigate().refresh();
 			softAssertion = new SoftAssert();
 			//LoginLib.login();
 			homePageWebE.ico_GuestChat.click();
@@ -546,7 +546,7 @@ public class HomePage
 		{
 
 			Log4J.logp.info("**** Started :startSurveyWithoutTemplate ****");
-
+			driver.navigate().refresh();
 			softAssertion = new SoftAssert();
 			//LoginLib.login();
 
@@ -658,7 +658,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started :openDeleteConversation ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 12 : View Open Conversation");
 			child2 = MainMethod.extent.startTest("Test ID 13 : Delete Open Conversation");
 			child3 = MainMethod.extent.startTest("Test ID 14 : Archive Conversation");
@@ -802,7 +802,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started :blockUnblockConversation ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 15: Block Conversation");
 			child2 = MainMethod.extent.startTest("Test ID 16 : Unblock User");
 
@@ -922,7 +922,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started :openLiveChat ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 17 : Live Open Conversation");
 			child2 = MainMethod.extent.startTest("Test ID 13 : Live Archive Conversation");
 
@@ -1037,18 +1037,21 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started :blockLiveConversation ****");
-
+			driver.navigate().refresh();
 			softAssertion = new SoftAssert();
 			//LoginLib.login();
 
 			homePageWebE.ico_Live_Chat.click();
 			Thread.sleep(2000);
 
-			homePageWebE.conversation_list.get(0).click();
-			CommonLib.waitForObject(homePageWebE.ico_CloseChat, "clickable", 10);
-
-			strExpectedValue = homePageWebE.lbl_LiveChatNames.get(0).getText().trim();
+			homePageWebE.tab_Archived.click();
 			Thread.sleep(2000);
+
+			strExpectedValue = homePageWebE.lbl_ArchiveNames.get(0).getText().trim();
+			Thread.sleep(2000);
+
+			homePageWebE.list_Archive.get(0).click();
+			CommonLib.waitForObject(homePageWebE.ico_CloseChat, "clickable", 10);
 
 			homePageWebE.btn_BlockUnblock.click();
 			CommonLib.waitForObject(homePageWebE.btn_Confirm, "clickable", 10);
@@ -1123,7 +1126,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started :createDeleteChannel ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 20 :  Crate Team Chat");
 			child2 = MainMethod.extent.startTest("Test ID 21 :  Add Members to Team Chat");
 			child3 = MainMethod.extent.startTest("Test ID 22 :  Delete Team Chat");
@@ -1308,7 +1311,7 @@ public class HomePage
 		{
 
 			Log4J.logp.info("**** Started :translateTeamMessage ****");
-
+			driver.navigate().refresh();
 			Properties properties = new Properties();
 			properties.load(new FileInputStream("src/main/resources/Properties/Translate.properties"));
 
@@ -1534,6 +1537,8 @@ public class HomePage
 
 			Log4J.logp.info("**** Started :insertTemplate ****");
 
+			driver.navigate().refresh();
+
 			softAssertion = new SoftAssert();
 			//LoginLib.login();
 
@@ -1639,7 +1644,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started :checkDirectChat ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 27 : Sending a Direct Chat");
 			child2 = MainMethod.extent.startTest("Test ID  28 : Clear Direct Chat Search box");
 
@@ -1754,7 +1759,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started :checkLogSheet ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 30 :  Add Participants to Log Sheet");
 			child2 = MainMethod.extent.startTest("Test ID 31 : Add Filter Log Sheet");
 			softAssertion = new SoftAssert();
@@ -1861,7 +1866,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started :checkColumnsLogSheet ****");
-
+			driver.navigate().refresh();
 			softAssertion = new SoftAssert();
 			//LoginLib.login();
 
@@ -2106,7 +2111,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started :checkAnalytics ****");
-
+			driver.navigate().refresh();
 			softAssertion = new SoftAssert();
 
 			child1 = MainMethod.extent.startTest("Test ID 37 : Choose Analyticd Start and End Dates");
@@ -2338,7 +2343,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started :checkReservation ****");
-
+			driver.navigate().refresh();
 			softAssertion = new SoftAssert();
 
 			child1 = MainMethod.extent.startTest("Test ID 42 : Validate Number Reservation");
@@ -2537,7 +2542,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started :checkValidationReservation ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 44 : Validate Reservation ID Required");
 			child2 = MainMethod.extent.startTest("Test ID 45 : Validate FirstName Required");
 			child3 = MainMethod.extent.startTest("Test ID 46 : Validate Arrival Required");
@@ -2753,7 +2758,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : uploadReservation ****");
-
+			driver.navigate().refresh();
 			//LoginLib.login();
 
 			//driver = ExecutionSetUp.getDriver();
@@ -2766,7 +2771,7 @@ public class HomePage
 			homePageWebE.btn_UploadReservation.click();
 			Thread.sleep(2000);
 
-			CommonLib.uploadFile("Reservations-Sample.xlsx","");
+			CommonLib.uploadFile("Reservations-Sample.xlsx", "");
 			Thread.sleep(5000);
 
 			if (homePageWebE.lbl_ReservationID.get(0).getText().trim().equals("1234567"))
@@ -2835,7 +2840,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : checkCompanyMenu ****");
-
+			driver.navigate().refresh();
 			softAssertion = new SoftAssert();
 
 			homePageWebE.ico_Company.click();
@@ -2905,7 +2910,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : checkSettingMenu ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 53 : Validate Changing Company Name");
 			child2 = MainMethod.extent.startTest("Test ID 54 : Validate Changing Timezone");
 			child3 = MainMethod.extent.startTest("Test ID 58 : Validate deleting department");
@@ -2925,7 +2930,7 @@ public class HomePage
 			homePageWebE.txt_CompanyDetails.get(0).click();
 			//Thread.sleep(2000);
 			homePageWebE.txt_CompanyDetails.get(0).clear();
-			Thread.sleep(1000);
+			//Thread.sleep(1000);
 			homePageWebE.txt_CompanyDetails.get(0).sendKeys(strCompanyName);
 			Thread.sleep(2000);
 
@@ -3089,14 +3094,14 @@ public class HomePage
 		String strAttribute, strActual, strExpected;
 		ExtentTest checkUserAdmin = MainMethod.extent.startTest("Check user Admin or not or Remove user").assignCategory("Regression");
 		ExtentTest child1 = null;
-		ExtentTest child2 = null;
+		//ExtentTest child2 = null;
 		ExtentTest child3 = null;
 		try
 		{
 			Log4J.logp.info("**** Started : checkUserAdmin ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID  55 : Validate adding user as admin");
-			child2 = MainMethod.extent.startTest("Test ID  56 : Validate Removing User");
+			//child2 = MainMethod.extent.startTest("Test ID  56 : Validate Removing User");
 			child3 = MainMethod.extent.startTest("Test ID  57 : Validate removing user as admin");
 
 			softAssertion = new SoftAssert();
@@ -3206,20 +3211,20 @@ public class HomePage
 		{
 			if (child1.getRunStatus().toString().equalsIgnoreCase("unknown"))
 				child1.log(LogStatus.FAIL, "Failed for Unknown status.");
-			if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
-				child2.log(LogStatus.FAIL, "Failed for Unknown status.");
+			//if (child2.getRunStatus().toString().equalsIgnoreCase("unknown"))
+			//	child2.log(LogStatus.FAIL, "Failed for Unknown status.");
 			if (child3.getRunStatus().toString().equalsIgnoreCase("unknown"))
 				child3.log(LogStatus.FAIL, "Failed for Unknown status.");
 
 			checkUserAdmin.appendChild(child1);
-			checkUserAdmin.appendChild(child2);
+			//checkUserAdmin.appendChild(child2);
 			checkUserAdmin.appendChild(child3);
 
 			MainMethod.extent.endTest(child1);
-			MainMethod.extent.endTest(child2);
+			//MainMethod.extent.endTest(child2);
 			MainMethod.extent.endTest(child3);
 
-			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child2.getRunStatus().toString().equalsIgnoreCase("FAIL") || child3.getRunStatus().toString().equalsIgnoreCase("FAIL"))
+			if (child1.getRunStatus().toString().equalsIgnoreCase("FAIL") || child3.getRunStatus().toString().equalsIgnoreCase("FAIL"))
 			{
 				checkUserAdmin.log(LogStatus.FAIL, "checkUserAdmin is failed.");
 			}
@@ -3250,7 +3255,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : checkEscalation ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test Id 60 : Validate adding message escalation");
 			child2 = MainMethod.extent.startTest("Test Id 61 : Validate editing message escalation");
 			child3 = MainMethod.extent.startTest("Test Id 62 : Validate deleting message escalation");
@@ -3428,7 +3433,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : checkDepartment ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 63 : Validate setting default department to tag new message without a department");
 			child2 = MainMethod.extent.startTest("Test ID 64 : Validate adding department name");
 
@@ -3565,7 +3570,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : checkTemplates ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 65 : Validate adding template");
 			child2 = MainMethod.extent.startTest("Test ID 66 : Validate deleting template");
 			child3 = MainMethod.extent.startTest("Test ID 67 : Validate adding emoji");
@@ -3748,7 +3753,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : checkAutoResponders ****");
-
+			driver.navigate().refresh();
 			strValue = "Test AutoResponders";
 
 			softAssertion = new SoftAssert();
@@ -3825,7 +3830,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : checkCompaignHistory ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 70 : Validate campaign history");
 			child2 = MainMethod.extent.startTest("Test ID 71 : Validate follow up message");
 
@@ -3967,7 +3972,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : checkMeTab ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 89 : Validate Notifcation ");
 			child2 = MainMethod.extent.startTest("Test ID 90 : Validate Privacy Policy");
 			child3 = MainMethod.extent.startTest("Test ID 91 : Validate Term of Service");
@@ -3987,6 +3992,9 @@ public class HomePage
 				Log4J.logp.info("Notification option has been displayed");
 				softAssertion.assertTrue(true);
 				child1.log(LogStatus.PASS, "Notification option has been displayed");
+
+				homePageWebE.lnk_MeMenu.get(1).click();
+				Thread.sleep(2000);
 
 				homePageWebE.ico_MeNotification.click();
 				Thread.sleep(2000);
@@ -4031,7 +4039,7 @@ public class HomePage
 			}
 
 			// Check Privacy Policy
-
+			System.out.println(homePageWebE.lnk_MeMenu.get(2).getText().trim());
 			if (homePageWebE.lnk_MeMenu.get(2).getText().trim().equals("Privacy Policy"))
 			{
 				Log4J.logp.info("Privacy Policy option has been displayed");
@@ -4200,7 +4208,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : checkReport ****");
-
+			driver.navigate().refresh();
 			softAssertion = new SoftAssert();
 
 			child1 = MainMethod.extent.startTest("Test ID 83 : Validate Report recipients");
@@ -4252,7 +4260,7 @@ public class HomePage
 			Thread.sleep(2000);
 
 			homePageWebE.btn_ConfirmDeleteReport.click();
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 
 			intAfter = homePageWebE.btn_RemoveReport.size();
 
@@ -4316,7 +4324,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : checkIntegration ****");
-
+			driver.navigate().refresh();
 			softAssertion = new SoftAssert();
 			homePageWebE.ico_Company.click();
 			CommonLib.waitForObject(homePageWebE.lbl_LeftCompanyName, "visibility", 10);
@@ -4385,7 +4393,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : checkAutomatedMessage ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 86 : Validate Automate message");
 			child2 = MainMethod.extent.startTest("Test ID 87 : Validate Editing Automate message");
 			child3 = MainMethod.extent.startTest("Test ID 88 : Validate Enabled/Disabled");
@@ -4571,7 +4579,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : checkSurveys ****");
-
+			driver.navigate().refresh();
 			softAssertion = new SoftAssert();
 
 			child1 = MainMethod.extent.startTest("Test ID : 72 Validate Edit Surveys");
@@ -4796,7 +4804,7 @@ public class HomePage
 		try
 		{
 			Log4J.logp.info("**** Started : checkMessagingService ****");
-
+			driver.navigate().refresh();
 			child1 = MainMethod.extent.startTest("Test ID 77 : Validate messaging service");
 			child2 = MainMethod.extent.startTest("Test ID 78 : Validate sign up");
 
