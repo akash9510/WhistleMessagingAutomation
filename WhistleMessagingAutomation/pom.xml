@@ -21,6 +21,8 @@
         <testng.version>6.8.8</testng.version>
         <log4j.version>1.2.17</log4j.version>
         <extent.version>2.41.2</extent.version>
+        <browserstack.version>0.1.0</browserstack.version>
+        <json.version>1.1</json.version>
     </properties>
 <dependencies>
 
@@ -75,6 +77,20 @@
     		<artifactId>extentreports</artifactId>
     		<version>${extent.version}</version>
 		</dependency>
+		
+		<dependency>
+   			 <groupId>com.browserstack</groupId>
+    		 <artifactId>browserstack-local-java</artifactId>
+   			 <version>${browserstack.version}</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<dependency>
+    		<groupId>com.googlecode.json-simple</groupId>
+    		<artifactId>json-simple</artifactId>
+    		<version>${json.version}</version>
+		</dependency>
+		
 
 </dependencies>
   

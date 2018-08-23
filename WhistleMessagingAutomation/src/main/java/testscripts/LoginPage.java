@@ -1,4 +1,5 @@
 package testscripts;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,52 +21,54 @@ import library.CommonLib;
 import library.Log4J;
 import library.LoginLib;
 import webelements.LoginWebE;
-public class LoginPage {
-	
-	static WebDriver driver = null;
-	static LoginWebE loginWebE = null;
-	static SoftAssert				softAssertion;
-	static String strUserName, strPassword;
-	
+
+public class LoginPage
+{
+
+	static WebDriver	driver		= null;
+	static LoginWebE	loginWebE	= null;
+	static SoftAssert	softAssertion;
+	static String		strUserName, strPassword;
 
 	@BeforeClass
 	public static void loginBeforeClass() throws FileNotFoundException, IOException
 	{
 		driver = ExecutionSetUp.getDriver();
 		loginWebE = LoginWebE.getInstance(driver);
-		
+
 		Properties logProperties = new Properties();
 		logProperties.load(new FileInputStream("src/main/resources/Properties/data.properties"));
 		strUserName = logProperties.getProperty("username");
 		strPassword = logProperties.getProperty("password");
-		
+
 		//Log4J.loadLogger();
 		//Log4J.logp.info("In Before Class of Login Page");
 	}
-	
+
 	/**
 	 * 
 	 * This method use for login in the application
 	 * 
 	 * @since 07-07-2018
-	 * */
-	@Test(description = "Check User should be able to login in the applicatin",priority= 0)
+	 */
+	@Test(description = "Check User should be able to login in the applicatin", priority = 0)
 	public static void checkLogin()
 	{
 		String strActualUserName;
 		boolean bstatus = false;
-		ExtentTest Login = MainMethod.extent.startTest("Test ID 1 : Login","User should be able to Login in the application").assignCategory("Regression").assignCategory("LoginPage");
+		ExtentTest Login = MainMethod.extent.startTest("Test ID 1 : Login", "User should be able to Login in the application").assignCategory("Regression").assignCategory("LoginPage");
 		try
 		{
 			Log4J.logp.info("***** Started : Login *****");
-			
+
 			softAssertion = new SoftAssert();
-			
+
 			bstatus = LoginLib.login();
-			if(bstatus == true)
+			if (bstatus == true)
 			{
 				strActualUserName = loginWebE.lbl_UserName.getText().trim();
-				if(strActualUserName.equals(strUserName))
+				System.out.println(strActualUserName + " and " + strUserName);
+				if (strActualUserName.equals(strUserName))
 				{
 					Log4J.logp.info("User will be successfully login in site");
 					Assert.assertTrue(true);
@@ -84,16 +87,18 @@ public class LoginPage {
 				Assert.assertTrue(false);
 				Login.log(LogStatus.FAIL, "Login Un - Successfull");
 			}
-			
+
 			Log4J.logp.info("**** Ended : Login ****");
 		}
-		catch (Exception e) {
+		catch (Exception e)
+		{
 			// TODO: handle exception
 			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			softAssertion.assertTrue(false, "Test ID 1 : Login Failed");
 		}
-		finally {
+		finally
+		{
 
 			if (Login.getRunStatus().toString().equalsIgnoreCase("unknown"))
 				Login.log(LogStatus.FAIL, "Test ID 1 : Failed for Unknown status.");
@@ -107,18 +112,18 @@ public class LoginPage {
 			{
 				Login.log(LogStatus.PASS, "Test ID 1 : Login is passed.");
 			}
-			
+
 			softAssertion.assertAll();
 			LoginLib.logout();
 		}
 	}
-	
+
 	/**
 	 * 
-	 * This method is use for check Forget passowrd 
+	 * This method is use for check Forget passowrd
 	 * 
-	 * */
-	@Test(description = "Check forget password functionality",priority = 1)
+	 */
+	@Test(description = "Check forget password functionality", priority = 1)
 	public static void checkForgetPassword()
 	{
 		String strActualMessage, strExpectedMessage;
@@ -126,23 +131,23 @@ public class LoginPage {
 		try
 		{
 			Log4J.logp.info("**** Started : Forget Passowrd ? ****");
-			
+
 			softAssertion = new SoftAssert();
-			
+
 			strExpectedMessage = "We've sent you an email with a link to reset your password.";
-			
+
 			loginWebE.btn_Forget_Password.click();
 			CommonLib.waitForObject(loginWebE.txt_EmailAdd, "visibility", 10);
-			
+
 			loginWebE.txt_EmailAdd.clear();
 			loginWebE.txt_EmailAdd.sendKeys(strUserName);
-			
+
 			loginWebE.btn_Next.click();
 			CommonLib.waitForObject(loginWebE.lbl_SuccessMessage, "visibility", 10);
-			
+
 			strActualMessage = loginWebE.lbl_SuccessMessage.getText().trim();
-			
-			if(strExpectedMessage.equals(strActualMessage))
+
+			if (strExpectedMessage.equals(strActualMessage))
 			{
 				Log4J.logp.info(strExpectedMessage + " :: has been displayed after entered valid email address");
 				softAssertion.assertTrue(true);
@@ -153,17 +158,18 @@ public class LoginPage {
 				softAssertion.assertTrue(false);
 				ForgetPassword.log(LogStatus.FAIL, "Not found any message");
 			}
-			
+
 			Log4J.logp.info("**** Ended : Forget Passowrd ? ****");
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			CommonLib.takeScreenshots();
 			e.printStackTrace();
 			Log4J.logp.info("Failed : Test ID 3 : Forget Passowrd ?");
-			softAssertion.assertTrue(false,"Test ID 3 : Failed");
+			softAssertion.assertTrue(false, "Test ID 3 : Failed");
 		}
-		finally {
+		finally
+		{
 
 			if (ForgetPassword.getRunStatus().toString().equalsIgnoreCase("unknown"))
 				ForgetPassword.log(LogStatus.FAIL, "Test ID 3 : Failed for Unknown status.");
@@ -177,18 +183,18 @@ public class LoginPage {
 			{
 				ForgetPassword.log(LogStatus.PASS, "Test ID 3 : Forget Passowrd ? :: Passed");
 			}
-			
+
 			softAssertion.assertAll();
 			driver.get("https://staging.v2whistle.com");
 		}
 	}
-	
+
 	/**
 	 * 
 	 * This method is check User can able to Logout from the system
 	 * 
-	 * */
-	@Test(description = "Logout from the application",priority = 2)
+	 */
+	@Test(description = "Logout from the application", priority = 2)
 	public static void checkLogout()
 	{
 		boolean bstatus = false;
@@ -196,14 +202,14 @@ public class LoginPage {
 		try
 		{
 			Log4J.logp.info("**** Started : checkLogout ****");
-			
+
 			softAssertion = new SoftAssert();
 			LoginLib.login();
 			Thread.sleep(2000);
-			
+
 			bstatus = LoginLib.logout();
-			
-			if(bstatus == true)
+
+			if (bstatus == true)
 			{
 				Log4J.logp.info("Logout Succesfully from the application");
 				softAssertion.assertTrue(true);
@@ -216,15 +222,16 @@ public class LoginPage {
 				checkLogout.log(LogStatus.FAIL, "Logout un - successfully");
 			}
 			Log4J.logp.info("**** Ended : checkLogout ****");
-			
+
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			CommonLib.takeScreenshots();
 			e.printStackTrace();
-			softAssertion.assertTrue(false,"checkLogout");
+			softAssertion.assertTrue(false, "checkLogout");
 		}
-		finally {
+		finally
+		{
 
 			if (checkLogout.getRunStatus().toString().equalsIgnoreCase("unknown"))
 				checkLogout.log(LogStatus.FAIL, "Test ID 94 : Failed for Unknown status.");
@@ -238,12 +245,12 @@ public class LoginPage {
 			{
 				checkLogout.log(LogStatus.PASS, "Test ID 94 : Logout :: Passed");
 			}
-			
+
 			softAssertion.assertAll();
 			driver.get("https://staging.v2whistle.com");
 		}
 	}
-	
+
 	@AfterClass
 	public static void loginAfterClass()
 	{
@@ -251,4 +258,3 @@ public class LoginPage {
 	}
 
 }
-

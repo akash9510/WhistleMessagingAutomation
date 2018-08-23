@@ -71,15 +71,17 @@ public class HomePage
 			strDepartDate = properties.getProperty("departdate");
 
 			//homePageWebE.txt_GuestName.clear();
-			homePageWebE.txt_GuestName.sendKeys("te");
-			Thread.sleep(8000);
 
-			homePageWebE.lst_SearchResults.get(0).click();
-			Thread.sleep(4000);
+			//homePageWebE.lst_SearchResults.get(0).click();
+			//Thread.sleep(4000);
+
+			homePageWebE.txt_GuestName.clear();
+			homePageWebE.txt_GuestName.sendKeys(strGuestName);
+			//Thread.sleep(4000);
 
 			homePageWebE.txt_PhoneNo.clear();
-			homePageWebE.txt_PhoneNo.sendKeys(strPhoneNo);
-			Thread.sleep(4000);
+			homePageWebE.txt_PhoneNo.sendKeys("123456");
+			//Thread.sleep(4000);
 
 			homePageWebE.txt_ArrivalDate.click();
 			Thread.sleep(3000);
@@ -87,24 +89,34 @@ public class HomePage
 			bstatus = CommonLib.selectDate(strArrivalDate, "Arrival");
 
 			homePageWebE.txt_DepartureDate.click();
-			Thread.sleep(4000);
+			Thread.sleep(3000);
 
 			bstatus = CommonLib.selectDate(strDepartDate, "Depart");
 
 			homePageWebE.txt_Notes.clear();
 			homePageWebE.txt_Notes.sendKeys("Test Notes");
-			Thread.sleep(2000);
+			//Thread.sleep(2000);
 
 			homePageWebE.txt_Email.clear();
 			homePageWebE.txt_Email.sendKeys(strEmail);
-			Thread.sleep(2000);
+			//Thread.sleep(2000);
 
 			homePageWebE.txt_Message.clear();
 			homePageWebE.txt_Message.sendKeys("Hello");
-			Thread.sleep(4000);
+			//Thread.sleep(3000);
 
 			homePageWebE.btn_SendConversation.click();
-			CommonLib.waitForObject(homePageWebE.lbl_Messages.get(0), "visibility", 20);
+			Thread.sleep(2000);
+
+			homePageWebE.txt_GuestName.clear();
+			homePageWebE.txt_GuestName.sendKeys(strGuestName);
+			Thread.sleep(4000);
+			homePageWebE.txt_Message.clear();
+			homePageWebE.txt_Message.sendKeys("Hello");
+			Thread.sleep(2000);
+
+			homePageWebE.btn_SendConversation.click();
+			CommonLib.waitForObject(homePageWebE.lbl_Messages.get(0), "visibility", 30);
 
 			int intMessageSize = homePageWebE.lbl_Messages.size();
 
@@ -166,7 +178,7 @@ public class HomePage
 		ExtentTest Child2 = null;
 		ExtentTest Child3 = null;
 		ExtentTest Child4 = null;
-		String strBackground;
+		String strBackground, strDefaultColor, strColor;
 		try
 		{
 
@@ -178,6 +190,17 @@ public class HomePage
 			Child4 = MainMethod.extent.startTest("Test ID 8 : User dropdown");
 
 			softAssertion = new SoftAssert();
+
+			if (ExecutionSetUp.strEnv.contains("chrome"))
+			{
+				strDefaultColor = "rgba(189, 189, 189, 1)";
+			}
+			else
+			{
+				strDefaultColor = "rgb(189, 189, 189)";
+			}
+
+			strColor = "rgba(0, 179, 134, 0.5)";
 
 			//LoginLib.login();
 
@@ -206,7 +229,7 @@ public class HomePage
 			strBackground = homePageWebE.lbl_ToggleBackground.getCssValue("background-color");
 			Log4J.logp.info(strBackground);
 
-			if (strBackground.trim().equalsIgnoreCase("rgba(189, 189, 189, 1)"))
+			if (strBackground.trim().equalsIgnoreCase(strDefaultColor))
 			{
 				Log4J.logp.info("By default Sound toggle is off");
 				softAssertion.assertTrue(true);
@@ -217,7 +240,7 @@ public class HomePage
 
 				strBackground = homePageWebE.lbl_ToggleBackground.getCssValue("background-color");
 				Log4J.logp.info(strBackground);
-				if (strBackground.trim().equalsIgnoreCase("rgba(0, 179, 134, 0.5)"))
+				if (strBackground.trim().equalsIgnoreCase(strColor))
 				{
 					Log4J.logp.info("After click on Sound toggle it will be on");
 					softAssertion.assertTrue(true);
@@ -248,7 +271,7 @@ public class HomePage
 			strBackground = homePageWebE.lbl_NotificationBackground.getCssValue("background-color");
 			Log4J.logp.info(strBackground);
 
-			if (strBackground.trim().equalsIgnoreCase("rgba(189, 189, 189, 1)"))
+			if (strBackground.trim().equalsIgnoreCase(strDefaultColor))
 			{
 				Log4J.logp.info("By default Notification toggle is off");
 				softAssertion.assertTrue(true);
@@ -259,7 +282,7 @@ public class HomePage
 
 				strBackground = homePageWebE.lbl_NotificationBackground.getCssValue("background-color");
 				Log4J.logp.info(strBackground);
-				if (strBackground.trim().equalsIgnoreCase("rgba(0, 179, 134, 0.5)"))
+				if (strBackground.trim().equalsIgnoreCase(strColor))
 				{
 					Log4J.logp.info("After click on Notification toggle it will be on");
 					softAssertion.assertTrue(true);
@@ -1581,7 +1604,9 @@ public class HomePage
 
 			strAcualTemplateValue = homePageWebE.lbl_Templates.get(0).getText().trim();
 
-			if (strAcualTemplateValue.equals(strExpectedTemplateValue))
+			System.out.println(strAcualTemplateValue + " and " + strExpectedTemplateValue);
+
+			if (strExpectedTemplateValue.contains(strAcualTemplateValue))
 			{
 				Log4J.logp.info("Template has been addedd successfully");
 				softAssertion.assertTrue(true);
@@ -4017,7 +4042,7 @@ public class HomePage
 					{
 						Log4J.logp.info("After click on Notification toggle it will be on");
 						softAssertion.assertTrue(true);
-						child3.log(LogStatus.PASS, "After click on Notification toggle it will be on");
+						child1.log(LogStatus.PASS, "After click on Notification toggle it will be on");
 
 						homePageWebE.ico_MeNotification.click();
 						Thread.sleep(2000);
@@ -4026,7 +4051,7 @@ public class HomePage
 					{
 						Log4J.logp.info("Notification toggle does not on after click on it");
 						softAssertion.assertTrue(false);
-						child3.log(LogStatus.FAIL, "Notification toggle does not on after click on it");
+						child1.log(LogStatus.FAIL, "Notification toggle does not on after click on it");
 					}
 				}
 

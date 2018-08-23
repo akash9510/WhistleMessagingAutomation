@@ -7,6 +7,7 @@ import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 
 import com.relevantcodes.extentreports.ExtentReports;
 
@@ -17,18 +18,21 @@ import webelements.LoginWebE;
 public class MainMethod
 {
 
-	static String				strBrowserName	= null;
-	static WebDriver			driver			= null;
-	static LoginWebE			LoginWebE		= null;
+	//static String				strBrowserName	= null;
+	static WebDriver			driver		= null;
+	static LoginWebE			LoginWebE	= null;
 	public static ExtentReports	extent;
 
 	@BeforeSuite
-	public static void driverStart()
+	@Parameters({ "config", "environment" })
+	public static void driverStart(String config, String environment)
 	{
 		String strURl;
 		try
 		{
 			Log4J.logp.info("Execution Started");
+
+			System.out.println(config + "  and " + environment);
 
 			extent = new ExtentReports("src/main/resources/AdvanceExtentReport/ExtentReportMaven.html", true);
 			extent.loadConfig(new File("src/main/resources/AdvanceExtentReport/extent-config.xml"));
@@ -39,13 +43,13 @@ public class MainMethod
 
 			logProperties.load(new FileInputStream("src/main/resources/Properties/data.properties"));
 
-			strBrowserName = logProperties.getProperty("browser");
+			//strBrowserName = logProperties.getProperty("browser");
 
-			Log4J.logp.info("Browser is :::" + strBrowserName);
+			Log4J.logp.info("Browser is :::" + environment);
 
 			strURl = logProperties.getProperty("url");
 
-			ExecutionSetUp.launchBrowser(strBrowserName);
+			ExecutionSetUp.launchBrowser(config, environment);
 
 			driver = ExecutionSetUp.getDriver();
 			LoginWebE = LoginWebE.getInstance(driver);

@@ -1,0 +1,37 @@
+{
+  "server": "hub-cloud.browserstack.com",
+  "user": "brandon410",
+  "key": "hFGrvxjtY9rNAAK162xd",
+
+  "capabilities": {
+    "browserstack.debug": true
+  },
+
+  "environments": {
+    "chrome": {
+      	"browser": "chrome",
+      	"os": "Windows",
+    	"os_version": "10",
+    	"resolution" : "1280x1024"
+      },
+       "chromeWin8": {
+        "browser": "chrome",
+      	"os": "Windows",
+    	"os_version": "8"
+      },
+      "firefox":{
+      	"browserName" : "Firefox",
+ 		"browser_version" : "62.0 beta",
+ 		"os" : "Windows",
+ 		"os_version" : "10",
+ 		"resolution" : "1280x1024"
+      },
+      "IE":{
+		"browserName" : "Edge",
+ 		"browser_version" : "17.0",
+ 		"os" : "Windows",
+ 		"os_version" : "10",
+ 		"resolution" : "1280x1024"
+   }
+  }
+}
