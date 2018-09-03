@@ -2,6 +2,8 @@ package framework;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
@@ -28,14 +30,19 @@ public class MainMethod
 	@Parameters({ "config", "environment" })
 	public static void driverStart(String config, String environment)
 	{
-		String strURl;
+		String strURl, strFile;
 		try
 		{
 			Log4J.logp.info("Execution Started");
 
 			System.out.println(config + "  and " + environment);
 
-			extent = new ExtentReports("src/main/resources/AdvanceExtentReport/ExtentReportMaven.html", true);
+			SimpleDateFormat format = new SimpleDateFormat("ddMMyyyyHHmmss");
+			Date date = new Date();
+
+			strFile = format.format(date);
+
+			extent = new ExtentReports("src/main/resources/AdvanceExtentReport/" + strFile + ".html", true);
 			extent.loadConfig(new File("src/main/resources/AdvanceExtentReport/extent-config.xml"));
 
 			Log4J.loadLogger();
