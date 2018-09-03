@@ -1,7 +1,7 @@
 {
   "server": "hub-cloud.browserstack.com",
-  "user": "brandon410",
-  "key": "hFGrvxjtY9rNAAK162xd",
+  "user": "akashgupta16",
+  "key": "X3uiBqKQu9qpbMqYSqxa",
 
   "capabilities": {
     "browserstack.debug": true
@@ -28,10 +28,17 @@
       },
       "IE":{
 		"browserName" : "Edge",
- 		"browser_version" : "17.0",
+ 		"browser_version" : "16.0",
  		"os" : "Windows",
  		"os_version" : "10",
- 		"resolution" : "1280x1024"
+ 		"resolution" : "2048x1536"
+   	  },
+   	  "safari":{
+   	  	"browser": "Safari",
+        "browser_version": "11.0",
+    	"os": "OS X",
+    	"os_version": "High Sierra",
+    	"resolution": "1024x768"
+   	  }
    }
-  }
 }

@@ -6,7 +6,8 @@ import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
 import com.relevantcodes.extentreports.ExtentReports;
@@ -23,7 +24,7 @@ public class MainMethod
 	static LoginWebE			LoginWebE	= null;
 	public static ExtentReports	extent;
 
-	@BeforeSuite
+	@BeforeTest
 	@Parameters({ "config", "environment" })
 	public static void driverStart(String config, String environment)
 	{
@@ -49,6 +50,8 @@ public class MainMethod
 
 			strURl = logProperties.getProperty("url");
 
+			//driver = new SafariDriver();
+
 			ExecutionSetUp.launchBrowser(config, environment);
 
 			driver = ExecutionSetUp.getDriver();
@@ -63,13 +66,25 @@ public class MainMethod
 		}
 	}
 
-	@AfterSuite
+	@AfterTest
 	public static void driverEnd()
 	{
 		try
 		{
 			extent.flush();
 			extent.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	@AfterSuite
+	public static void endSuite()
+	{
+		try
+		{
 			driver.close();
 		}
 		catch (Exception e)

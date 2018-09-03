@@ -26,12 +26,12 @@ import library.Log4J;
 public class ExecutionSetUp
 {
 
-	public static WebDriver		driver			= null;
-	private static Local		l;
-	public static String		strEnv			= null;
-	public static final String	USERNAME		= "aakash9";
-	public static final String	AUTOMATE_KEY	= "pqwx7T6AnWinRMJ5jicv";
-	public static final String	URL				= "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
+	public static WebDriver	driver	= null;
+	private static Local	l;
+	public static String	strEnv	= null;
+	//public static final String	USERNAME		= "aakash9";
+	//public static final String	AUTOMATE_KEY	= "pqwx7T6AnWinRMJ5jicv";
+	//public static final String	URL				= "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void launchBrowser(String config_file, String environment)
@@ -58,6 +58,7 @@ public class ExecutionSetUp
 			{
 				Map.Entry pair = (Map.Entry) it.next();
 				capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
+				MainMethod.extent.addSystemInfo(pair.getKey().toString(), pair.getValue().toString());
 			}
 
 			Map<String, String> commonCapabilities = (Map<String, String>) config.get("capabilities");
@@ -116,6 +117,7 @@ public class ExecutionSetUp
 			}
 
 			driver = new RemoteWebDriver(new URL("http://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub"), capabilities);
+			maximizeBrowser();
 		}
 		catch (Exception e)
 		{
