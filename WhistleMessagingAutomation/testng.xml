@@ -1,39 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="WhistleMessaging" parallel="none">
-    <test name="Chrome">
-    <parameter name="config" value="Browser.Stack.json"/>
-  	<parameter name="environment" value="chrome"/>
-        <classes>
-            <class name ="framework.MainMethod" />
-             <!--  <class name="testscripts.LoginPage" /> -->
-             <class name="testscripts.HomePage" />
-             <methods>
-      			<include name = "startSurveyUsingSurveyTemplate"></include>
-      		 </methods>
-        </classes>
-    </test>
-    <test name="Firefox">
-    <parameter name="config" value="Browser.Stack.json"/>
-  	<parameter name="environment" value="firefox"/>
-        <classes>
-            <class name ="framework.MainMethod" />
-             <!--  <class name="testscripts.LoginPage" /> -->
-             <class name="testscripts.HomePage" />
-             <methods>
-      			<include name = "startSurveyUsingSurveyTemplate"></include>
-      		 </methods>
-        </classes>
-    </test>
-    <test name="IE">
-    <parameter name="config" value="Browser.Stack.json"/>
+<suite name="WhistleMessaging">
+<parameter name="config" value="Browser.Stack.json"/>
   	<parameter name="environment" value="IE"/>
+    <test name="Edge">
         <classes>
             <class name ="framework.MainMethod" />
-             <!--  <class name="testscripts.LoginPage" /> -->
-             <class name="testscripts.HomePage" />
-             <methods>
-      			<include name = "startSurveyUsingSurveyTemplate"></include>
-      		 </methods>
+         	<class name ="testscripts.LoginPage" />
+            <class name ="testscripts.HomePage" />
+            <methods>
+            <exclude name = "checkLogSheet"></exclude>
+            <exclude name = "checkColumnsLogSheet"></exclude>
+            <exclude name = "checkAutoResponders"></exclude>
+            </methods>
         </classes>
     </test>
 </suite>
