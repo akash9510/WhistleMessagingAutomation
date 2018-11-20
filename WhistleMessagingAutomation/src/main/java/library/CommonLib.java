@@ -349,6 +349,8 @@ public class CommonLib
 				robot.delay(500);
 			}
 
+			driver.switchTo().defaultContent();
+
 			//Open Goto window
 
 			robot.keyPress(KeyEvent.VK_META);

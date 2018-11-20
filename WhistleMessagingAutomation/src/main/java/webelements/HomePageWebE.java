@@ -59,19 +59,19 @@ public class HomePageWebE
 	public WebElement		lbl_Month;
 
 	/** to click on Left pointer of Calendar */
-	@FindBy(xpath = "/html/body/div[13]/div/div[1]/div/div/div/div/div[2]/div[1]/div[1]/button[1]")
+	@FindBy(xpath = "(//div[contains(@style,'flex-direction')]//button[contains(@style,'overflow: visible')])[1]")
 	public WebElement		lnk_Left_Pointer;
 
 	/** to click on Right pointer of Calendar */
-	@FindBy(xpath = "/html/body/div[13]/div/div[1]/div/div/div/div/div[2]/div[1]/div[1]/button[2]")
+	@FindBy(xpath = "(//div[contains(@style,'flex-direction')]//button[contains(@style,'overflow: visible')])[2]")
 	public WebElement		lnk_Right_Pointer;
 
 	/** to click on Left pointer of Calendar */
-	@FindBy(xpath = "/html/body/div[14]/div/div[1]/div/div/div/div/div[2]/div[1]/div[1]/button[1]")
+	@FindBy(xpath = "(//div[contains(@style,'flex-direction')]//button[contains(@style,'overflow: visible')])[1]")
 	public WebElement		lnk_Left_Pointer_Depart;
 
 	/** to click on Right pointer of Calendar */
-	@FindBy(xpath = "/html/body/div[14]/div/div[1]/div/div/div/div/div[2]/div[1]/div[1]/button[2]")
+	@FindBy(xpath = "(//div[contains(@style,'flex-direction')]//button[contains(@style,'overflow: visible')])[2]")
 	public WebElement		lnk_Right_Pointer_Depart;
 
 	/** to click on Left pointer of Calendar */
@@ -91,7 +91,7 @@ public class HomePageWebE
 	public WebElement		lnk_Right_Pointer_Depart_Reservation;
 
 	/** to check Middle Panel after Click on Send button */
-	@FindBy(css = ".ChatMessage__message--bubble.currentUser > span")
+	@FindBy(css = ".ChatMessage__contents > span")
 	public List<WebElement>	lbl_Messages;
 
 	/** to click on Whistle Hotel dropdown */
@@ -121,6 +121,10 @@ public class HomePageWebE
 	/** to click on Guest Chat left Side */
 	@FindBy(id = "guest-chat-tab")
 	public WebElement		ico_GuestChat;
+
+	/** to click on threads */
+	@FindBy(css = ".DepartmentList__department")
+	public List<WebElement>	open_Threads;
 
 	/** to click on Start Conversation button */
 	@FindBy(css = ".PrimaryButtonContainer__button.btn")
@@ -167,8 +171,14 @@ public class HomePageWebE
 	public WebElement		btn_StartSurvey;
 
 	/** to click on Use Survey Template button */
-	@FindBy(css = ".chip.selected.add")
+	//@FindBy(xpath = "//div[@class='AutomatedMessageEditor__survey-select']//div")
+	@FindBy(xpath = "//div[@class='AutomatedMessageEditor__survey-select']//div[@class='chip selected add']")
 	public WebElement		btn_UseSurveyTemplate;
+
+	/** to click on Use Survey Template button */
+	//@FindBy(xpath = "//div[@class='AutomatedMessageEditor__survey-select']//div")
+	@FindBy(xpath = "//div[@class='StartSurveyView__button--right']//div[@class='chip selected add']")
+	public WebElement		btn_UseSurveyTemplate_Survey;
 
 	/** to select first template from Template window */
 	@FindBy(xpath = "(//div[@id='survey-template-modal']//span)[1]")
@@ -347,12 +357,16 @@ public class HomePageWebE
 	public List<WebElement>	list_Templates;
 
 	/** to check template added or not */
-	@FindBy(css = ".ChatMessage__message--bubble.currentUser > span")
+	@FindBy(css = ".ChatMessage__contents > span")
 	public List<WebElement>	lbl_Templates;
 
 	/** to click on Setting icon */
 	@FindBy(css = ".ChatMessage__settings")
 	public WebElement		ico_Setting;
+
+	/** to click on Tranlate label */
+	@FindBy(xpath = "//div[text()='Translate']")
+	public WebElement		lbl_Translate;
 
 	/** to click on Direct Chat icon from Left Panel */
 	@FindBy(id = "direct-chat-tab")
@@ -367,7 +381,7 @@ public class HomePageWebE
 	public WebElement		txt_DirectMessage;
 
 	/** to get the message which sent to direcrt chat */
-	@FindBy(css = ".ChatMessage__message--bubble.currentUser > span")
+	@FindBy(css = ".ChatMessage__contents > span")
 	public List<WebElement>	lbl_DirectMessage;
 
 	/** to click on search icon */
@@ -729,14 +743,14 @@ public class HomePageWebE
 
 	/** to click on Department */
 	@FindBy(xpath = "//ul[@class='dropdown-content active']//span")
-	public WebElement		lnk_Department;
+	public List<WebElement>	lnk_Department;
 
 	/** to check count of Department */
-	@FindBy(xpath = "(//td[@class='user-tags'])[1]//div[@class='chip undefined']")
+	@FindBy(xpath = "(//div[@class='chip selected add'])[1]/../../..//div[@class='chip undefined']")
 	public List<WebElement>	lbl_DepartmentCount;
 
 	/** to click on remove icon of Department */
-	@FindBy(xpath = "(//td[@class='user-tags'])[1]//div[@class='chip undefined']//i")
+	@FindBy(xpath = "(//div[@class='chip selected add'])[1]/../../..//i[@class='material-icons closeIcon']")
 	public List<WebElement>	ico_RemoveDepartment;
 
 	/** to enter value in AutoResponder textbox */
@@ -836,7 +850,7 @@ public class HomePageWebE
 	public List<WebElement>	ico_Checkbox;
 
 	/** to click on Checkbox of Admin */
-	@FindBy(xpath = "//td[@class='user-admin']//label")
+	@FindBy(xpath = "//input[not(@disabled)][@class='filled-in']/..//label")
 	public List<WebElement>	chk_Admin;
 
 	/** to click on Remove icon of Admin */
@@ -976,7 +990,7 @@ public class HomePageWebE
 	public WebElement		ico_DeleteFollowup;
 
 	/** to check message service */
-	@FindBy(xpath = "//table//div[@class='ChatTypeBadge']/..")
+	@FindBy(xpath = "//table//div[contains(@class,'ChatTypeBadge')]/..")
 	public List<WebElement>	lbl_MessageService;
 
 	/** to click on Sign Up link */
@@ -998,6 +1012,26 @@ public class HomePageWebE
 	/** to click on Confirm button */
 	@FindBy(xpath = "//div[@id='removeFacebook']//button[text()='CONFIRM']")
 	public WebElement		btn_ConfirmMessage;
+
+	/** to click on Sign In link of Google Voice */
+	@FindBy(css = ".signUpLink")
+	public WebElement		lnk_SignIn_Voice;
+
+	/** to enter value in testbox of Voice */
+	@FindBy(id = "identifierId")
+	public WebElement		txt_Voice_TextBox;
+
+	/** to click on Next button of usernaeme */
+	@FindBy(id = "identifierNext")
+	public WebElement		btn_VoiceNextUserName;
+
+	/** to enter value in password */
+	@FindBy(xpath = "//input[@name='password']")
+	public WebElement		txt_VoicePassword;
+
+	/** to click on password next button */
+	@FindBy(id = "passwordNext")
+	public WebElement		btn_VoiceNextPassword;
 
 	static HomePageWebE		Instance	= null;
 

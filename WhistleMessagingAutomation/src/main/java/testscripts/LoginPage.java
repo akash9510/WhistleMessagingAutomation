@@ -145,9 +145,9 @@ public class LoginPage
 			loginWebE.btn_Next.click();
 			CommonLib.waitForObject(loginWebE.lbl_SuccessMessage, "visibility", 10);
 
-			strActualMessage = loginWebE.lbl_SuccessMessage.getText().trim();
+			strActualMessage = loginWebE.lbl_SuccessMessage.getText();
 
-			if (strExpectedMessage.equals(strActualMessage))
+			if (strActualMessage.contains(strExpectedMessage))
 			{
 				Log4J.logp.info(strExpectedMessage + " :: has been displayed after entered valid email address");
 				softAssertion.assertTrue(true);
@@ -185,7 +185,6 @@ public class LoginPage
 			}
 
 			softAssertion.assertAll();
-			driver.get("https://staging.v2whistle.com");
 		}
 	}
 
@@ -202,6 +201,8 @@ public class LoginPage
 		try
 		{
 			Log4J.logp.info("**** Started : checkLogout ****");
+
+			driver.get("https://staging.v2whistle.com");
 
 			softAssertion = new SoftAssert();
 			LoginLib.login();

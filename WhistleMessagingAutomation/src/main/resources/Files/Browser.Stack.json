@@ -1,7 +1,7 @@
 {
   "server": "hub-cloud.browserstack.com",
-  "user": "akashgupta16",
-  "key": "X3uiBqKQu9qpbMqYSqxa",
+  "user": "chrish24",
+  "key": "jz2pYNumqrN7aQP3mMhh",
 
   "capabilities": {
     "browserstack.debug": true
@@ -28,7 +28,7 @@
       },
       "IE":{
 		"browserName" : "Edge",
- 		"browser_version" : "16.0",
+ 		"browser_version" : "17.0",
  		"os" : "Windows",
  		"os_version" : "10",
  		"resolution" : "2048x1536"

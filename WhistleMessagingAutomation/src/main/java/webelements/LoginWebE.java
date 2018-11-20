@@ -34,7 +34,7 @@ public class LoginWebE
 	public WebElement	btn_Forget_Password;
 
 	/** to get the Forget Password message */
-	@FindBy(css = ".animated.slideInRight.center-align")
+	@FindBy(xpath = "//div[@class='animated slideInRight center-align']")
 	public WebElement	lbl_SuccessMessage;
 
 	static LoginWebE	Instance	= null;

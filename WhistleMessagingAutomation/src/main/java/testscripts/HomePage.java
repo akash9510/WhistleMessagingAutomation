@@ -80,7 +80,7 @@ public class HomePage
 			//Thread.sleep(4000);
 
 			homePageWebE.txt_PhoneNo.clear();
-			homePageWebE.txt_PhoneNo.sendKeys("123456");
+			homePageWebE.txt_PhoneNo.sendKeys(strPhoneNo);
 			//Thread.sleep(4000);
 
 			homePageWebE.txt_ArrivalDate.click();
@@ -108,14 +108,14 @@ public class HomePage
 			homePageWebE.btn_SendConversation.click();
 			Thread.sleep(2000);
 
-			homePageWebE.txt_GuestName.clear();
+			/*homePageWebE.txt_GuestName.clear();
 			homePageWebE.txt_GuestName.sendKeys(strGuestName);
 			Thread.sleep(4000);
 			homePageWebE.txt_Message.clear();
 			homePageWebE.txt_Message.sendKeys("Hello");
 			Thread.sleep(2000);
-
-			homePageWebE.btn_SendConversation.click();
+			
+			homePageWebE.btn_SendConversation.click();*/
 			CommonLib.waitForObject(homePageWebE.lbl_Messages.get(0), "visibility", 30);
 
 			int intMessageSize = homePageWebE.lbl_Messages.size();
@@ -134,6 +134,28 @@ public class HomePage
 				softAssertion.assertTrue(true);
 				StartConversation.log(LogStatus.FAIL, "Message not Sent");
 			}
+
+			// Check Message Recieved or not 
+
+			/*driver.get("https://voice.google.com/about");
+			CommonLib.waitForObject(homePageWebE.lnk_SignIn_Voice, "clickable", 30);
+			
+			homePageWebE.lnk_SignIn_Voice.click();
+			CommonLib.waitForObject(homePageWebE.txt_Voice_TextBox, "visibility", 30);
+			
+			//WebElement userElement = driver.findElement(By.id("identifierId"));
+			homePageWebE.txt_Voice_TextBox.sendKeys(properties.getProperty("voiceUsername"));
+			
+			homePageWebE.btn_VoiceNextUserName.click();
+			
+			Thread.sleep(3000);
+			
+			//WebElement passwordElement = driver.findElement(By.name("password"));
+			homePageWebE.txt_VoicePassword.sendKeys(properties.getProperty("voicePassword"));
+			homePageWebE.btn_VoiceNextPassword.click();
+			
+			Thread.sleep(5000);*/
+
 			Log4J.logp.info("**** Ended : startConversation ****");
 		}
 		catch (Exception e)
@@ -493,9 +515,9 @@ public class HomePage
 			CommonLib.waitForObject(homePageWebE.btn_StartSurvey, "visibility", 10);
 
 			homePageWebE.btn_StartSurvey.click();
-			CommonLib.waitForObject(homePageWebE.btn_UseSurveyTemplate, "clickable", 10);
+			CommonLib.waitForObject(homePageWebE.btn_UseSurveyTemplate_Survey, "clickable", 10);
 
-			homePageWebE.btn_UseSurveyTemplate.click();
+			homePageWebE.btn_UseSurveyTemplate_Survey.click();
 			CommonLib.waitForObject(homePageWebE.lnk_FIrstTemplate, "clickable", 10);
 
 			homePageWebE.lnk_FIrstTemplate.click();
@@ -692,6 +714,9 @@ public class HomePage
 			homePageWebE.ico_GuestChat.click();
 			Thread.sleep(2000);
 
+			homePageWebE.open_Threads.get(0).click();
+			Thread.sleep(2000);
+
 			// Scroll Down
 			bstatus = CommonLib.scroll_Page(homePageWebE.scrollbar_Conversation, 10);
 
@@ -834,6 +859,9 @@ public class HomePage
 
 			homePageWebE.ico_GuestChat.click();
 			Thread.sleep(2000);
+
+			/*homePageWebE.open_Threads.get(0).click();
+			Thread.sleep(2000);*/
 
 			homePageWebE.conversation_list.get(0).click();
 			CommonLib.waitForObject(homePageWebE.ico_CloseChat, "clickable", 10);
@@ -1446,6 +1474,9 @@ public class HomePage
 			builder.moveToElement(homePageWebE.lbl_Templates.get(0)).build().perform();
 
 			homePageWebE.ico_Setting.click();
+			Thread.sleep(2000);
+
+			homePageWebE.lbl_Translate.click();
 			Thread.sleep(2000);
 
 			homePageWebE.lst_Translte.click();
@@ -2860,7 +2891,7 @@ public class HomePage
 	@Test(description = "Check Menu of Company tab", priority = 19)
 	public static void checkCompanyMenu()
 	{
-		String[] strCompanyMenu = { "Settings", "Departments", "Templates", "Autoresponders", "Campaign History", "Surveys", "Messaging Services", "Reports", "Integrations", "Automated Messages" };
+		String[] strCompanyMenu = { "Settings", "Departments", "Templates", "Guest Chat Availability", "Campaign History", "Surveys", "Messaging Services", "Reports", "Integrations", "Automated Messages" };
 		ExtentTest checkCompanyMenu = MainMethod.extent.startTest("Test ID 52 : Validate Settings Tab");
 		try
 		{
@@ -2883,7 +2914,7 @@ public class HomePage
 				{
 					Log4J.logp.info(strCompanyMenu[i] + " Not found in Left navigation panel of Company page");
 					softAssertion.assertTrue(false);
-					checkCompanyMenu.log(LogStatus.PASS, strCompanyMenu[i] + " Not found in Left navigation panel of Company page");
+					checkCompanyMenu.log(LogStatus.FAIL, strCompanyMenu[i] + " Not found in Left navigation panel of Company page");
 				}
 			}
 
@@ -3017,15 +3048,15 @@ public class HomePage
 			CommonLib.scroll_Page(homePageWebE.scrollbar_Setting, 1);
 			Thread.sleep(2000);
 
-			intBefore = homePageWebE.lbl_DepartmentCount.size();
+			intBefore = homePageWebE.ico_RemoveDepartment.size();
 
 			homePageWebE.btn_AddDepartment.get(0).click();
 			Thread.sleep(2000);
 
-			homePageWebE.lnk_Department.click();
+			homePageWebE.lnk_Department.get(0).click();
 			Thread.sleep(2000);
 
-			intAfter = homePageWebE.lbl_DepartmentCount.size();
+			intAfter = homePageWebE.ico_RemoveDepartment.size();
 
 			if (intAfter == intBefore + 1)
 			{
@@ -3045,7 +3076,7 @@ public class HomePage
 			homePageWebE.ico_RemoveDepartment.get(intAfter - 1).click();
 			Thread.sleep(2000);
 
-			intAfter = homePageWebE.lbl_DepartmentCount.size();
+			intAfter = homePageWebE.ico_RemoveDepartment.size();
 
 			if (intAfter == intBefore)
 			{
@@ -3983,7 +4014,7 @@ public class HomePage
 	 * This method is check Me tab
 	 * 
 	 */
-	@Test(description = "Check Me tab", priority = 27)
+	@Test(description = "Check Me tab", priority = 35)
 	public static void checkMeTab()
 	{
 		String strBackground;
@@ -4449,6 +4480,7 @@ public class HomePage
 			Thread.sleep(2000);
 
 			homePageWebE.btn_UseSurveyTemplate.click();
+			CommonLib.waitForObject(homePageWebE.lnk_SurveyTemplates.get(0), "visibility", 10);
 			Thread.sleep(2000);
 
 			homePageWebE.lnk_SurveyTemplates.get(0).click();
@@ -4478,6 +4510,7 @@ public class HomePage
 			Thread.sleep(2000);
 
 			homePageWebE.txt_AutomatedMessage.clear();
+			Thread.sleep(2000);
 			homePageWebE.txt_AutomatedMessage.sendKeys(strEditValue);
 			Thread.sleep(2000);
 
@@ -4822,7 +4855,7 @@ public class HomePage
 	@Test(description = "Check Messaging Service", priority = 32)
 	public static void checkMessagingService()
 	{
-		String[] strServices = { "SMS", "Email", "Chargerback", "Discotech", "Enterprise Rent-A-Car", "Facebook Messenger", "TripAdvisor", "Viator", "Viber" };
+		String[] strServices = { "SMS", "Email", "Opt-In Engine", "Chargerback", "Discotech", "Enterprise Rent-A-Car", "Facebook Messenger", "TripAdvisor", "Viator", "Viber" };
 		ExtentTest checkMessagingService = MainMethod.extent.startTest("Check messaging Services").assignCategory("Regression");
 		ExtentTest child1 = null;
 		ExtentTest child2 = null;
