@@ -41,7 +41,8 @@ public class LoginLib
 			loginWebE.txt_EmailAdd.sendKeys(strUserName);
 			Thread.sleep(3000);
 
-			//System.out.println(CommonLib.checkElementPresent(loginWebE.btn_Next));
+			System.out.println(CommonLib.checkElementPresent(loginWebE.btn_Next));
+			CommonLib.waitForObject(loginWebE.btn_Next, "visibility", 20);
 
 			loginWebE.btn_Next.click();
 			CommonLib.waitForObject(loginWebE.txt_Password, "visibility", 10);

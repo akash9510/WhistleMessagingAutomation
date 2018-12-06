@@ -1,12 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="WhistleMessaging">
-<parameter name="config" value="Browser.Stack.json"/>
-  	<parameter name="environment" value="IE"/>
-    <test name="Edge">
+	<test name="Chrome">
+		<parameter name="config" value="Browser.Stack.json"/>
+  		<parameter name="environment" value="chrome"/>
         <classes>
             <class name ="framework.MainMethod" />
          	<class name ="testscripts.LoginPage" />
-            <class name ="testscripts.HomePage" />
+            <class name ="testscripts.HomePage" /> 
+            <methods>
+            <exclude name = "checkLogSheet"></exclude>
+            <exclude name = "checkColumnsLogSheet"></exclude>
+            <exclude name = "checkAutoResponders"></exclude>
+            </methods>
+        </classes>
+    </test>
+    <test name="Firefox">
+		<parameter name="config" value="Browser.Stack.json"/>
+  		<parameter name="environment" value="firefox"/>
+        <classes>
+            <class name ="framework.MainMethod" />
+         	<class name ="testscripts.LoginPage" />
+            <class name ="testscripts.HomePage" /> 
+            <methods>
+            <exclude name = "checkLogSheet"></exclude>
+            <exclude name = "checkColumnsLogSheet"></exclude>
+            <exclude name = "checkAutoResponders"></exclude>
+            </methods>
+        </classes>
+    </test>
+    <test name="IE">
+		<parameter name="config" value="Browser.Stack.json"/>
+  		<parameter name="environment" value="IE"/>
+        <classes>
+            <class name ="framework.MainMethod" />
+         	<class name ="testscripts.LoginPage" />
+            <class name ="testscripts.HomePage" /> 
             <methods>
             <exclude name = "checkLogSheet"></exclude>
             <exclude name = "checkColumnsLogSheet"></exclude>

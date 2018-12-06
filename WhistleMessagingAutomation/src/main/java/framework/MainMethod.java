@@ -57,8 +57,6 @@ public class MainMethod
 
 			strURl = logProperties.getProperty("url");
 
-			//driver = new SafariDriver();
-
 			ExecutionSetUp.launchBrowser(config, environment);
 
 			driver = ExecutionSetUp.getDriver();

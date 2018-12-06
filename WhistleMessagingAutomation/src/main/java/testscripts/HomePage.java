@@ -880,8 +880,8 @@ public class HomePage
 
 			strActualValue = homePageWebE.first_Blocked.getText().trim();
 
-			//System.out.println(strActualValue);
-			//System.out.println(strExpectedValue);
+			System.out.println(strActualValue);
+			System.out.println(strExpectedValue);
 
 			if (strActualValue.equals(strExpectedValue))
 			{
@@ -906,7 +906,7 @@ public class HomePage
 			Thread.sleep(4000);
 			//System.out.println(homePageWebE.btn_BlockUnblock.getText().trim());
 
-			if (homePageWebE.btn_BlockUnblock.getText().trim().contains("block"))
+			if (homePageWebE.btn_BlockUnblock.getText().trim().contains("BLOCK"))
 			{
 				Log4J.logp.info("User has been Unblocked successfully");
 				softAssertion.assertTrue(true);
@@ -1169,6 +1169,7 @@ public class HomePage
 	{
 		ArrayList<String> arrExpectedTeam = new ArrayList<String>();
 		int intCount, intAfterCount;
+		String strChannelName;
 		ExtentTest createDeleteChannel = MainMethod.extent.startTest("Create Channel, Add members and Delete Channel").assignCategory("Regression");
 		ExtentTest child1 = null;
 		ExtentTest child2 = null;
@@ -1186,13 +1187,18 @@ public class HomePage
 			softAssertion = new SoftAssert();
 			//LoginLib.login();
 
+			SimpleDateFormat format = new SimpleDateFormat("ddMMyyyyHHmmss");
+			Date date = new Date();
+
+			strChannelName = format.format(date);
+
 			homePageWebE.ico_TeamChat.click();
 			CommonLib.waitForObject(homePageWebE.btn_CreateChannel, "clickable", 10);
 
 			homePageWebE.btn_CreateChannel.click();
 			CommonLib.waitForObject(homePageWebE.txt_ChannelName, "visibility", 10);
 
-			homePageWebE.txt_ChannelName.sendKeys("Test Channel");
+			homePageWebE.txt_ChannelName.sendKeys(strChannelName);
 			Thread.sleep(2000);
 
 			for (int i = 0; i < 3; i++)
@@ -1282,7 +1288,7 @@ public class HomePage
 			homePageWebE.btn_ConfirmChannelRemove.click();
 			Thread.sleep(2000);
 
-			if (homePageWebE.lbl_ChannelName.get(0).getText().contains("Test Channel"))
+			if (homePageWebE.lbl_ChannelName.get(0).getText().contains(strChannelName))
 			{
 				Log4J.logp.info("Channel Not removed");
 				softAssertion.assertTrue(false);
@@ -3045,10 +3051,12 @@ public class HomePage
 
 			// Add Department
 
-			CommonLib.scroll_Page(homePageWebE.scrollbar_Setting, 1);
-			Thread.sleep(2000);
+			/*CommonLib.scroll_Page(homePageWebE.scrollbar_Setting, 1);
+			Thread.sleep(2000);*/
 
 			intBefore = homePageWebE.ico_RemoveDepartment.size();
+
+			System.out.println(intBefore);
 
 			homePageWebE.btn_AddDepartment.get(0).click();
 			Thread.sleep(2000);
@@ -3074,9 +3082,11 @@ public class HomePage
 			// Remove Department
 
 			homePageWebE.ico_RemoveDepartment.get(intAfter - 1).click();
-			Thread.sleep(2000);
+			Thread.sleep(4000);
 
 			intAfter = homePageWebE.ico_RemoveDepartment.size();
+			System.out.println(intBefore);
+			System.out.println(intAfter);
 
 			if (intAfter == intBefore)
 			{
@@ -3093,9 +3103,7 @@ public class HomePage
 
 			Log4J.logp.info("**** Ended : checkSettingMenu ****");
 		}
-		catch (
-
-		Exception e)
+		catch (Exception e)
 		{
 			CommonLib.takeScreenshots();
 			e.printStackTrace();
@@ -3544,7 +3552,7 @@ public class HomePage
 			Thread.sleep(1000);
 
 			System.out.println(homePageWebE.lbl_DefaultMessage.getText().trim());
-
+			System.out.println(strDepartment + " set as default department.");
 			if (homePageWebE.lbl_DefaultMessage.getText().trim().equals(strDepartment + " set as default department."))
 			{
 				Log4J.logp.info("Department has been set as default");
@@ -3561,7 +3569,7 @@ public class HomePage
 			homePageWebE.lst_DepartmentDropdown.click();
 			Thread.sleep(2000);
 
-			homePageWebE.lbl_DepartmentList.get(0).click();
+			homePageWebE.lbl_DepartmentList.get(2).click();
 			Thread.sleep(2000);
 
 			ele = driver.findElement(By.xpath("//div[text()='" + strDepartment + "']//i"));
@@ -4510,7 +4518,7 @@ public class HomePage
 			Thread.sleep(2000);
 
 			homePageWebE.txt_AutomatedMessage.clear();
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 			homePageWebE.txt_AutomatedMessage.sendKeys(strEditValue);
 			Thread.sleep(2000);
 
@@ -4528,6 +4536,9 @@ public class HomePage
 
 			homePageWebE.btn_CreateAutomated.click();
 			CommonLib.waitForObject(homePageWebE.lbl_AutomatedTitle.get(0), "visibility", 10);
+
+			System.out.println(homePageWebE.lbl_AutomatedTitle.get(0).getText().trim());
+			System.out.println(strEditValue);
 
 			if (homePageWebE.lbl_AutomatedTitle.get(0).getText().trim().equals(strEditValue))
 			{
@@ -4912,7 +4923,7 @@ public class HomePage
 			homePageWebE.btn_CancelSignUp.click();
 			Thread.sleep(2000);
 
-			Log4J.logp.info("**** Started : checkMessagingService ****");
+			Log4J.logp.info("**** Ended : checkMessagingService ****");
 		}
 		catch (Exception e)
 		{

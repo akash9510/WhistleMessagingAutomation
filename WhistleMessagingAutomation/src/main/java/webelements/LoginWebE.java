@@ -19,6 +19,7 @@ public class LoginWebE
 	/** to click on Next button */
 	@FindBy(xpath = "//button[@type='submit']")
 	//@FindBy(css = ".right-align .btn.waves-effect.waves-light")
+	//@FindBy(xpath = "//*[@id=\"login-email-form\"]/div[2]/div[2]/button")
 	public WebElement	btn_Next;
 
 	/** to check username after login in the application */

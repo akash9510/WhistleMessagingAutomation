@@ -104,6 +104,26 @@ public class CommonLib
 
 	/**
 	 * 
+	 * Click activty in Safari browser
+	 * 
+	 */
+	public static boolean clickSafari(WebElement ele)
+	{
+		try
+		{
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript("arguments[0].click();", ele);
+			return true;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * 
 	 * This method is use for Select Date from Calendar
 	 * 
 	 */
