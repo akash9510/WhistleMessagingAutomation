@@ -51,7 +51,7 @@ public class LoginPage
 	 * 
 	 * @since 07-07-2018
 	 */
-	@Test(description = "Check User should be able to login in the applicatin", priority = 0)
+	@Test(description = "Check User should be able to login in the applicatin", priority = 1)
 	public static void checkLogin()
 	{
 		String strActualUserName;
@@ -123,7 +123,7 @@ public class LoginPage
 	 * This method is use for check Forget passowrd
 	 * 
 	 */
-	@Test(description = "Check forget password functionality", priority = 1)
+	@Test(description = "Check forget password functionality", priority = 2)
 	public static void checkForgetPassword()
 	{
 		String strActualMessage, strExpectedMessage;
@@ -193,7 +193,7 @@ public class LoginPage
 	 * This method is check User can able to Logout from the system
 	 * 
 	 */
-	@Test(description = "Logout from the application", priority = 2)
+	@Test(description = "Logout from the application", priority = 3)
 	public static void checkLogout()
 	{
 		boolean bstatus = false;
